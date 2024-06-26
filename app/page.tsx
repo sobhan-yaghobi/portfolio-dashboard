@@ -16,9 +16,9 @@ export default function Home() {
         Edit profile
       </Typography>
 
-      <form className="[&>section]:mt-8 [&>section>*]:mb-3">
+      <form className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Avatar
           </Typography>
           <div className="flex items-center gap-6">
@@ -33,10 +33,11 @@ export default function Home() {
         </section>
 
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Name
           </Typography>
           <TextField
+            size="small"
             className="w-full"
             id="name"
             placeholder="username or name"
@@ -52,10 +53,11 @@ export default function Home() {
         </section>
 
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Phone
           </Typography>
           <TextField
+            size="small"
             className="w-full"
             id="name"
             placeholder="+00 000 000 0000"
@@ -71,10 +73,11 @@ export default function Home() {
         </section>
 
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Email
           </Typography>
           <TextField
+            size="small"
             className="w-full"
             id="name"
             placeholder="example@gmail.com"
@@ -90,10 +93,11 @@ export default function Home() {
         </section>
 
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Location
           </Typography>
           <TextField
+            size="small"
             className="w-full"
             id="name"
             placeholder="iran, tehran"
@@ -109,10 +113,11 @@ export default function Home() {
         </section>
 
         <section>
-          <Typography variant="h6" component={"h5"}>
+          <Typography variant="subtitle1" component={"h5"}>
             Bio
           </Typography>
           <TextField
+            size="small"
             className="w-full"
             id="name"
             placeholder="iran, tehran"
@@ -123,7 +128,7 @@ export default function Home() {
         </section>
 
         <section>
-          <Button className="w-full py-4" variant="contained" size="large">
+          <Button className="w-full py-3" variant="contained" size="large">
             Save Changes
           </Button>
         </section>

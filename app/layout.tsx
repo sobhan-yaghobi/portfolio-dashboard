@@ -26,6 +26,7 @@ export default function RootLayout({
               <Sidebar />
             </div>
             <div className="flex-1 p-3 rounded-sm overflow-y-auto lg:my-3">{children}</div>
+            <div className="w-3/12"></div>
           </div>
         </MaterialProvider>
       </body>

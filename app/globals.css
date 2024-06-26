@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #7480ff;
+}
+
+@layer base {
+  * {
+    scrollbar-color: var(--primary-color) transparent;
+    scrollbar-width: thin;
+  }
+}
