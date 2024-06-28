@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
+import Link from "next/link"
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
       <Typography variant="h4" component="h2" className="mb-8">
         Edit profile
       </Typography>
-
+      <Link href={"/login"}>login</Link>
       <form className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
           <Typography variant="subtitle1" component={"h5"}>
