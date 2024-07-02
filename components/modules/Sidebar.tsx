@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { Fragment } from "react"
 import { usePathname } from "next/navigation"
 
 import Person4Icon from "@mui/icons-material/Person4"
@@ -65,8 +65,8 @@ type ItemLinkProps = Omit<TypeSidebarItem, "children"> & {
 }
 const ItemLink: React.FC<ItemLinkProps> = ({ ...item }) => {
   return (
-    <Link key={item.id} href={item.href}>
-      <ListItemButton selected={item.pathname === item.href} key={item.id} className="rounded-lg">
+    <Link href={item.href}>
+      <ListItemButton selected={item.pathname === item.href} className="rounded-lg">
         <ListItemIcon>{item.icon}</ListItemIcon>
         <ListItemText primary={item.title} />
       </ListItemButton>
@@ -83,26 +83,28 @@ const Sidebar: React.FC = () => {
   return (
     <Box>
       <List component="nav" aria-label="main mailbox folders">
-        {items.map((item) =>
-          typeof item.children === "undefined" ? (
-            <ItemLink {...item} pathname={pathname} />
-          ) : (
-            <>
-              <ListItemButton onClick={() => clickAction(item.href)}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-                {open === item.href ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse className="ml-3" in={open === item.href} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {item.children.map((subitem) => (
-                    <ItemLink {...subitem} pathname={pathname} />
-                  ))}
-                </List>
-              </Collapse>
-            </>
-          )
-        )}
+        {items.map((item) => (
+          <Fragment key={item.id}>
+            {typeof item.children === "undefined" ? (
+              <ItemLink {...item} pathname={pathname} />
+            ) : (
+              <>
+                <ListItemButton onClick={() => clickAction(item.href)} className="rounded-lg">
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.title} />
+                  {open === item.href ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse className="ml-3" in={open === item.href} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {item.children.map((subitem) => (
+                      <ItemLink key={subitem.id} {...subitem} pathname={pathname} />
+                    ))}
+                  </List>
+                </Collapse>
+              </>
+            )}
+          </Fragment>
+        ))}
       </List>
       <Divider />
       <List component="nav" aria-label="secondary mailbox folder">
