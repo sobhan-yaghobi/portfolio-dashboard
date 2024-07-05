@@ -25,6 +25,7 @@ import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
 import Collapse from "@mui/material/Collapse"
 import Link from "next/link"
+import { logout } from "@/app/action/signIn"
 
 type TypeSidebarItem = {
   id: number
@@ -80,6 +81,7 @@ const Sidebar: React.FC = () => {
   const clickAction = (path: string) => {
     setOpen((prevPath) => (prevPath === path ? "" : path))
   }
+  const logoutAction = () => logout()
   return (
     <Box>
       <List component="nav" aria-label="main mailbox folders">
@@ -108,7 +110,7 @@ const Sidebar: React.FC = () => {
       </List>
       <Divider />
       <List component="nav" aria-label="secondary mailbox folder">
-        <ListItemButton color="error" className="rounded-lg">
+        <ListItemButton onClick={logoutAction} color="error" className="rounded-lg">
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>

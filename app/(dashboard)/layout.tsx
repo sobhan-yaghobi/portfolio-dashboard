@@ -1,8 +1,10 @@
 import React from "react"
 
 import Sidebar from "@/components/modules/Sidebar"
+import { getMe } from "../auth/getMe"
 
-const layout: React.FC<React.PropsWithChildren> = ({ children }) => {
+const layout: React.FC<React.PropsWithChildren> = async ({ children }) => {
+  const data = await getMe()
   return (
     <div className="w-full flex flex-col relative lg:max-h-screen lg:h-screen lg:flex-row">
       {/* <div className="sticky top-0 z-50 lg:hidden">

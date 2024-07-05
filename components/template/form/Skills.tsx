@@ -103,7 +103,7 @@ const Skills: React.FC = () => {
                 <em>None</em>
               </MenuItem>
               {allProjects.map((item) => (
-                <MenuItem disabled={item.selected} value={item.name}>
+                <MenuItem key={item.name} disabled={item.selected} value={item.name}>
                   {item.name}
                 </MenuItem>
               ))}
