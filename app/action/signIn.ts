@@ -1,9 +1,9 @@
 "use server"
 
-import { comparePassword } from "@/lib/auth"
-import { SchemaSignIn, TypeFormState } from "@/lib/definition"
+import { comparePassword } from "@/auth/auth"
+import { SchemaSignIn, TypeFormState } from "@/auth/definition"
 import prisma from "@/lib/prisma"
-import { createSession, deleteSession } from "@/lib/session"
+import { createSession, deleteSession } from "@/auth/session"
 
 export const signIn = async (_: TypeFormState, formData: FormData) => {
   const validationResult = SchemaSignIn.safeParse({
