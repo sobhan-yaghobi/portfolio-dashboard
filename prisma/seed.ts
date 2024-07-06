@@ -4,6 +4,7 @@ import { env } from "process"
 const prisma = new PrismaClient()
 
 const main = async () => {
+  await prisma.admin.deleteMany()
   await prisma.admin.create({
     data: {
       pass1: await hashPassword(env.pass1 as string),

@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
       className="bg-black/20 max-w-96 p-12 px-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg [&>*]:mt-3 [&]:first:*:!mt-0"
       action={action}
     >
-      <Typography variant="h4" component="h2">
+      <Typography variant="h4" component="h2" className="mt-0">
         Sign In
       </Typography>
       <p>Welcome Back!</p>

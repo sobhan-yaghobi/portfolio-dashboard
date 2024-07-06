@@ -37,15 +37,6 @@ export const createSession = async (id: string) => {
   redirect("/")
 }
 
-export const verifySession = async () => {
-  const cookie = cookies().get("session")?.value
-  const session = await decrypt(cookie)
-
-  if (session && session.id) {
-    return { isAuth: true, id: Number(session.id) }
-  }
-  return redirect("/login")
-}
 export const deleteSession = () => {
   cookies().delete("session")
   redirect("/login")
