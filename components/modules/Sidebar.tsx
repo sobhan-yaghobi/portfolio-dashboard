@@ -2,6 +2,7 @@
 
 import React, { Fragment } from "react"
 import { usePathname } from "next/navigation"
+import { logout } from "@/actions/signIn"
 
 import Person4Icon from "@mui/icons-material/Person4"
 import KeyIcon from "@mui/icons-material/Key"
@@ -25,7 +26,6 @@ import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
 import Collapse from "@mui/material/Collapse"
 import Link from "next/link"
-import { logout } from "@/app/action/signIn"
 
 type TypeSidebarItem = {
   id: number

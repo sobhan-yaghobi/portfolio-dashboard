@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { signIn } from "@/app/action/signIn"
+import { signIn } from "@/actions/signIn"
 
 import { useFormState, useFormStatus } from "react-dom"
 
