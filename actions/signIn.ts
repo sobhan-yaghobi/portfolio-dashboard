@@ -1,11 +1,11 @@
 "use server"
 
 import { comparePassword } from "@/auth/auth"
-import { SchemaSignIn, TypeFormState } from "@/auth/definition"
+import { SchemaSignIn, TypeSignInState } from "@/actions/definition"
 import prisma from "@/lib/prisma"
 import { createSession, deleteSession } from "@/auth/session"
 
-export const signIn = async (_: TypeFormState, formData: FormData) => {
+export const signIn = async (_: TypeSignInState, formData: FormData) => {
   const validationResult = SchemaSignIn.safeParse({
     pass1: formData.get("pass1"),
     pass2: formData.get("pass2"),

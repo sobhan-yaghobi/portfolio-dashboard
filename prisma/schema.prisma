@@ -16,10 +16,10 @@ model Admin {
 }
 
 model Project {
-  id         String @id @default(cuid())
-  image      String
-  title      String
-  link       String
-  source     String
-  descrption String
+  id          String @id @default(cuid())
+  image       String
+  title       String
+  link        String
+  source      String
+  description String
 }
