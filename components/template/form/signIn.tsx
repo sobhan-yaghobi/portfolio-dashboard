@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import LoadingButton from "@mui/lab/LoadingButton"
+import TextError from "@/components/modules/TextError"
 
 const SignIn: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
@@ -30,7 +31,7 @@ const SignIn: React.FC = () => {
   }
   return (
     <form
-      className="bg-black/20 max-w-96 p-12 px-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg [&>*]:mt-3 [&]:first:*:!mt-0"
+      className="bg-black/20 max-w-96 p-12 px-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg [&>*]:mt-2 [&]:first:*:!mt-0"
       ref={formRef}
       action={clientAction}
     >
@@ -38,58 +39,62 @@ const SignIn: React.FC = () => {
         Sign In
       </Typography>
       <p>Welcome Back!</p>
-      <section className="grid grid-cols-2 gap-3">
-        <TextField
-          error={Boolean(errors && errors?.pass1)}
-          size="small"
-          type="password"
-          className="w-full"
-          name="pass1"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">1.</InputAdornment>,
-          }}
-          variant="outlined"
-          helperText={errors && errors?.pass1}
-        />
+      <section className="grid grid-cols-2 gap-x-7 gap-y-1">
+        <TextError className="min-h-5" message={errors && errors?.pass1}>
+          <TextField
+            error={Boolean(errors && errors?.pass1)}
+            size="small"
+            type="password"
+            className="w-full"
+            name="pass1"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">1.</InputAdornment>,
+            }}
+            variant="outlined"
+          />
+        </TextError>
 
-        <TextField
-          error={Boolean(errors && errors?.pass2)}
-          size="small"
-          type="password"
-          className="w-full"
-          name="pass2"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">2.</InputAdornment>,
-          }}
-          variant="outlined"
-          helperText={errors && errors?.pass2}
-        />
+        <TextError className="min-h-5" message={errors && errors?.pass2}>
+          <TextField
+            error={Boolean(errors && errors?.pass2)}
+            size="small"
+            type="password"
+            className="w-full"
+            name="pass2"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">2.</InputAdornment>,
+            }}
+            variant="outlined"
+          />
+        </TextError>
 
-        <TextField
-          error={Boolean(errors && errors?.pass3)}
-          size="small"
-          type="password"
-          className="w-full"
-          name="pass3"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">3.</InputAdornment>,
-          }}
-          variant="outlined"
-          helperText={errors && errors?.pass3}
-        />
+        <TextError className="min-h-5" message={errors && errors?.pass3}>
+          <TextField
+            error={Boolean(errors && errors?.pass3)}
+            size="small"
+            type="password"
+            className="w-full"
+            name="pass3"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">3.</InputAdornment>,
+            }}
+            variant="outlined"
+          />
+        </TextError>
 
-        <TextField
-          error={Boolean(errors && errors?.pass4)}
-          size="small"
-          type="password"
-          className="w-full"
-          name="pass4"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">4.</InputAdornment>,
-          }}
-          variant="outlined"
-          helperText={errors && errors?.pass4}
-        />
+        <TextError className="min-h-5" message={errors && errors?.pass4}>
+          <TextField
+            error={Boolean(errors && errors?.pass4)}
+            size="small"
+            type="password"
+            className="w-full"
+            name="pass4"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">4.</InputAdornment>,
+            }}
+            variant="outlined"
+          />
+        </TextError>
       </section>
       <section className="w-full">
         <SignInButton />
