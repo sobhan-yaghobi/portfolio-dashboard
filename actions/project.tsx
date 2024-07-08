@@ -8,7 +8,7 @@ export const addProject = async (
   formData: FormData
 ): Promise<TypeAddProjectState> => {
   const validationResult = SchemaAddProject.safeParse({
-    image: (formData.get("image") as File).name,
+    image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
     title: formData.get("title"),
     link: formData.get("link"),
     source: formData.get("source"),
