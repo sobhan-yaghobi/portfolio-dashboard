@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useRef, useState } from "react"
+import { toast } from "react-toastify"
+
 import { addProject } from "@/actions/project"
 
 import { TypeError } from "@/actions/definition"
@@ -22,17 +24,22 @@ const Project: React.FC = () => {
   const clientAction = async (event: FormData) => {
     const actionResult = await addProject(event)
     if (actionResult) {
-      if (!actionResult.status) {
-        formRef.current?.reset()
+      if ("errors" in actionResult) {
+        return setErrors({ ...actionResult.errors } as TypeError)
       }
 
-      if ("errors" in actionResult) {
-        setErrors({ ...actionResult.errors } as TypeError)
+      const message = actionResult.message
+      if (actionResult.status) {
+        setErrors({} as TypeError)
+        message && toast.success(message)
+      } else {
+        message && toast.error(message)
       }
+      formRef.current?.reset()
     }
   }
   return (
-    <form action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+    <form ref={formRef} action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           Image
@@ -44,6 +51,7 @@ const Project: React.FC = () => {
             errors && errors?.image ? "border-red-500" : "border-white"
           }`}
         />
+        <p className="min-h-7 text-red-500 text-sm">{errors && errors.image}</p>
       </section>
 
       <section>
@@ -64,8 +72,8 @@ const Project: React.FC = () => {
           }}
           variant="outlined"
           error={Boolean(errors && errors?.title)}
-          helperText={errors && errors?.title}
         />
+        <p className="min-h-7 text-red-500 text-sm">{errors && errors.title}</p>
       </section>
 
       <section>
@@ -86,8 +94,8 @@ const Project: React.FC = () => {
           }}
           variant="outlined"
           error={Boolean(errors && errors?.link)}
-          helperText={errors && errors?.link}
         />
+        <p className="min-h-7 text-red-500 text-sm">{errors && errors.link}</p>
       </section>
 
       <section>
@@ -108,8 +116,8 @@ const Project: React.FC = () => {
           }}
           variant="outlined"
           error={Boolean(errors && errors?.source)}
-          helperText={errors && errors?.source}
         />
+        <p className="min-h-7 text-red-500 text-sm">{errors && errors.source}</p>
       </section>
 
       <section>
@@ -119,14 +127,14 @@ const Project: React.FC = () => {
         <TextField
           size="small"
           className="w-full"
-          id="description"
+          name="description"
           placeholder="about project"
           multiline
           rows={4}
           variant="outlined"
           error={Boolean(errors && errors?.description)}
-          helperText={errors && errors?.description}
         />
+        <p className="min-h-7 text-red-500 text-sm">{errors && errors.description}</p>
       </section>
 
       <section>
@@ -143,8 +151,8 @@ const SignInButton: React.FC = () => {
       <LoadingButton
         loading={pending}
         type="submit"
-        className="w-full"
-        variant="outlined"
+        className="w-full py-3"
+        variant="contained"
         size="large"
       >
         Add Project
