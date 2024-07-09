@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma"
 import { isEqual } from "lodash"
 import { SchemaAddProject, TypeAddProject, TypeErrors, TypeReturnSererAction } from "./definition"
 import { ProjectCreateInput } from "@/lib/types"
+import { revalidatePath } from "next/cache"
 
 const projectObject = (formData: FormData) =>
   ({
@@ -55,6 +56,15 @@ export const editProject = async (
   }
 
   return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
+}
+
+export const deleteProject = async (id: string, path: string): Promise<TypeReturnSererAction> => {
+  const deleteResult = await prisma.project.delete({ where: { id } })
+  if (deleteResult) {
+    revalidatePath(path)
+    return { message: "project removed successfully", status: true }
+  }
+  return { message: "project remove got failure", status: false }
 }
 
 export const getAllProjects = async () => {

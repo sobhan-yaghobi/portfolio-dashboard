@@ -1,15 +1,44 @@
+"use client"
+
 import React from "react"
 import { Project } from "@prisma/client"
+import { toast } from "react-toastify"
+
+import { deleteProject } from "@/actions/project"
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 import Link from "next/link"
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material"
 
 const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, description }) => {
+  const deleteAction = async () => {
+    const deleteResult = await deleteProject(id, "/projects")
+    if (deleteResult.status) {
+      return toast.success(deleteResult.message)
+    }
+    return toast.error(deleteResult.message)
+  }
   return (
-    <Card className="w-80">
+    <Card className="w-80 relative">
+      <IconButton
+        onClick={deleteAction}
+        title="delete"
+        className="absolute right-1 top-1 bg-black/30"
+        color="error"
+      >
+        <DeleteIcon />
+      </IconButton>
       <CardMedia
         sx={{ height: 140 }}
         image="https://picsum.photos/id/870/200/300?grayscale&blur=2"
