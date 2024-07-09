@@ -11,7 +11,7 @@ const page: React.FC = async () => {
       <Typography variant="h4" component="h2" className="mb-8">
         Edit profile
       </Typography>
-      <ul className="grid grid-cols-3 gap-6 place-items-center">
+      <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
         {projects.map((item) => (
           <ProjectBox key={item.id} {...item} />
         ))}
