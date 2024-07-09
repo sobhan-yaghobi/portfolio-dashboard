@@ -24,3 +24,8 @@ export const addProject = async (formData: FormData): Promise<TypeReturnSererAct
 
   return { message: "project creation failure", status: false }
 }
+
+export const getAllProjects = async () => {
+  const projects = await prisma.project.findMany()
+  return { data: projects ? projects : [], status: 201 }
+}
