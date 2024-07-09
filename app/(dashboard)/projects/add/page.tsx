@@ -1,6 +1,6 @@
 import React from "react"
 import Typography from "@mui/material/Typography"
-import Project from "@/components/template/form/Project"
+import AddProject from "@/components/template/form/project/AddProject"
 
 const page: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const page: React.FC = () => {
       <Typography variant="h4" component="h2" className="mb-8">
         Add Project
       </Typography>
-      <Project />
+      <AddProject />
     </>
   )
 }

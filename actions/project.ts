@@ -1,17 +1,21 @@
 "use server"
 
-import { SchemaAddProject, TypeAddProject, TypeErrors, TypeReturnSererAction } from "./definition"
-
 import prisma from "@/lib/prisma"
+import { isEqual } from "lodash"
+import { SchemaAddProject, TypeAddProject, TypeErrors, TypeReturnSererAction } from "./definition"
+import { ProjectCreateInput } from "@/lib/types"
 
-export const addProject = async (formData: FormData): Promise<TypeReturnSererAction> => {
-  const validationResult = SchemaAddProject.safeParse({
+const projectObject = (formData: FormData) =>
+  ({
     image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
     title: formData.get("title"),
     link: formData.get("link"),
     source: formData.get("source"),
     description: formData.get("description"),
   } as TypeAddProject)
+
+export const addProject = async (formData: FormData): Promise<TypeReturnSererAction> => {
+  const validationResult = SchemaAddProject.safeParse(projectObject(formData))
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
@@ -23,6 +27,34 @@ export const addProject = async (formData: FormData): Promise<TypeReturnSererAct
   }
 
   return { message: "project creation failure", status: false }
+}
+
+export const editProject = async (
+  id: string,
+  formData: FormData
+): Promise<TypeReturnSererAction> => {
+  const validationResult = SchemaAddProject.safeParse(projectObject(formData))
+
+  if (validationResult.success) {
+    const projectResult = await prisma.project.findUnique({
+      where: { id },
+      select: ProjectCreateInput,
+    })
+    if (projectResult) {
+      const updatedProject = projectObject(formData)
+      if (!isEqual(projectResult, updatedProject)) {
+        const updateResult = await prisma.project.update({ where: { id }, data: updatedProject })
+        if (updateResult) {
+          return { message: "project update successfully", status: true }
+        }
+        return { message: "update is got failure", status: false }
+      }
+      return { message: "please update the project field first !", status: false }
+    }
+    return { message: "project not found", status: false }
+  }
+
+  return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
 export const getAllProjects = async () => {

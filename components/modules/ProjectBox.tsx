@@ -35,9 +35,11 @@ const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, descrip
           </Button>
         </Link>
 
-        <Button variant="outlined" size="small" endIcon={<EditIcon />}>
-          edit
-        </Button>
+        <Link href={`/projects/${id}`}>
+          <Button variant="outlined" size="small" endIcon={<EditIcon />}>
+            edit
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   )

@@ -1,13 +1,8 @@
 "use client"
 
-import React, { useRef, useState } from "react"
-import { toast } from "react-toastify"
-
-import { addProject } from "@/actions/project"
+import React from "react"
 
 import { TypeError } from "@/actions/definition"
-
-import { useFormStatus } from "react-dom"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -15,32 +10,21 @@ import InsertLinkIcon from "@mui/icons-material/InsertLink"
 import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
-import { LoadingButton } from "@mui/lab"
 import TextError from "@/components/modules/TextError"
+import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
+import { TypeProjectInput } from "@/lib/types"
 
-const Project: React.FC = () => {
-  const formRef = useRef<HTMLFormElement>(null)
-  const [errors, setErrors] = useState<TypeError>({} as TypeError)
+type FormProps = {
+  ref: React.RefObject<HTMLFormElement>
+  defaultValues?: TypeProjectInput | null
+  submitText: string
+  errors: TypeError
+  submitFunction: (formData: FormData) => void | any
+}
 
-  const clientAction = async (event: FormData) => {
-    const actionResult = await addProject(event)
-    if (actionResult) {
-      if ("errors" in actionResult) {
-        return setErrors({ ...actionResult.errors } as TypeError)
-      }
-
-      const message = actionResult.message
-      if (actionResult.status) {
-        setErrors({} as TypeError)
-        message && toast.success(message)
-      } else {
-        message && toast.error(message)
-      }
-      formRef.current?.reset()
-    }
-  }
+const Form: React.FC<FormProps> = ({ ref, defaultValues, submitText, errors, submitFunction }) => {
   return (
-    <form ref={formRef} action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+    <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           Image
@@ -53,6 +37,7 @@ const Project: React.FC = () => {
               errors && errors?.image ? "border-red-500" : "border-white"
             }`}
           />
+          {defaultValues && defaultValues.image && <span>Default : {defaultValues.image}</span>}
         </TextError>
       </section>
 
@@ -75,6 +60,7 @@ const Project: React.FC = () => {
             }}
             variant="outlined"
             error={Boolean(errors && errors?.title)}
+            defaultValue={defaultValues && defaultValues.title}
           />
         </TextError>
       </section>
@@ -98,6 +84,7 @@ const Project: React.FC = () => {
             }}
             variant="outlined"
             error={Boolean(errors && errors?.link)}
+            defaultValue={defaultValues && defaultValues.link}
           />
         </TextError>
       </section>
@@ -121,6 +108,7 @@ const Project: React.FC = () => {
             }}
             variant="outlined"
             error={Boolean(errors && errors?.source)}
+            defaultValue={defaultValues && defaultValues.source}
           />
         </TextError>
       </section>
@@ -139,32 +127,16 @@ const Project: React.FC = () => {
             rows={4}
             variant="outlined"
             error={Boolean(errors && errors?.description)}
+            defaultValue={defaultValues && defaultValues.description}
           />
         </TextError>
       </section>
 
       <section>
-        <SignInButton />
+        <SubmitLoadingButton submitText={submitText} variant="text" />
       </section>
     </form>
   )
 }
 
-const SignInButton: React.FC = () => {
-  const { pending } = useFormStatus()
-  return (
-    <>
-      <LoadingButton
-        loading={pending}
-        type="submit"
-        className="w-full py-3"
-        variant="contained"
-        size="large"
-      >
-        Add Project
-      </LoadingButton>
-    </>
-  )
-}
-
-export default Project
+export default Form
