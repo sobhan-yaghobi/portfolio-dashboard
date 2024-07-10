@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { SchemaAddSkills, TypeAddSkills, TypeErrors, TypeReturnSererAction } from "./definition"
+import { revalidatePath } from "next/cache"
 
 const skillsObject = (formData: FormData) =>
   ({
@@ -24,4 +25,13 @@ export const addSkills = async (formData: FormData): Promise<TypeReturnSererActi
   }
 
   return { message: "skills creation failure", status: false }
+}
+
+export const deleteSkill = async (id: string, path: string): Promise<TypeReturnSererAction> => {
+  const deleteResult = await prisma.skills.delete({ where: { id } })
+  if (deleteResult) {
+    revalidatePath(path)
+    return { message: "project removed successfully", status: true }
+  }
+  return { message: "project remove got failure", status: false }
 }
