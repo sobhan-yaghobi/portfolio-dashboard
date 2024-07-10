@@ -18,7 +18,7 @@ import MenuItem from "@mui/material/MenuItem"
 import { IconButton } from "@mui/material"
 import { Project } from "@prisma/client"
 import { find, some } from "lodash"
-import { TypeSkillsInput } from "@/lib/types"
+import { TypeSkillInput } from "@/lib/types"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 import { TypeError } from "@/actions/definition"
@@ -27,7 +27,7 @@ type FormProps = {
   projects?: Project[]
   selectedProjects: Project[]
   setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
-  defaultValues?: TypeSkillsInput | null
+  defaultValues?: TypeSkillInput | null
   submitText: string
   errors: TypeError
   submitFunction: (formData: FormData) => void | any
