@@ -16,48 +16,40 @@ import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { IconButton } from "@mui/material"
+import { Project } from "@prisma/client"
+import { find, some } from "lodash"
 
-const Skills: React.FC = () => {
-  const [mainProject, setMainProject] = useState("")
-  const [selectedProjects, setSelectedProjects] = useState<string[]>([])
-  const [allProjects, setAllProjects] = useState([
-    { name: "project 1", selected: false },
-    { name: "project 2", selected: false },
-    { name: "project 3", selected: false },
-    { name: "project 4", selected: false },
-    { name: "project 5", selected: false },
-    { name: "project 6", selected: false },
-    { name: "project 7", selected: false },
-    { name: "project 8", selected: false },
-    { name: "project 9", selected: false },
-    { name: "project 10", selected: false },
-    { name: "project 11", selected: false },
-  ])
-  const toggleSelectedProjects = (item: string) => {
-    setAllProjects((prev) => {
-      const newAllProject = prev.map((prevItem) => {
-        if (prevItem.name === item) {
-          return { ...prevItem, selected: !prevItem.selected }
-        }
-        return prevItem
-      })
-      return newAllProject
+type SkillsProps = {
+  projects?: Project[]
+  selectedProjects: Project[]
+  setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
+}
+
+const Skills: React.FC<SkillsProps> = ({ projects, selectedProjects, setSelectedProjects }) => {
+  const [mainProject, setMainProject] = useState<Project | null>(null)
+  const handleChangeAction = (e: SelectChangeEvent<string>) => {
+    const mainProject = find(projects, function (item) {
+      return item.id === e.target.value
     })
+    setMainProject(mainProject ? mainProject : ({} as Project))
   }
+  const addProjectAction = () => {
+    if (mainProject && "id" in mainProject) {
+      const isSelect = selectedProjects.some(
+        (selectedProject) => selectedProject.id === mainProject.id
+      )
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setMainProject(event.target.value)
+      if (!isSelect) {
+        setSelectedProjects((prev) => [...prev, mainProject])
+      }
+    }
   }
-  const addProjectAction = (item: string) => {
-    setMainProject("")
-    toggleSelectedProjects(item)
-    setSelectedProjects((prev) => [...prev, item])
-  }
-  const removeProjectAction = (item: string) => {
-    setSelectedProjects((prev) => prev.filter((prevItem) => prevItem !== item))
-    toggleSelectedProjects(item)
-  }
-
+  const removeProjectAction = (id: string) =>
+    setSelectedProjects((prev) => prev.filter((item) => item.id !== id))
+  const isSelected = (id: string) =>
+    some(selectedProjects, function (selectedProject) {
+      return selectedProject.id === id
+    })
   return (
     <form className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
@@ -99,20 +91,21 @@ const Skills: React.FC = () => {
         <div className="w-full flex gap-3">
           <FormControl className="flex-1">
             <InputLabel id="demo-simple-select-helper-label">Projects</InputLabel>
-            <Select value={mainProject} label="Projects" onChange={handleChange}>
+            <Select label="Select Projects" onChange={handleChangeAction}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {allProjects.map((item) => (
-                <MenuItem key={item.name} disabled={item.selected} value={item.name}>
-                  {item.name}
-                </MenuItem>
-              ))}
+              {projects &&
+                projects?.map((item) => (
+                  <MenuItem key={item.id} disabled={isSelected(item.id)} value={item.id}>
+                    {item.title}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
           <Button
             disabled={!mainProject}
-            onClick={() => addProjectAction(mainProject)}
+            onClick={addProjectAction}
             size="large"
             className="w-2/12"
             variant="contained"
@@ -122,10 +115,13 @@ const Skills: React.FC = () => {
         </div>
         <ul className="min-h-14 w-full flex flex-wrap gap-3">
           {selectedProjects.map((item) => (
-            <li className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer" key={item}>
-              <span className="px-2 mr-1">{item}</span>
+            <li
+              className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer"
+              key={item.id}
+            >
+              <span className="px-2 mr-1">{item.title}</span>
               <IconButton
-                onClick={() => removeProjectAction(item)}
+                onClick={() => removeProjectAction(item.id)}
                 className="flex-1"
                 size="small"
                 color="error"
