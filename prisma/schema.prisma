@@ -28,6 +28,7 @@ model Project {
 
 model Skills {
   id          String    @id @default(cuid())
+  name        String
   image       String
   projects    Project[]
   link        String

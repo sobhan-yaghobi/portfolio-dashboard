@@ -1,8 +1,11 @@
+"use server"
+
 import prisma from "@/lib/prisma"
 import { SchemaAddSkills, TypeAddSkills, TypeErrors, TypeReturnSererAction } from "./definition"
 
 const skillsObject = (formData: FormData) =>
   ({
+    name: formData.get("name"),
     image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
     link: formData.get("link"),
     description: formData.get("description"),
