@@ -16,10 +16,20 @@ model Admin {
 }
 
 model Project {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   image       String
   title       String
   link        String
   source      String
+  description String
+  Skills      Skills? @relation(fields: [skillsId], references: [id])
+  skillsId    String?
+}
+
+model Skills {
+  id          String    @id @default(cuid())
+  image       String
+  projects    Project[]
+  link        String
   description String
 }

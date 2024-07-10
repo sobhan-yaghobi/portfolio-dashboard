@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
+import { IconButton } from "@mui/material"
 
 const Skills: React.FC = () => {
   const [mainProject, setMainProject] = useState("")
@@ -123,14 +124,14 @@ const Skills: React.FC = () => {
           {selectedProjects.map((item) => (
             <li className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer" key={item}>
               <span className="px-2 mr-1">{item}</span>
-              <Button
+              <IconButton
                 onClick={() => removeProjectAction(item)}
-                className="py-2"
+                className="flex-1"
                 size="small"
                 color="error"
               >
                 <DeleteOutlineOutlinedIcon />
-              </Button>
+              </IconButton>
             </li>
           ))}
         </ul>

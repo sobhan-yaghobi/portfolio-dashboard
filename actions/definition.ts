@@ -1,3 +1,4 @@
+import { Project } from "@prisma/client"
 import { z } from "zod"
 
 export type TypeError = {
@@ -34,3 +35,10 @@ export const SchemaAddProject = z.object({
   description: z.string().trim().min(1, "description is required"),
 })
 export type TypeAddProject = z.infer<typeof SchemaAddProject>
+
+export const SchemaAddSkills = z.object({
+  image: z.string().trim().min(1, "image is required"),
+  link: z.string().trim().min(1, "link is required"),
+  description: z.string().trim().min(1, "description is required"),
+})
+export type TypeAddSkills = z.infer<typeof SchemaAddSkills>
