@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation"
 
 import Typography from "@mui/material/Typography"
-import EditSkill from "@/components/template/form/skills/EditSkill"
+import EditSkill from "@/components/template/form/skill/EditSkill"
 
 const Page: React.FC<{
   params: { [slug: string]: string }
