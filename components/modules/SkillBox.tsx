@@ -8,7 +8,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Link from "next/link"
-import { deleteSkill } from "@/actions/skills"
+import { deleteSkill } from "@/actions/skill"
 import { toast } from "react-toastify"
 
 const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
