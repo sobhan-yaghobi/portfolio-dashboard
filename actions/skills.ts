@@ -21,8 +21,8 @@ export const addSkill = async (formData: FormData): Promise<TypeReturnSererActio
     return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
   }
 
-  const skillsResult = await prisma.skills.create({ data: validationResult.data })
-  if (skillsResult) {
+  const skillResult = await prisma.skills.create({ data: validationResult.data })
+  if (skillResult) {
     return { message: "skill create, successfully", status: true }
   }
 
@@ -46,7 +46,7 @@ export const editSkill = async (id: string, formData: FormData): Promise<TypeRet
         }
         return { message: "update is got failure", status: false }
       }
-      return { message: "please update the skills field first !", status: false }
+      return { message: "please update the skill field first !", status: false }
     }
     return { message: "skill not found", status: false }
   }
