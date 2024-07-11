@@ -1,6 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
+import { find, some } from "lodash"
+
+import { Project } from "@prisma/client"
+import { TypeError } from "@/actions/definition"
+import { TypeSkillInput } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -16,12 +21,8 @@ import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { IconButton } from "@mui/material"
-import { Project } from "@prisma/client"
-import { find, some } from "lodash"
-import { TypeSkillInput } from "@/lib/types"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
-import { TypeError } from "@/actions/definition"
 
 type FormProps = {
   projects?: Project[]
@@ -29,8 +30,8 @@ type FormProps = {
   setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
   defaultValues?: TypeSkillInput | null
   submitText: string
-  errors: TypeError
   submitFunction: (formData: FormData) => void | any
+  errors: TypeError
 }
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
@@ -70,6 +71,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
       some(selectedProjects, function (selectedProject) {
         return selectedProject.id === id
       })
+
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
