@@ -1,11 +1,13 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import Form from "./Form"
 import { Project } from "@prisma/client"
 import { addSkill } from "@/actions/skills"
 import { toast } from "react-toastify"
+
 import { TypeError } from "@/actions/definition"
+
+import Form from "./Form"
 
 type AddSkillProps = {
   projects: Project[]
