@@ -1,12 +1,14 @@
 "use client"
 
-import { editSkill } from "@/actions/skills"
-import { TypeSkillInput } from "@/lib/types"
 import React, { useRef, useState } from "react"
-import { toast } from "react-toastify"
-import Form from "./Form"
+import { editSkill } from "@/actions/skills"
 import { TypeError } from "@/actions/definition"
 import { Project } from "@prisma/client"
+import { toast } from "react-toastify"
+
+import { TypeSkillInput } from "@/lib/types"
+
+import Form from "./Form"
 
 type EditSkillsProps = {
   id: string
