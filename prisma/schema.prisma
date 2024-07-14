@@ -34,3 +34,11 @@ model Skills {
   link        String
   description String
 }
+
+model TechnicalGrowth {
+  id          String @id @default(cuid())
+  title       String
+  subtitle    String
+  description String
+  order       Int
+}

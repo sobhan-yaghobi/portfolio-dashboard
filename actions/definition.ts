@@ -43,3 +43,11 @@ export const SchemaAddSkill = z.object({
   description: z.string().trim().min(1, "description is required"),
 })
 export type TypeAddSkill = z.infer<typeof SchemaAddSkill>
+
+export const SchemaTechnicalGrowth = z.object({
+  title: z.string().trim().min(1, "title is required"),
+  subtitle: z.string().trim().min(1, "subtitle is required"),
+  order: z.number().optional(),
+  description: z.string().trim().min(1, "description is required"),
+})
+export type TypeTechnicalGrowth = z.infer<typeof SchemaTechnicalGrowth>

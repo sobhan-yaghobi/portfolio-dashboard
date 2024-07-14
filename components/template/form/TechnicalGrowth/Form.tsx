@@ -1,6 +1,7 @@
 import React from "react"
 import { TypeError } from "@/actions/definition"
 
+import LowPriorityIcon from "@mui/icons-material/LowPriority"
 import TitleIcon from "@mui/icons-material/Title"
 import EditNoteIcon from "@mui/icons-material/EditNote"
 
@@ -18,6 +19,30 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
   ({ submitText, submitFunction, errors }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            Order
+          </Typography>
+          <TextError message={errors && errors?.order}>
+            <TextField
+              error={Boolean(errors && errors?.order)}
+              size="small"
+              className="w-full"
+              name="order"
+              type="number"
+              placeholder="write the order of technical"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LowPriorityIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
+          </TextError>
+        </section>
+
         <section>
           <Typography variant="subtitle1" component={"h5"}>
             Title
@@ -68,12 +93,12 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
           <Typography variant="subtitle1" component={"h5"}>
             Description
           </Typography>
-          <TextError message={errors && errors?.desc}>
+          <TextError message={errors && errors?.description}>
             <TextField
-              error={Boolean(errors && errors?.desc)}
+              error={Boolean(errors && errors?.description)}
               size="small"
               className="w-full"
-              name="desc"
+              name="description"
               placeholder="note desc"
               multiline
               rows={4}
