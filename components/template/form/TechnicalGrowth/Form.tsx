@@ -18,10 +18,6 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
   ({ submitText, submitFunction, errors }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
-        <Typography variant="h4" component="h2" className="mt-0">
-          Add Technical Growth
-        </Typography>
-
         <section>
           <Typography variant="subtitle1" component={"h5"}>
             Title
