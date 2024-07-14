@@ -1,0 +1,97 @@
+import React from "react"
+import { TypeError } from "@/actions/definition"
+
+import TitleIcon from "@mui/icons-material/Title"
+import EditNoteIcon from "@mui/icons-material/EditNote"
+
+import { InputAdornment, TextField, Typography } from "@mui/material"
+import TextError from "@/components/modules/TextError"
+import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
+
+type FormProps = {
+  submitText: string
+  submitFunction: (formData: FormData) => void | any
+  errors: TypeError
+}
+
+const Form = React.forwardRef<HTMLFormElement, FormProps>(
+  ({ submitText, submitFunction, errors }, ref) => {
+    return (
+      <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+        <Typography variant="h4" component="h2" className="mt-0">
+          Add Technical Growth
+        </Typography>
+
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            Title
+          </Typography>
+          <TextError message={errors && errors?.title}>
+            <TextField
+              error={Boolean(errors && errors?.title)}
+              size="small"
+              className="w-full"
+              name="title"
+              placeholder="note a title"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <TitleIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
+          </TextError>
+        </section>
+
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            Sub Title
+          </Typography>
+          <TextError message={errors && errors?.subtitle}>
+            <TextField
+              error={Boolean(errors && errors?.subtitle)}
+              size="small"
+              className="w-full"
+              name="subtitle"
+              placeholder="note a subtitle"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditNoteIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
+          </TextError>
+        </section>
+
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            Description
+          </Typography>
+          <TextError message={errors && errors?.desc}>
+            <TextField
+              error={Boolean(errors && errors?.desc)}
+              size="small"
+              className="w-full"
+              name="desc"
+              placeholder="note desc"
+              multiline
+              rows={4}
+              variant="outlined"
+            />
+          </TextError>
+        </section>
+
+        <section className="w-full">
+          <SubmitLoadingButton submitText={submitText} />
+        </section>
+      </form>
+    )
+  }
+)
+
+export default Form

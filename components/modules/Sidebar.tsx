@@ -16,6 +16,7 @@ import FolderCopyIcon from "@mui/icons-material/FolderCopy"
 import NewspaperIcon from "@mui/icons-material/Newspaper"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import TimelineIcon from "@mui/icons-material/Timeline"
 import LogoutIcon from "@mui/icons-material/Logout"
 
 import Box from "@mui/material/Box"
@@ -59,6 +60,7 @@ const items: TypeSidebarItem[] = [
     ],
   },
   { id: 6, href: "/blogs", title: "Blogs", icon: <NewspaperIcon /> },
+  { id: 7, href: "/tec_growth", title: "Technical Growth", icon: <TimelineIcon /> },
 ]
 
 type ItemLinkProps = Omit<TypeSidebarItem, "children"> & {
