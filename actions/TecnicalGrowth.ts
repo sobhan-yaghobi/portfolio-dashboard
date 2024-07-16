@@ -1,42 +1,24 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { isEqual } from "lodash"
+import { revalidatePath } from "next/cache"
+
 import {
   SchemaTechnicalGrowth,
   TypeErrors,
   TypeReturnSererAction,
   TypeTechnicalGrowth,
 } from "./definition"
-import { revalidatePath } from "next/cache"
+import { TechnicalGrowthInput } from "@/lib/types"
+import { TechnicalGrowth } from "@prisma/client"
 
 const TCGRObject = (formData: FormData) =>
   ({
-    order: Number(formData.get("order")),
     title: formData.get("title"),
     subtitle: formData.get("subtitle"),
     description: formData.get("description"),
   } as TypeTechnicalGrowth)
-
-const orderHandler = async (
-  order: number | undefined
-): Promise<TypeReturnSererAction & { data: number }> => {
-  const technicalGrowths = await prisma.technicalGrowth.findMany()
-  if (order && order <= technicalGrowths.length + 1) {
-    const technicalUpdateResult = await prisma.technicalGrowth.updateMany({
-      where: { order: { gt: order - 1 } },
-      data: { order: { increment: 1 } },
-    })
-    if (technicalUpdateResult) {
-      return { status: true, data: order }
-    }
-    return {
-      status: false,
-      message: "error insert technical growth",
-      data: technicalGrowths.length + 1,
-    }
-  }
-  return { status: true, data: technicalGrowths.length + 1 }
-}
 
 export const addTechnicalGrowth = async (
   formData: FormData,
@@ -48,14 +30,9 @@ export const addTechnicalGrowth = async (
     return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
   }
 
-  const orderResult = await orderHandler(validationResult.data.order)
-
-  if (!orderResult.status) {
-    return { message: orderResult.message, status: false }
-  }
-
+  const technicalGrowthLengths = await prisma.technicalGrowth.count()
   const technicalGrowthResult = await prisma.technicalGrowth.create({
-    data: { ...validationResult.data, order: orderResult.data },
+    data: { ...validationResult.data, order: technicalGrowthLengths },
   })
   if (technicalGrowthResult) {
     revalidatePath(path)
@@ -63,4 +40,53 @@ export const addTechnicalGrowth = async (
   }
 
   return { message: "technical growth creation failure", status: false }
+}
+
+export const editTechnicalGrowth = async (
+  id: string,
+  formData: FormData
+): Promise<TypeReturnSererAction> => {
+  const technicalGrowth = TCGRObject(formData)
+  const validationResult = SchemaTechnicalGrowth.safeParse(technicalGrowth)
+
+  if (validationResult.success) {
+    const technicalGrowthResult = await prisma.technicalGrowth.findUnique({
+      where: { id },
+      select: TechnicalGrowthInput,
+    })
+    if (technicalGrowthResult) {
+      if (!isEqual(technicalGrowthResult, technicalGrowth)) {
+        const updateResult = await prisma.technicalGrowth.update({
+          where: { id },
+          data: technicalGrowth,
+        })
+        if (updateResult) {
+          return { message: "technical growth update successfully", status: true }
+        }
+        return { message: "update is got failure", status: false }
+      }
+      return { message: "please update the technical growth field first !", status: false }
+    }
+    return { message: "technical growth not found", status: false }
+  }
+
+  return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
+}
+
+export const editOrder = async (newTechs: TechnicalGrowth[]): Promise<TypeReturnSererAction> => {
+  const techsWithNewOrder = newTechs.map((tech, index) => ({ ...tech, order: index }))
+  try {
+    for (const object of techsWithNewOrder) {
+      await prisma.technicalGrowth.update({
+        where: { id: object.id },
+        data: {
+          order: object.order,
+        },
+      })
+    }
+    revalidatePath("/(dashboard)/tec_growth", "page")
+    return { message: "update orders successfully", status: true }
+  } catch (_) {
+    return { message: "update orders failure", status: false }
+  }
 }

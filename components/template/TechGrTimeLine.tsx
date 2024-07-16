@@ -3,6 +3,10 @@
 import React, { useRef, useState } from "react"
 import { TechnicalGrowth } from "@prisma/client"
 import { cn } from "@/lib/utils"
+import { isEqual, map, reject, slice } from "lodash"
+import { toast } from "react-toastify"
+
+import { editOrder } from "@/actions/TecnicalGrowth"
 
 import {
   Timeline,
@@ -23,6 +27,7 @@ type TechGrTimeLineProps = {
 type TypeDragAndDrop = {
   draggedFrom: number | null
   draggedTo: number | null
+  originalArray: TechnicalGrowth[]
 }
 
 const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
@@ -30,7 +35,9 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
   const dragAndDropRef = useRef<TypeDragAndDrop>({
     draggedFrom: null,
     draggedTo: null,
+    originalArray: techs,
   })
+  const [isUpdate, setIsUpdate] = useState(false)
   const getPosition = (event: React.DragEvent<HTMLDivElement>) => {
     const positionString = event.currentTarget.dataset.position
     if (positionString !== undefined && !isNaN(Number(positionString))) {
@@ -39,6 +46,8 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
       return null
     }
   }
+  const isTechEqual = (newTec: TechnicalGrowth[]) =>
+    !isEqual(map(newTec, "id"), map(dragAndDropRef.current.originalArray, "id"))
 
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) =>
     (dragAndDropRef.current = { ...dragAndDropRef.current, draggedFrom: getPosition(e) })
@@ -61,25 +70,37 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
     const { draggedFrom, draggedTo } = dragAndDropRef.current
     if (typeof draggedFrom === "number" && typeof draggedTo === "number") {
       const itemDragged = list[draggedFrom]
-      const remainingItems = list.filter((_, index) => index !== draggedFrom)
-      console.log("new List ", [
-        ...remainingItems.slice(0, draggedTo),
+      const remainingItems = reject(list, (_, index) => index === draggedFrom)
+      const newList = [
+        ...slice(remainingItems, 0, draggedTo),
         itemDragged,
-        ...remainingItems.slice(draggedTo),
-      ])
+        ...slice(remainingItems, draggedTo),
+      ]
 
-      setList([
-        ...remainingItems.slice(0, draggedTo),
-        itemDragged,
-        ...remainingItems.slice(draggedTo),
-      ])
+      setIsUpdate(isTechEqual(newList))
+      setList(newList)
     }
-    dragAndDropRef.current = { draggedFrom: null, draggedTo: null }
+    dragAndDropRef.current = { ...dragAndDropRef.current, draggedFrom: null, draggedTo: null }
     e.currentTarget.classList.remove("dropArea")
   }
 
+  const updateAction = async () => {
+    const updateResult = await editOrder(list)
+    setIsUpdate(false)
+    if (updateResult.status) {
+      dragAndDropRef.current.originalArray = list
+      return toast.success(updateResult.message)
+    }
+    setList(techs)
+    return toast.error(updateResult.message)
+  }
+  const resetAction = () => {
+    setIsUpdate(false)
+    setList(dragAndDropRef.current.originalArray)
+  }
+
   return (
-    <div className="bg-slate-200/20 flex-1 p-6 mt-6 flex flex-col rounded-lg">
+    <div className="flex-1 p-6 mt-6 pb-0 flex flex-col rounded-lg">
       {techs.length ? (
         <Timeline position="left">
           {list.map((item, index) => (
@@ -92,7 +113,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
               onDragEnter={onDragEnter}
               onDragLeave={onDragLeave}
               onDrop={onDrop}
-              className={cn("h-fit mt-32 first:mt-0 cursor-move select-none")}
+              className={cn("h-fit mt-6 first:mt-0 cursor-move select-none")}
             >
               <TimelineSeparator>
                 <TimelineDot />
@@ -118,6 +139,18 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
           </Button>
         </div>
       )}
+      <div className="h-10 mt-6">
+        {isUpdate && (
+          <>
+            <Button className="py-3 mr-3" onClick={updateAction}>
+              Update
+            </Button>
+            <Button color="error" className="py-3" onClick={resetAction}>
+              Reset
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   )
 }
