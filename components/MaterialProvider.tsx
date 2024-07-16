@@ -11,6 +11,15 @@ const theme = createTheme({
     primary: { main: "#7480ff" },
     secondary: { main: "#ff52d9" },
   },
+  typography: {
+    h1: { fontFamily: '"dana"' },
+    h2: { fontFamily: '"dana"' },
+    h3: { fontFamily: '"dana"' },
+    h4: { fontFamily: '"dana"' },
+    h5: { fontFamily: '"dana"' },
+    h6: { fontFamily: '"dana"' },
+    fontFamily: '"iran-sans", cursive',
+  },
 })
 
 const MaterialProvider: React.FC<React.PropsWithChildren> = ({ children }) => {

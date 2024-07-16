@@ -7,9 +7,25 @@
 }
 
 @layer base {
+  @font-face {
+    font-family: "iran-sans";
+    src: url("../public/fonts/iran-sans/woff/iran-sans.woff");
+  }
+  @font-face {
+    font-family: "dana";
+    font-weight: 900;
+    src: url("../public/fonts/dana/woff/dana-extra-black.woff");
+  }
+
   * {
     scrollbar-color: var(--primary-color) transparent;
     scrollbar-width: thin;
+  }
+  .iran-sans {
+    font-family: "iran-sans";
+  }
+  .dana {
+    font-family: "dana";
   }
 }
 
@@ -27,13 +43,38 @@
       #e5dcef 96.51%
     );
     box-shadow: 0 0 2rem #100f17, 0 0 10rem 5rem #180e54;
-    /* background: radial-gradient(
-      57.59% 68.12% at 40.42% 34.97%,
-      #100f17 71.02%,
-      #180e54 80.82%,
-      #4d2ecc 86.18%,
-      #b778e3 92.86%,
-      #e5dcef 96.51%
-    ); */
+  }
+
+  .draggable {
+    opacity: 0.5;
+  }
+
+  .dropArea {
+    color: white !important;
+    background: theme("colors.white/50") !important;
+    position: relative;
+
+    &::before {
+      content: "Drop Here";
+      color: theme("colors.stone.500");
+      font-size: 1em;
+      text-transform: uppercase;
+      width: 100%;
+      height: 100%;
+      border: 2px dashed blue;
+      border-radius: 3px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    div {
+      visibility: hidden;
+    }
+
+    p {
+      margin-left: 1em;
+    }
   }
 }

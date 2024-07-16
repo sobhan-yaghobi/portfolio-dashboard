@@ -9,7 +9,7 @@ const page = async () => {
   const techs = await prisma.technicalGrowth.findMany({ orderBy: { order: "asc" } })
   return (
     <div>
-      <section className="h-screen">
+      <section className="min-h-screen flex flex-col">
         <Typography variant="h4" component="h2" className="mt-0 flex justify-between">
           <span>Add Technical Growth</span>
           <Button variant="contained">
@@ -19,7 +19,7 @@ const page = async () => {
         <TechGrTimeLine techs={techs} />
       </section>
 
-      <Divider className="my-20" />
+      <Divider className="mb-20 mt-10" />
 
       <section id="add">
         <Typography variant="h4" component="h2" className="mt-0">
