@@ -84,9 +84,18 @@ export const editOrder = async (newTechs: TechnicalGrowth[]): Promise<TypeReturn
         },
       })
     }
-    revalidatePath("/(dashboard)/tec_growth", "page")
+    revalidatePath("/tec_growth")
     return { message: "update orders successfully", status: true }
   } catch (_) {
     return { message: "update orders failure", status: false }
   }
+}
+
+export const deleteTechnicalGrowth = async (id: string, path: string) => {
+  const deleteResult = await prisma.technicalGrowth.delete({ where: { id } })
+  if (deleteResult) {
+    revalidatePath(path)
+    return { message: "technical growth removed successfully", status: true }
+  }
+  return { message: "technical growth remove got failure", status: false }
 }

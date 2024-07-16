@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { TechnicalGrowth } from "@prisma/client"
 import { cn } from "@/lib/utils"
 import { isEqual, map, reject, slice } from "lodash"
 import { toast } from "react-toastify"
 
-import { editOrder } from "@/actions/TecnicalGrowth"
+import { deleteTechnicalGrowth, editOrder } from "@/actions/TecnicalGrowth"
 
 import {
   Timeline,
@@ -17,8 +17,9 @@ import {
   TimelineSeparator,
 } from "@mui/lab"
 import EmptyBox from "../modules/EmptyBox"
-import { Button, Typography } from "@mui/material"
+import { Button, IconButton, Typography } from "@mui/material"
 import Link from "next/link"
+import { Delete as DeleteIcon, EditNote as EditNoteIcon } from "@mui/icons-material"
 
 type TechGrTimeLineProps = {
   techs: TechnicalGrowth[]
@@ -99,6 +100,19 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
     setList(dragAndDropRef.current.originalArray)
   }
 
+  const deleteAction = async (id: string) => {
+    const deleteResult = await deleteTechnicalGrowth(id, "/tec_growth")
+    if (deleteResult.status) {
+      return toast.success(deleteResult.message)
+    }
+    return toast.error(deleteResult.message)
+  }
+
+  useEffect(() => {
+    setList(techs)
+    dragAndDropRef.current.originalArray = techs
+  }, [techs])
+
   return (
     <div className="flex-1 p-6 mt-6 pb-0 flex flex-col rounded-lg">
       {techs.length ? (
@@ -113,13 +127,32 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
               onDragEnter={onDragEnter}
               onDragLeave={onDragLeave}
               onDrop={onDrop}
-              className={cn("h-fit mt-6 first:mt-0 cursor-move select-none")}
+              className={cn("h-fit mt-6 first:mt-0 cursor-move select-none group")}
             >
               <TimelineSeparator>
                 <TimelineDot />
                 <TimelineConnector />
               </TimelineSeparator>
               <div>
+                <div className="flex gap-2 absolute left-1 top-1">
+                  <IconButton
+                    onClick={() => deleteAction(item.id)}
+                    title="delete"
+                    className="bg-black/30 hidden group-hover:flex"
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <Link href={`/tec_growth/${item.id}`}>
+                    <IconButton
+                      title="edit"
+                      className="bg-black/30 hidden group-hover:flex"
+                      color="primary"
+                    >
+                      <EditNoteIcon />
+                    </IconButton>
+                  </Link>
+                </div>
                 <TimelineContent>
                   <Typography variant="h5">{item.title}</Typography>
                   <Typography fontSize={16} variant="h6">
