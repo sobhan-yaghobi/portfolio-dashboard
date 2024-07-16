@@ -22,7 +22,7 @@ const AddSkill: React.FC<AddSkillProps> = ({ projects, selectionProjects }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addSkill(event)
+    const actionResult = await addSkill(event, "/skills")
     if (actionResult) {
       if ("errors" in actionResult) {
         return setErrors({ ...actionResult.errors } as TypeError)

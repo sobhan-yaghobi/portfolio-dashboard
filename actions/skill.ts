@@ -14,7 +14,10 @@ const skillObject = (formData: FormData) =>
     description: formData.get("description"),
   } as TypeAddSkill)
 
-export const addSkill = async (formData: FormData): Promise<TypeReturnSererAction> => {
+export const addSkill = async (
+  formData: FormData,
+  path: string
+): Promise<TypeReturnSererAction> => {
   const validationResult = SchemaAddSkill.safeParse(skillObject(formData))
 
   if (!validationResult.success) {
@@ -23,6 +26,7 @@ export const addSkill = async (formData: FormData): Promise<TypeReturnSererActio
 
   const skillResult = await prisma.skills.create({ data: validationResult.data })
   if (skillResult) {
+    revalidatePath(path)
     return { message: "skill create, successfully", status: true }
   }
 
