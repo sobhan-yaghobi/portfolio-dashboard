@@ -104,3 +104,8 @@ export const deleteTechnicalGrowth = async (id: string, path: string) => {
   }
   return { message: "technical growth remove got failure", status: false }
 }
+
+export const get = async () => {
+  const technicalGrowths = await prisma.technicalGrowth.findMany({ orderBy: { order: "asc" } })
+  return technicalGrowths || ([] as TechnicalGrowth[])
+}

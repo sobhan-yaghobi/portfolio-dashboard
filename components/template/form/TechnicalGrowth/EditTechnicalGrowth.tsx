@@ -5,7 +5,7 @@ import { TypeError } from "@/actions/definition"
 import { TypeTechnicalGrowth } from "@/lib/types"
 
 import Form from "./Form"
-import { editTechnicalGrowth } from "@/actions/TecnicalGrowth"
+import { editTechnicalGrowth } from "@/actions/TechnicalGrowth"
 import { toast } from "react-toastify"
 
 type EditTechnicalGrowthProps = {

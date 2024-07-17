@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { isEqual, map, reject, slice } from "lodash"
 import { toast } from "react-toastify"
 
-import { deleteTechnicalGrowth, editOrder } from "@/actions/TecnicalGrowth"
+import { deleteTechnicalGrowth, editOrder } from "@/actions/TechnicalGrowth"
 
 import {
   Timeline,

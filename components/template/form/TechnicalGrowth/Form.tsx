@@ -13,7 +13,7 @@ type FormProps = {
   submitText: string
   submitFunction: (formData: FormData) => void | any
   errors: TypeError
-  defaultValues: TypeTechnicalGrowth | null
+  defaultValues?: TypeTechnicalGrowth | null
 }
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
