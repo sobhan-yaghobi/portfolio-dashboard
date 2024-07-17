@@ -73,7 +73,10 @@ export const editTechnicalGrowth = async (
   return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-export const editOrder = async (newTechs: TechnicalGrowth[]): Promise<TypeReturnSererAction> => {
+export const editOrder = async (
+  newTechs: TechnicalGrowth[],
+  path: string
+): Promise<TypeReturnSererAction> => {
   const techsWithNewOrder = newTechs.map((tech, index) => ({ ...tech, order: index }))
   try {
     for (const object of techsWithNewOrder) {
@@ -84,7 +87,7 @@ export const editOrder = async (newTechs: TechnicalGrowth[]): Promise<TypeReturn
         },
       })
     }
-    revalidatePath("/tec_growth")
+    revalidatePath(path)
     return { message: "update orders successfully", status: true }
   } catch (_) {
     return { message: "update orders failure", status: false }

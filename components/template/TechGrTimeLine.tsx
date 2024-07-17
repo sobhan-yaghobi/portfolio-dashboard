@@ -86,7 +86,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
   }
 
   const updateAction = async () => {
-    const updateResult = await editOrder(list)
+    const updateResult = await editOrder(list, "/tec_growth")
     setIsUpdate(false)
     if (updateResult.status) {
       dragAndDropRef.current.originalArray = list
@@ -127,7 +127,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
               onDragEnter={onDragEnter}
               onDragLeave={onDragLeave}
               onDrop={onDrop}
-              className={cn("h-fit mt-6 first:mt-0 cursor-move select-none group")}
+              className={cn("h-fit mt-6 first:mt-0 cursor-move select-none group before:hidden")}
             >
               <TimelineSeparator>
                 <TimelineDot />

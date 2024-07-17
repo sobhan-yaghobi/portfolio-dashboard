@@ -53,7 +53,7 @@
     div {
       visibility: hidden;
     }
-    &::before {
+    &::after {
       content: "Drop Here";
       color: theme("colors.white");
       font-size: 1em;
