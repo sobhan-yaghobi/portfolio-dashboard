@@ -23,5 +23,4 @@ export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
   title: true,
   subtitle: true,
   description: true,
-  order: true,
 }

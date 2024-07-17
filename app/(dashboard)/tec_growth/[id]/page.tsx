@@ -9,20 +9,18 @@ const Page: React.FC<{
   params: { [slug: string]: string }
 }> = async ({ params }) => {
   const id = params?.id
-  //   const mainSkill = await prisma.skills.findUnique({ where: { id } })
+  const mainTechnicalGrowth = await prisma.technicalGrowth.findUnique({ where: { id } })
 
-  //   if (!mainSkill) {
-  //     redirect("/tec_growth")
-  //   }
-
-  //   const projects = await prisma.project.findMany()
+  if (!mainTechnicalGrowth) {
+    redirect("/tec_growth")
+  }
 
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
         Edit Technical Growth
       </Typography>
-      <EditTechnicalGrowth id={id} />
+      <EditTechnicalGrowth id={id} defaultValues={mainTechnicalGrowth} />
     </>
   )
 }

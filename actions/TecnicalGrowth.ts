@@ -44,7 +44,8 @@ export const addTechnicalGrowth = async (
 
 export const editTechnicalGrowth = async (
   id: string,
-  formData: FormData
+  formData: FormData,
+  path: string
 ): Promise<TypeReturnSererAction> => {
   const technicalGrowth = TCGRObject(formData)
   const validationResult = SchemaTechnicalGrowth.safeParse(technicalGrowth)
@@ -61,6 +62,7 @@ export const editTechnicalGrowth = async (
           data: technicalGrowth,
         })
         if (updateResult) {
+          revalidatePath(path)
           return { message: "technical growth update successfully", status: true }
         }
         return { message: "update is got failure", status: false }

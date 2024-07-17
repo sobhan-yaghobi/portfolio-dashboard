@@ -1,5 +1,6 @@
 import React from "react"
 import { TypeError } from "@/actions/definition"
+import { TypeTechnicalGrowth } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"
 import EditNoteIcon from "@mui/icons-material/EditNote"
@@ -12,10 +13,11 @@ type FormProps = {
   submitText: string
   submitFunction: (formData: FormData) => void | any
   errors: TypeError
+  defaultValues: TypeTechnicalGrowth | null
 }
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
-  ({ submitText, submitFunction, errors }, ref) => {
+  ({ submitText, submitFunction, errors, defaultValues }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
@@ -37,6 +39,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
                 ),
               }}
               variant="outlined"
+              defaultValue={defaultValues?.title}
             />
           </TextError>
         </section>
@@ -60,6 +63,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
                 ),
               }}
               variant="outlined"
+              defaultValue={defaultValues?.subtitle}
             />
           </TextError>
         </section>
@@ -78,6 +82,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
               multiline
               rows={4}
               variant="outlined"
+              defaultValue={defaultValues?.description}
             />
           </TextError>
         </section>
