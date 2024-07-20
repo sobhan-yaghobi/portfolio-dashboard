@@ -2,31 +2,28 @@ import AccountCircle from "@mui/icons-material/AccountCircle"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
 import EmailIcon from "@mui/icons-material/Email"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
-import HowToRegIcon from "@mui/icons-material/HowToReg"
 
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
-import Link from "next/link"
 
 export default function Home() {
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        Edit profile
+        پروفایل
       </Typography>
-      <Link href={"/login"}>login</Link>
       <form className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Avatar
+            آواتار
           </Typography>
           <div className="flex items-center gap-6">
             <div className="w-44 h-44 bg-white/50 rounded-full" />
             <div className="max-w-72 flex flex-col items-start gap-6">
               <Button variant="outlined" size="large">
-                Upload new image
+                عکس جدید آپلود کن
               </Button>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt, exercitationem.
             </div>
@@ -35,13 +32,13 @@ export default function Home() {
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Name
+            نام
           </Typography>
           <TextField
             size="small"
             className="w-full"
             id="name"
-            placeholder="username or name"
+            placeholder="نام خود را وارد کنید"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -55,12 +52,13 @@ export default function Home() {
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Phone
+            تلفن
           </Typography>
           <TextField
+            dir="ltr"
             size="small"
             className="w-full"
-            id="name"
+            id="phone"
             placeholder="+00 000 000 0000"
             InputProps={{
               startAdornment: (
@@ -75,9 +73,10 @@ export default function Home() {
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Email
+            ایمیل
           </Typography>
           <TextField
+            dir="ltr"
             size="small"
             className="w-full"
             id="name"
@@ -95,13 +94,13 @@ export default function Home() {
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Location
+            موقعیت
           </Typography>
           <TextField
             size="small"
             className="w-full"
             id="name"
-            placeholder="iran, tehran"
+            placeholder="ایران ، تهران"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -115,7 +114,7 @@ export default function Home() {
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Bio
+            در باره ی خود
           </Typography>
           <TextField
             size="small"
@@ -130,7 +129,7 @@ export default function Home() {
 
         <section>
           <Button className="w-full py-3" variant="contained" size="large">
-            Save Changes
+            آپدیت
           </Button>
         </section>
       </form>
