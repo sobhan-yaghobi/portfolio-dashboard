@@ -9,12 +9,10 @@ import { TypeSkillInput } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
-import AddIcon from "@mui/icons-material/Add"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 
 import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
-import Button from "@mui/material/Button"
 import InputAdornment from "@mui/material/InputAdornment"
 import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
@@ -125,11 +123,8 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
               <Select
                 label="Select Projects"
                 onChange={handleChangeAction}
-                value={mainProject?.id || "none"}
+                value={mainProject?.id || ""}
               >
-                <MenuItem value="none">
-                  <em>None</em>
-                </MenuItem>
                 {projects &&
                   projects?.map((item) => (
                     <MenuItem key={item.id} disabled={isSelected(item.id)} value={item.id}>

@@ -45,7 +45,6 @@ const EditSkill: React.FC<EditSkillsProps> = ({
         } else {
           message && toast.error(message)
         }
-        // formRef.current?.reset()
       }
     }
   }
