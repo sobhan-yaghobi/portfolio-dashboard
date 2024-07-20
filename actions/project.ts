@@ -68,6 +68,6 @@ export const deleteProject = async (id: string, path: string): Promise<TypeRetur
 }
 
 export const getAllProjects = async () => {
-  const projects = await prisma.project.findMany()
+  const projects = await prisma.project.findMany({ include: { skills: true } })
   return { data: projects ? projects : [], status: 201 }
 }

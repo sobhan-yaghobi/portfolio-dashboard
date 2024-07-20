@@ -31,7 +31,7 @@ const EditSkill: React.FC<EditSkillsProps> = ({
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editSkill(id, event)
+      const actionResult = await editSkill(id, event, selectedProjects, "/skills")
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)
@@ -40,11 +40,12 @@ const EditSkill: React.FC<EditSkillsProps> = ({
         const message = actionResult.message
         if (actionResult.status) {
           setErrors({} as TypeError)
+          setSelectedProjects([] as Project[])
           message && toast.success(message)
         } else {
           message && toast.error(message)
         }
-        formRef.current?.reset()
+        // formRef.current?.reset()
       }
     }
   }

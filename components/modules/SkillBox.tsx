@@ -20,7 +20,7 @@ const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
     return toast.error(deleteResult.message)
   }
   return (
-    <Card className="w-80 relative">
+    <Card className="min-w-72 max-w-80 relative">
       <IconButton
         onClick={deleteAction}
         title="delete"

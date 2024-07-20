@@ -13,7 +13,7 @@ const page: React.FC = async () => {
         Skills
       </Typography>
       {skills.length ? (
-        <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
+        <ul className="grid grid-cols-4 gap-3 gap-y-12 place-items-center">
           {skills.map((item) => (
             <SkillBox key={item.id} {...item} />
           ))}

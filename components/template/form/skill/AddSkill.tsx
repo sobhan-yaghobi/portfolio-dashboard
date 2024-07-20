@@ -22,7 +22,7 @@ const AddSkill: React.FC<AddSkillProps> = ({ projects, selectionProjects }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addSkill(event, "/skills")
+    const actionResult = await addSkill(event, selectedProjects, "/skills")
     if (actionResult) {
       if ("errors" in actionResult) {
         return setErrors({ ...actionResult.errors } as TypeError)
@@ -31,6 +31,7 @@ const AddSkill: React.FC<AddSkillProps> = ({ projects, selectionProjects }) => {
       const message = actionResult.message
       if (actionResult.status) {
         setErrors({} as TypeError)
+        setSelectedProjects([] as Project[])
         message && toast.success(message)
       } else {
         message && toast.error(message)

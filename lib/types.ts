@@ -13,7 +13,6 @@ export type TypeSkillInput = Prisma.SkillsCreateInput
 export const SkillCreateInput: Prisma.SkillsSelect = {
   name: true,
   image: true,
-  projects: true,
   link: true,
   description: true,
 }

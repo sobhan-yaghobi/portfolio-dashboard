@@ -62,6 +62,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
 
         if (!isSelect) {
           setSelectedProjects((prev) => [...prev, mainProject])
+          setMainProject({} as Project)
         }
       }
     }
@@ -119,10 +120,14 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
             Project Usage
           </Typography>
           <div className="w-full flex gap-3">
-            <FormControl className="flex-1">
+            <FormControl className="flex-1" onBlur={addProjectAction}>
               <InputLabel id="demo-simple-select-helper-label">Projects</InputLabel>
-              <Select label="Select Projects" onChange={handleChangeAction}>
-                <MenuItem value="">
+              <Select
+                label="Select Projects"
+                onChange={handleChangeAction}
+                value={mainProject?.id || "none"}
+              >
+                <MenuItem value="none">
                   <em>None</em>
                 </MenuItem>
                 {projects &&
@@ -133,15 +138,6 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
                   ))}
               </Select>
             </FormControl>
-            <Button
-              disabled={!mainProject}
-              onClick={addProjectAction}
-              size="large"
-              className="w-2/12"
-              variant="contained"
-            >
-              <AddIcon />
-            </Button>
           </div>
           <ul className="min-h-14 w-full flex flex-wrap gap-3">
             {selectedProjects.map((item) => (

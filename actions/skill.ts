@@ -5,6 +5,7 @@ import { SchemaAddSkill, TypeAddSkill, TypeErrors, TypeReturnSererAction } from 
 import { revalidatePath } from "next/cache"
 import { SkillCreateInput } from "@/lib/types"
 import { isEqual } from "lodash"
+import { Project } from "@prisma/client"
 
 const skillObject = (formData: FormData) =>
   ({
@@ -16,6 +17,7 @@ const skillObject = (formData: FormData) =>
 
 export const addSkill = async (
   formData: FormData,
+  projects: Project[],
   path: string
 ): Promise<TypeReturnSererAction> => {
   const validationResult = SchemaAddSkill.safeParse(skillObject(formData))
@@ -24,7 +26,9 @@ export const addSkill = async (
     return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
   }
 
-  const skillResult = await prisma.skills.create({ data: validationResult.data })
+  const skillResult = await prisma.skills.create({
+    data: { ...validationResult.data, projects: { connect: projects || [] } },
+  })
   if (skillResult) {
     revalidatePath(path)
     return { message: "skill create, successfully", status: true }
@@ -33,7 +37,12 @@ export const addSkill = async (
   return { message: "skill creation failure", status: false }
 }
 
-export const editSkill = async (id: string, formData: FormData): Promise<TypeReturnSererAction> => {
+export const editSkill = async (
+  id: string,
+  formData: FormData,
+  projects: Project[],
+  path: string
+): Promise<TypeReturnSererAction> => {
   const skill = skillObject(formData)
   const validationResult = SchemaAddSkill.safeParse(skill)
 
@@ -44,8 +53,13 @@ export const editSkill = async (id: string, formData: FormData): Promise<TypeRet
     })
     if (skillResult) {
       if (!isEqual(skillResult, skill)) {
-        const updateResult = await prisma.skills.update({ where: { id }, data: skill })
+        const updateResult = await prisma.skills.update({
+          where: { id },
+          data: { ...skill, projects: { connect: projects } },
+        })
+
         if (updateResult) {
+          revalidatePath(path)
           return { message: "skill update successfully", status: true }
         }
         return { message: "update is got failure", status: false }
