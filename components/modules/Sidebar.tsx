@@ -36,31 +36,31 @@ type TypeSidebarItem = {
   children?: TypeSidebarItem[]
 }
 const items: TypeSidebarItem[] = [
-  { id: 1, href: "/", title: "Edit profile", icon: <Person4Icon /> },
-  { id: 2, href: "/password", title: "Password", icon: <KeyIcon /> },
-  { id: 3, href: "/notify", title: "Notifications", icon: <NotificationsIcon /> },
+  { id: 1, href: "/", title: "پروفایل", icon: <Person4Icon /> },
+  { id: 2, href: "/password", title: "پسورد", icon: <KeyIcon /> },
+  { id: 3, href: "/notify", title: "اعلانات", icon: <NotificationsIcon /> },
   {
     id: 4,
-    title: "Skills",
+    title: "تجربه ها",
     href: "skills",
     icon: <AssignmentIndIcon />,
     children: [
-      { id: 41, href: "/skills/add", title: "Add", icon: <PostAddIcon /> },
-      { id: 42, href: "/skills", title: "List", icon: <RecentActorsIcon /> },
+      { id: 41, href: "/skills/add", title: "اضافه کردن تجربه", icon: <PostAddIcon /> },
+      { id: 42, href: "/skills", title: "لیست تجربه ها", icon: <RecentActorsIcon /> },
     ],
   },
   {
     id: 5,
-    title: "Projects",
+    title: "پروژه ها",
     href: "/projects",
     icon: <FolderOpenIcon />,
     children: [
-      { id: 51, href: "/projects/add", title: "Add", icon: <CreateNewFolderIcon /> },
-      { id: 52, href: "/projects", title: "List", icon: <FolderCopyIcon /> },
+      { id: 51, href: "/projects/add", title: "اضافه کردن پروژه", icon: <CreateNewFolderIcon /> },
+      { id: 52, href: "/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
-  { id: 6, href: "/blogs", title: "Blogs", icon: <NewspaperIcon /> },
-  { id: 7, href: "/tec_growth", title: "Technical Growth", icon: <TimelineIcon /> },
+  { id: 6, href: "/blogs", title: "بلاک", icon: <NewspaperIcon /> },
+  { id: 7, href: "/tec_growth", title: "رشد فنی", icon: <TimelineIcon /> },
 ]
 
 type ItemLinkProps = Omit<TypeSidebarItem, "children"> & {
@@ -116,7 +116,7 @@ const Sidebar: React.FC = () => {
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary="خروج" />
         </ListItemButton>
       </List>
     </Box>
