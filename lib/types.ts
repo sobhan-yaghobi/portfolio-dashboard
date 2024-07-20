@@ -1,5 +1,14 @@
 import { Prisma } from "@prisma/client"
 
+export type TypeUserProfile = Prisma.AdminCreateInput
+export const UserProfileInput: Prisma.AdminSelect = {
+  name: true,
+  phone: true,
+  email: true,
+  location: true,
+  bio: true,
+}
+
 export type TypeProjectInput = Prisma.ProjectCreateInput
 export const ProjectCreateInput: Prisma.ProjectSelect = {
   image: true,

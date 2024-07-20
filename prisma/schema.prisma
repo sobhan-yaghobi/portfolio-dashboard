@@ -8,11 +8,17 @@ datasource db {
 }
 
 model Admin {
-  id    String @id @default(cuid())
-  pass1 String
-  pass2 String
-  pass3 String
-  pass4 String
+  id       String @id @default(cuid())
+  pass1    String
+  pass2    String
+  pass3    String
+  pass4    String
+  image    String
+  name     String
+  phone    String
+  email    String
+  location String
+  bio      String
 }
 
 model Project {
