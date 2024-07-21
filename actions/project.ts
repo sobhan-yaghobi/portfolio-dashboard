@@ -6,11 +6,10 @@ import { isEqual } from "lodash"
 import { SchemaAddProject, TypeAddProject, TypeErrors, TypeReturnSererAction } from "./definition"
 import { ProjectCreateInput } from "@/lib/types"
 import { revalidatePath } from "next/cache"
-import { createImage } from "./image"
+import { createImage, updateImage } from "./image"
 
 const projectObject = (formData: FormData) =>
   ({
-    // image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
     image: formData.get("image") as File,
     title: formData.get("title"),
     link: formData.get("link"),
@@ -46,19 +45,30 @@ export const editProject = async (
   id: string,
   formData: FormData
 ): Promise<TypeReturnSererAction> => {
-  const validationResult = SchemaAddProject.safeParse(projectObject(formData))
+  const mainProject = projectObject(formData)
+  const validationResult = SchemaAddProject.safeParse(mainProject)
 
   if (validationResult.success) {
     const projectResult = await prisma.project.findUnique({
       where: { id },
       select: ProjectCreateInput,
     })
+
     if (projectResult) {
-      const updatedProject = projectObject(formData)
-      if (!isEqual(projectResult, updatedProject)) {
-        const updateResult = await prisma.project.update({ where: { id }, data: updatedProject })
-        if (updateResult) {
-          return { message: "project update successfully", status: true }
+      if (!isEqual(projectResult, mainProject)) {
+        const updateImageResult = await updateImage(projectResult.image, mainProject.image)
+
+        if (updateImageResult.status) {
+          const { image, ...projectWithoutImage } = mainProject
+
+          const updateResult = await prisma.project.update({
+            where: { id },
+            data: { ...projectWithoutImage },
+          })
+
+          if (updateResult) {
+            return { message: "project update successfully", status: true }
+          }
         }
         return { message: "update is got failure", status: false }
       }

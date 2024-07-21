@@ -5,10 +5,9 @@ import { env } from "process"
 
 const bucket = env.NEXT_PUBLIC_IMAGE_BUCKET
 const token = env.NEXT_PUBLIC_SUPABASE_SECRET_KEY
-const url = env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/" + bucket
 
 export const createImage = async (path: string, file: File) => {
-  if (bucket && token && url) {
+  if (bucket && token) {
     const { data: signedData, error: er } = await supabase.storage
       .from(bucket)
       .createSignedUploadUrl(path)
@@ -19,10 +18,22 @@ export const createImage = async (path: string, file: File) => {
         .uploadToSignedUrl(signedData.path, signedData?.token, file)
 
       if (data) {
-        return { path: `${url}/${signedData.path}`, message: "image successfully created" }
+        return { path: signedData.path, message: "image successfully created" }
       }
     }
     return { message: "create path for image failure" }
   }
   return { message: "create image failure" }
+}
+
+export const updateImage = async (path: string, file: File) => {
+  if (bucket) {
+    const { data, error } = await supabase.storage.from(bucket).update(path, file)
+    console.log("error", error)
+
+    if (data) {
+      return { message: "update image successfully", status: true }
+    }
+  }
+  return { message: "update image failure", status: false }
 }
