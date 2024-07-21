@@ -32,6 +32,7 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
             <input
               name="image"
               type="file"
+              accept="image/*"
               className={`w-full p-4 rounded-md border border-solid ${
                 errors && errors?.image ? "border-red-500" : "border-white"
               }`}

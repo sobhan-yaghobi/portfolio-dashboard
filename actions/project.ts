@@ -1,14 +1,17 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { v4 as uuid } from "uuid"
 import { isEqual } from "lodash"
 import { SchemaAddProject, TypeAddProject, TypeErrors, TypeReturnSererAction } from "./definition"
 import { ProjectCreateInput } from "@/lib/types"
 import { revalidatePath } from "next/cache"
+import { createImage } from "./image"
 
 const projectObject = (formData: FormData) =>
   ({
-    image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
+    // image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
+    image: formData.get("image") as File,
     title: formData.get("title"),
     link: formData.get("link"),
     source: formData.get("source"),
@@ -16,13 +19,22 @@ const projectObject = (formData: FormData) =>
   } as TypeAddProject)
 
 export const addProject = async (formData: FormData): Promise<TypeReturnSererAction> => {
-  const validationResult = SchemaAddProject.safeParse(projectObject(formData))
+  const mainProject = projectObject(formData)
+  const validationResult = SchemaAddProject.safeParse(mainProject)
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
   }
+  const projectId = uuid()
 
-  const projectResult = await prisma.project.create({ data: validationResult.data })
+  const createImageResult = await createImage(projectId, mainProject.image)
+  if (!createImageResult?.path) {
+    return { message: createImageResult?.message, status: false }
+  }
+
+  const projectResult = await prisma.project.create({
+    data: { ...validationResult.data, id: projectId, image: createImageResult.path },
+  })
   if (projectResult) {
     return { message: "project create, successfully", status: true }
   }

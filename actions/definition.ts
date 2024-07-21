@@ -28,7 +28,15 @@ export type TypeSessionPayload = {
 }
 
 export const SchemaAddProject = z.object({
-  image: z.string().trim().min(1, "image is required"),
+  image: z.instanceof(File).superRefine((file, ctx) => {
+    if (!file.size) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "عکس اجباری میباشد",
+        path: ["image"],
+      })
+    }
+  }),
   title: z.string().trim().min(1, "title is required"),
   link: z.string().trim().min(1, "link is required"),
   source: z.string().trim().min(1, "source is required"),

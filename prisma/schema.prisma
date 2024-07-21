@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Admin {
-  id       String @id @default(cuid())
+  id       String @id @default(uuid())
   pass1    String
   pass2    String
   pass3    String
@@ -22,7 +22,7 @@ model Admin {
 }
 
 model Project {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   image       String
   title       String
   link        String
@@ -32,7 +32,7 @@ model Project {
 }
 
 model Skills {
-  id          String    @id @default(cuid())
+  id          String    @id @default(uuid())
   name        String
   image       String
   projects    Project[]
@@ -41,7 +41,7 @@ model Skills {
 }
 
 model TechnicalGrowth {
-  id          String @id @default(cuid())
+  id          String @id @default(uuid())
   title       String
   subtitle    String
   description String
