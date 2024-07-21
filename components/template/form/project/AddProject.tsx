@@ -14,7 +14,7 @@ const AddProject: React.FC = () => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addProject(event)
+    const actionResult = await addProject(event, "/projects")
     if (actionResult) {
       if ("errors" in actionResult) {
         return setErrors({ ...actionResult.errors } as TypeError)

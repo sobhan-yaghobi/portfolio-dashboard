@@ -28,12 +28,21 @@ export const createImage = async (path: string, file: File) => {
 
 export const updateImage = async (path: string, file: File) => {
   if (bucket) {
-    const { data, error } = await supabase.storage.from(bucket).update(path, file)
-    console.log("error", error)
+    const { data } = await supabase.storage.from(bucket).update(path, file)
 
     if (data) {
       return { message: "update image successfully", status: true }
     }
   }
   return { message: "update image failure", status: false }
+}
+
+export const deleteImage = async (path: string) => {
+  if (bucket) {
+    const { data } = await supabase.storage.from(bucket).remove([path])
+    if (data) {
+      return { message: "remove image successfully", status: true }
+    }
+  }
+  return { message: "remove image failure", status: false }
 }
