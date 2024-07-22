@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useRef, useState } from "react"
+import { toast } from "react-toastify"
+
 import { signIn } from "@/actions/signIn"
 
 import { TypeError } from "@/actions/definition"
@@ -13,21 +15,11 @@ import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
-import { toast } from "react-toastify"
 
 const SignIn: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
-  // const clientAction = async (event: FormData) => {
-  //   const actionResult = await signIn(event)
-  //   if (actionResult) {
-  //     if ("errors" in actionResult) {
-  //       return setErrors({ ...actionResult.errors } as TypeError)
-  //     }
-  //     formRef.current?.reset()
-  //   }
-  // }
   const clientAction = async (event: FormData) => {
     const actionResult = await signIn(event)
     console.log("actionResult", actionResult)
