@@ -1,7 +1,9 @@
-import type { Metadata } from "next"
-
 import "./globals.css"
+import "react-toastify/dist/ReactToastify.css"
+
+import type { Metadata } from "next"
 import MaterialProvider from "@/components/MaterialProvider"
+import { ToastContainer } from "react-toastify"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,6 +19,17 @@ export default async function RootLayout({
     <html lang="fa" dir="rtl">
       <body>
         <MaterialProvider>{children}</MaterialProvider>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </body>
     </html>
   )

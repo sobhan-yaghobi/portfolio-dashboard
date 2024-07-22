@@ -1,8 +1,6 @@
 import React from "react"
 
 import Sidebar from "@/components/modules/Sidebar"
-import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
 
 const layout: React.FC<React.PropsWithChildren> = async ({ children }) => {
   return (
@@ -15,17 +13,6 @@ const layout: React.FC<React.PropsWithChildren> = async ({ children }) => {
       </div>
       <div className="flex-1 p-3 rounded-sm overflow-y-auto lg:my-3">{children}</div>
       {/* <div className="w-3/12"></div> */}
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </div>
   )
 }

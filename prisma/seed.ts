@@ -7,10 +7,8 @@ const main = async () => {
   await prisma.admin.deleteMany()
   await prisma.admin.create({
     data: {
-      pass1: await hashPassword(env.pass1 as string),
-      pass2: await hashPassword(env.pass2 as string),
-      pass3: await hashPassword(env.pass3 as string),
-      pass4: await hashPassword(env.pass4 as string),
+      password: await hashPassword(env.password as string),
+      image: "",
       name: "سبحان یعقوبی",
       phone: "989396007232",
       email: "sobhan.yaghobi.work@gmail.com",

@@ -9,14 +9,11 @@ datasource db {
 
 model Admin {
   id       String @id @default(uuid())
-  pass1    String
-  pass2    String
-  pass3    String
-  pass4    String
+  password String
   image    String
   name     String
   phone    String
-  email    String
+  email    String @unique
   location String
   bio      String
 }

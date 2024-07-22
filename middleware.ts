@@ -7,7 +7,11 @@ export default async function middleware(request: NextRequest) {
   // const sessionResult = await decrypt(cookie)
 
   // if (!pathname.startsWith("/login")) {
-  //   if (sessionResult && "id" in sessionResult) {
+  //   const getMeResult = await fetch("/api/auth", {
+  //     body: JSON.stringify((sessionResult && sessionResult.id) || ""),
+  //   })
+
+  //   if (getMeResult) {
   //     return NextResponse.next()
   //   } else {
   //     return NextResponse.redirect(new URL("/login", request.url))

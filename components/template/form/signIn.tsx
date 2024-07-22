@@ -3,120 +3,111 @@
 import React, { useRef, useState } from "react"
 import { signIn } from "@/actions/signIn"
 
-import { useFormStatus } from "react-dom"
-
 import { TypeError } from "@/actions/definition"
+
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"
+import KeyIcon from "@mui/icons-material/Key"
 
 import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
-import LoadingButton from "@mui/lab/LoadingButton"
 import TextError from "@/components/modules/TextError"
+import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
+import { toast } from "react-toastify"
 
 const SignIn: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
+  // const clientAction = async (event: FormData) => {
+  //   const actionResult = await signIn(event)
+  //   if (actionResult) {
+  //     if ("errors" in actionResult) {
+  //       return setErrors({ ...actionResult.errors } as TypeError)
+  //     }
+  //     formRef.current?.reset()
+  //   }
+  // }
   const clientAction = async (event: FormData) => {
     const actionResult = await signIn(event)
+    console.log("actionResult", actionResult)
+
     if (actionResult) {
-      if (!actionResult.status) {
-        formRef.current?.reset()
+      if ("errors" in actionResult) {
+        return setErrors({ ...actionResult.errors } as TypeError)
       }
 
-      if ("errors" in actionResult) {
-        setErrors({ ...actionResult.errors } as TypeError)
+      const message = actionResult.message
+      if (actionResult.status) {
+        message && toast.success(message)
+      } else {
+        message && toast.error(message)
       }
+      setErrors({} as TypeError)
+      formRef.current?.reset()
     }
   }
+
   return (
     <form
-      className="bg-black/20 max-w-96 p-12 px-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg [&>*]:mt-2 [&]:first:*:!mt-0"
+      className="bg-black/20 max-w-96 p-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg absolute [&>*]:mt-1 [&]:first:*:!mt-0"
       ref={formRef}
       action={clientAction}
     >
-      <Typography variant="h4" component="h2" className="mt-0">
-        Sign In
-      </Typography>
-      <p>Welcome Back!</p>
-      <section className="grid grid-cols-2 gap-x-7 gap-y-1">
-        <TextError className="min-h-5" message={errors && errors?.pass1}>
-          <TextField
-            error={Boolean(errors && errors?.pass1)}
-            size="small"
-            type="password"
-            className="w-full"
-            name="pass1"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">1.</InputAdornment>,
-            }}
-            variant="outlined"
-          />
-        </TextError>
+      <section className="mb-6">
+        <Typography variant="h4" component="h2" className="mt-0">
+          ورود
+        </Typography>
+        <p>خوش برگشتید!</p>
+      </section>
 
-        <TextError className="min-h-5" message={errors && errors?.pass2}>
+      <section>
+        <TextError className="min-h-5" message={errors && errors?.email}>
           <TextField
-            error={Boolean(errors && errors?.pass2)}
+            autoComplete="off"
+            dir="ltr"
+            error={Boolean(errors && errors?.email)}
             size="small"
-            type="password"
-            className="w-full"
-            name="pass2"
+            name="email"
+            placeholder="email"
             InputProps={{
-              startAdornment: <InputAdornment position="start">2.</InputAdornment>,
-            }}
-            variant="outlined"
-          />
-        </TextError>
-
-        <TextError className="min-h-5" message={errors && errors?.pass3}>
-          <TextField
-            error={Boolean(errors && errors?.pass3)}
-            size="small"
-            type="password"
-            className="w-full"
-            name="pass3"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">3.</InputAdornment>,
-            }}
-            variant="outlined"
-          />
-        </TextError>
-
-        <TextError className="min-h-5" message={errors && errors?.pass4}>
-          <TextField
-            error={Boolean(errors && errors?.pass4)}
-            size="small"
-            type="password"
-            className="w-full"
-            name="pass4"
-            InputProps={{
-              startAdornment: <InputAdornment position="start">4.</InputAdornment>,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AlternateEmailIcon />
+                </InputAdornment>
+              ),
             }}
             variant="outlined"
           />
         </TextError>
       </section>
+
+      <section>
+        <TextError className="min-h-5" message={errors && errors?.password}>
+          <TextField
+            autoComplete="off"
+            dir="ltr"
+            error={Boolean(errors && errors?.password)}
+            size="small"
+            type="password"
+            name="password"
+            placeholder="password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <KeyIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="outlined"
+          />
+        </TextError>
+      </section>
+
       <section className="w-full">
-        <SignInButton />
+        <SubmitLoadingButton submitText="ادامه" variant="text" />
       </section>
     </form>
-  )
-}
-
-const SignInButton: React.FC = () => {
-  const { pending } = useFormStatus()
-  return (
-    <>
-      <LoadingButton
-        loading={pending}
-        type="submit"
-        className="w-full"
-        variant="outlined"
-        size="large"
-      >
-        Continue
-      </LoadingButton>
-    </>
   )
 }
 

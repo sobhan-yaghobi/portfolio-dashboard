@@ -15,10 +15,8 @@ export type TypeReturnSererAction = {
 }
 
 export const SchemaSignIn = z.object({
-  pass1: z.string().trim().min(4, "pass1 error"),
-  pass2: z.string().trim().min(4, "pass2 error"),
-  pass3: z.string().trim().min(4, "pass3 error"),
-  pass4: z.string().trim().min(4, "pass4 error"),
+  email: z.string().email("ایمیل معتبر نمیباشد").trim().min(1, "ایمیل اجباری میباشد"),
+  password: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است"),
 })
 export type TypeSignInForm = z.infer<typeof SchemaSignIn>
 
