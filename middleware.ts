@@ -1,25 +1,37 @@
+import { verifyToken } from "@/auth/auth"
+import { decrypt } from "@/auth/session"
 import { NextRequest, NextResponse } from "next/server"
-import { decrypt } from "./auth/session"
 
 export default async function middleware(request: NextRequest) {
-  // const pathname = request.nextUrl.pathname
-  // const cookie = request.cookies.get("session")?.value
-  // const sessionResult = await decrypt(cookie)
+  const { pathname } = request.nextUrl
+  const cookie = request.cookies.get("session")?.value
+  const sessionResult = await decrypt(cookie)
 
-  // if (!pathname.startsWith("/login")) {
-  //   const getMeResult = await fetch("/api/auth", {
-  //     body: JSON.stringify((sessionResult && sessionResult.id) || ""),
-  //   })
+  if (sessionResult && "id" in sessionResult && typeof sessionResult.id === "string") {
+    const verifyTokenResult = await verifyToken(sessionResult.id)
+    if (!verifyTokenResult) {
+      if (!pathname.startsWith("/login")) {
+        return NextResponse.redirect(new URL("/login", request.url))
+      }
+      return null
+    }
 
-  //   if (getMeResult) {
-  //     return NextResponse.next()
-  //   } else {
-  //     return NextResponse.redirect(new URL("/login", request.url))
-  //   }
-  // } else {
-  //   if (sessionResult) {
-  //     return NextResponse.redirect(new URL("/", request.url))
-  //   }
-  return NextResponse.next()
-  // }
+    if (pathname === "/") {
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+
+    if (pathname.startsWith("/login")) {
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+    return NextResponse.next()
+  } else {
+    if (!pathname.startsWith("/login")) {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+    return null
+  }
+}
+
+export const config = {
+  matcher: ["/", "/login", "/dashboard/:path*"],
 }

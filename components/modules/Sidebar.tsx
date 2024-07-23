@@ -36,31 +36,36 @@ type TypeSidebarItem = {
   children?: TypeSidebarItem[]
 }
 const items: TypeSidebarItem[] = [
-  { id: 1, href: "/", title: "پروفایل", icon: <Person4Icon /> },
-  { id: 2, href: "/password", title: "پسورد", icon: <KeyIcon /> },
-  { id: 3, href: "/notify", title: "اعلانات", icon: <NotificationsIcon /> },
+  { id: 1, href: "/dashboard", title: "پروفایل", icon: <Person4Icon /> },
+  { id: 2, href: "/dashboard/password", title: "پسورد", icon: <KeyIcon /> },
+  { id: 3, href: "/dashboard/notify", title: "اعلانات", icon: <NotificationsIcon /> },
   {
     id: 4,
     title: "تجربه ها",
     href: "skills",
     icon: <AssignmentIndIcon />,
     children: [
-      { id: 41, href: "/skills/add", title: "اضافه کردن تجربه", icon: <PostAddIcon /> },
-      { id: 42, href: "/skills", title: "لیست تجربه ها", icon: <RecentActorsIcon /> },
+      { id: 41, href: "/dashboard/skills/add", title: "اضافه کردن تجربه", icon: <PostAddIcon /> },
+      { id: 42, href: "/dashboard/skills", title: "لیست تجربه ها", icon: <RecentActorsIcon /> },
     ],
   },
   {
     id: 5,
     title: "پروژه ها",
-    href: "/projects",
+    href: "/dashboard/projects",
     icon: <FolderOpenIcon />,
     children: [
-      { id: 51, href: "/projects/add", title: "اضافه کردن پروژه", icon: <CreateNewFolderIcon /> },
-      { id: 52, href: "/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
+      {
+        id: 51,
+        href: "/dashboard/projects/add",
+        title: "اضافه کردن پروژه",
+        icon: <CreateNewFolderIcon />,
+      },
+      { id: 52, href: "/dashboard/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
-  { id: 6, href: "/blogs", title: "بلاک", icon: <NewspaperIcon /> },
-  { id: 7, href: "/tec_growth", title: "رشد فنی", icon: <TimelineIcon /> },
+  { id: 6, href: "/dashboard/blogs", title: "بلاک", icon: <NewspaperIcon /> },
+  { id: 7, href: "/dashboard/tec_growth", title: "رشد فنی", icon: <TimelineIcon /> },
 ]
 
 type ItemLinkProps = Omit<TypeSidebarItem, "children"> & {

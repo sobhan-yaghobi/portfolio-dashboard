@@ -1,5 +1,6 @@
 import "./globals.css"
 import "react-toastify/dist/ReactToastify.css"
+import "tailwindcss/tailwind.css"
 
 import type { Metadata } from "next"
 import MaterialProvider from "@/components/MaterialProvider"

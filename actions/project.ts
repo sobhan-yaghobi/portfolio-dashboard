@@ -21,6 +21,8 @@ export const addProject = async (
   formData: FormData,
   path: string
 ): Promise<TypeReturnSererAction> => {
+  console.log("----- addProject Run !!")
+
   const mainProject = projectObject(formData)
   const validationResult = SchemaAddProject.safeParse(mainProject)
 

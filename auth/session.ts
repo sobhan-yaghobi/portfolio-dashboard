@@ -34,7 +34,7 @@ export const createSession = async (id: string) => {
     sameSite: "lax",
     path: "/",
   })
-  redirect("/")
+  redirect("/dashboard")
 }
 
 export const deleteSession = () => {
