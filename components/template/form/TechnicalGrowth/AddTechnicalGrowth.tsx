@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react"
 
 import { TypeError } from "@/actions/definition"
 
-import Form from "./Form"
+import Form from "./TechnicalGrowthForm"
 import { addTechnicalGrowth } from "@/actions/TechnicalGrowth"
 import { toast } from "react-toastify"
 

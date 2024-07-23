@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 import { TypeError } from "@/actions/definition"
 
-import Form from "./Form"
+import Form from "./SkillForm"
 
 type AddSkillProps = {
   projects: Project[]

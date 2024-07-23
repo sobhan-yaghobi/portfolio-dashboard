@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 
 import { TypeSkillInput } from "@/lib/types"
 
-import Form from "./Form"
+import Form from "./SkillForm"
 
 type EditSkillsProps = {
   id: string

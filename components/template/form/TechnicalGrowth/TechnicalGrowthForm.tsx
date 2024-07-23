@@ -9,14 +9,14 @@ import { InputAdornment, TextField, Typography } from "@mui/material"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 
-type FormProps = {
+type TechnicalGrowthFormProps = {
   submitText: string
   submitFunction: (formData: FormData) => void | any
   errors: TypeError
   defaultValues?: TypeTechnicalGrowth | null
 }
 
-const Form = React.forwardRef<HTMLFormElement, FormProps>(
+const TechnicalGrowthForm = React.forwardRef<HTMLFormElement, TechnicalGrowthFormProps>(
   ({ submitText, submitFunction, errors, defaultValues }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
@@ -95,4 +95,6 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
   }
 )
 
-export default Form
+TechnicalGrowthForm.displayName = "TechnicalGrowthForm"
+
+export default TechnicalGrowthForm

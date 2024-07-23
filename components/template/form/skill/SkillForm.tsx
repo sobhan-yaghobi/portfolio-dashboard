@@ -22,7 +22,7 @@ import { IconButton } from "@mui/material"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 
-type FormProps = {
+type SkillFormProps = {
   projects?: Project[]
   selectedProjects: Project[]
   setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
@@ -32,7 +32,7 @@ type FormProps = {
   errors: TypeError
 }
 
-const Form = React.forwardRef<HTMLFormElement, FormProps>(
+const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
   (
     {
       projects,
@@ -204,5 +204,6 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
     )
   }
 )
+SkillForm.displayName = "SkillForm"
 
-export default Form
+export default SkillForm

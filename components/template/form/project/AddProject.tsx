@@ -7,7 +7,7 @@ import { addProject } from "@/actions/project"
 
 import { TypeError } from "@/actions/definition"
 
-import Form from "./Form"
+import Form from "./ProjectForm"
 
 const AddProject: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)

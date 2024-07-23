@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 import { TypeError } from "@/actions/definition"
 
-import Form from "./Form"
+import Form from "./ProjectForm"
 import { editProject } from "@/actions/project"
 import { TypeProjectInput } from "@/lib/types"
 

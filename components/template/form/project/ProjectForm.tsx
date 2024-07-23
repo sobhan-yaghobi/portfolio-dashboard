@@ -14,13 +14,13 @@ import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import { TypeProjectInput } from "@/lib/types"
 
-type FormProps = {
+type ProjectFormProps = {
   defaultValues?: TypeProjectInput | null
   submitText: string
   errors: TypeError
   submitFunction: (formData: FormData) => void | any
 }
-const Form = React.forwardRef<HTMLFormElement, FormProps>(
+const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
   ({ defaultValues, submitText, submitFunction, errors }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
@@ -139,4 +139,6 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
     )
   }
 )
-export default Form
+ProjectForm.displayName = "ProjectForm"
+
+export default ProjectForm
