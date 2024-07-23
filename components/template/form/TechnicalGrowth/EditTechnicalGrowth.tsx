@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 import { TypeTechnicalGrowth } from "@/lib/types"
 
 import Form from "./TechnicalGrowthForm"

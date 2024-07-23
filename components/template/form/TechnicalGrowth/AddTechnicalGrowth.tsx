@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react"
 
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 
 import Form from "./TechnicalGrowthForm"
 import { addTechnicalGrowth } from "@/actions/TechnicalGrowth"

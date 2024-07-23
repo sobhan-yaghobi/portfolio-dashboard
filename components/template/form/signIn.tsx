@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 import { signIn } from "@/actions/signIn"
 
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"
 import KeyIcon from "@mui/icons-material/Key"

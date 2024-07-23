@@ -1,5 +1,5 @@
 import React from "react"
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 import { TypeTechnicalGrowth } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"

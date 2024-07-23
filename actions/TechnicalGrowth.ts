@@ -9,7 +9,7 @@ import {
   TypeErrors,
   TypeReturnSererAction,
   TypeTechnicalGrowth,
-} from "./definition"
+} from "../lib/definition"
 import { TechnicalGrowthInput } from "@/lib/types"
 import { TechnicalGrowth } from "@prisma/client"
 

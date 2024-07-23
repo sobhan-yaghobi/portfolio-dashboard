@@ -5,7 +5,7 @@ import { Project } from "@prisma/client"
 import { addSkill } from "@/actions/skill"
 import { toast } from "react-toastify"
 
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 
 import Form from "./SkillForm"
 

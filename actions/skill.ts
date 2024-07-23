@@ -1,7 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { SchemaAddSkill, TypeAddSkill, TypeErrors, TypeReturnSererAction } from "./definition"
+import { SchemaAddSkill, TypeAddSkill, TypeErrors, TypeReturnSererAction } from "../lib/definition"
 import { revalidatePath } from "next/cache"
 import { SkillCreateInput } from "@/lib/types"
 import { isEqual } from "lodash"

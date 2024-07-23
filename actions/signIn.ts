@@ -1,11 +1,6 @@
 "use server"
 
-import {
-  SchemaSignIn,
-  TypeErrors,
-  TypeReturnSererAction,
-  TypeSignInForm,
-} from "@/actions/definition"
+import { SchemaSignIn, TypeErrors, TypeReturnSererAction, TypeSignInForm } from "@/lib/definition"
 
 import prisma from "@/lib/prisma"
 import { comparePassword } from "@/auth/auth"

@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { find, some } from "lodash"
 
 import { Project } from "@prisma/client"
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 import { TypeSkillInput } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"

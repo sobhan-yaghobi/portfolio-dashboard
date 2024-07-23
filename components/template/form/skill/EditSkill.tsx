@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react"
 import { editSkill } from "@/actions/skill"
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 import { Project } from "@prisma/client"
 import { toast } from "react-toastify"
 

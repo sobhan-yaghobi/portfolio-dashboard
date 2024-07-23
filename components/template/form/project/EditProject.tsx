@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
 
-import { TypeError } from "@/actions/definition"
+import { TypeError } from "@/lib/definition"
 
 import Form from "./ProjectForm"
 import { editProject } from "@/actions/project"
