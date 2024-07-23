@@ -1,11 +1,14 @@
+import React from "react"
+import prisma from "@/lib/prisma"
+
 import AddTechnicalGrowth from "@/components/template/form/TechnicalGrowth/AddTechnicalGrowth"
 import TechGrTimeLine from "@/components/template/TechGrTimeLine"
-import prisma from "@/lib/prisma"
 import { Button, Divider, Typography } from "@mui/material"
 import Link from "next/link"
-import React from "react"
 
-const page = async () => {
+export const dynamic = "force-dynamic"
+
+const page: React.FC = async () => {
   const techs = await prisma.technicalGrowth.findMany({ orderBy: { order: "asc" } })
   return (
     <div>

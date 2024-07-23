@@ -5,6 +5,8 @@ import EmptyBox from "@/components/modules/EmptyBox"
 import ProjectBox from "@/components/modules/ProjectBox"
 import { Typography } from "@mui/material"
 
+export const dynamic = "force-dynamic"
+
 const page: React.FC = async () => {
   const projects = await prisma.project.findMany()
 

@@ -5,6 +5,8 @@ import prisma from "@/lib/prisma"
 import SkillBox from "@/components/modules/SkillBox"
 import EmptyBox from "@/components/modules/EmptyBox"
 
+export const dynamic = "force-dynamic"
+
 const page: React.FC = async () => {
   const skills = await prisma.skills.findMany()
   return (
