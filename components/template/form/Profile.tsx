@@ -28,7 +28,10 @@ const Profile: React.FC<ProfileProps> = ({ defaultValues }) => {
             <Button variant="outlined" size="large">
               عکس جدید آپلود کن
             </Button>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt, exercitationem.
+            <p>
+              پیشنهاد میشود مقدار حجم عکس زیر 5 مگابایت باشد و فرمت عکس JPG یا PNG باشد و همچنین
+              فرمت GIF نامعتبر میباشد
+            </p>
           </div>
         </div>
       </section>

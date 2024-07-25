@@ -37,7 +37,7 @@ type TypeSidebarItem = {
 }
 const items: TypeSidebarItem[] = [
   { id: 1, href: "/dashboard", title: "پروفایل", icon: <Person4Icon /> },
-  { id: 2, href: "/dashboard/password", title: "پسورد", icon: <KeyIcon /> },
+  { id: 2, href: "/dashboard/password", title: "گذرواژه", icon: <KeyIcon /> },
   { id: 3, href: "/dashboard/notify", title: "اعلانات", icon: <NotificationsIcon /> },
   {
     id: 4,
