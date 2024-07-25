@@ -46,6 +46,12 @@ export const SchemaAdminProfile = z.object({
 })
 export type TypeAdminProfileFrom = z.infer<typeof SchemaAdminProfile>
 
+export const SchemaAdminPassword = z.object({
+  currentPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است"),
+  newPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است"),
+})
+export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
+
 export const SchemaAddProject = z.object({
   image: z.instanceof(File).superRefine((file, ctx) => {
     if (!file.size) {

@@ -11,11 +11,12 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 
 export type PasswordTextFiledProps = {
+  name: string
   label: string
   password?: string
 }
 
-const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({ label, password }) => {
+const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({ name, label, password }) => {
   const [toggleVisible, setToggleVisible] = useState(false)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -25,6 +26,7 @@ const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({ label, password }
       <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
         autoComplete="off"
+        name={name}
         label={label}
         id="outlined-adornment-password"
         type={toggleVisible ? "text" : "password"}

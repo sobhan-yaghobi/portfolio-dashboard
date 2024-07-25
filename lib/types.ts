@@ -11,6 +11,12 @@ export const AdminProfileInput: Prisma.AdminSelect = {
 }
 export const AdminProfileInputWithId: Prisma.AdminSelect = { ...AdminProfileInput, id: true }
 
+export type TypePasswordAdminInput = Pick<Prisma.AdminCreateInput, "password" | "id">
+export const PasswordAdminInput: Prisma.AdminSelect = {
+  password: true,
+  id: true,
+}
+
 export type TypeProjectInput = Prisma.ProjectCreateInput
 export const ProjectCreateInput: Prisma.ProjectSelect = {
   image: true,
