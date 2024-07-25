@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 
-export type TypeAdminProfile = Prisma.AdminCreateInput
+export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
 export const AdminProfileInput: Prisma.AdminSelect = {
   name: true,
   phone: true,
@@ -8,7 +8,6 @@ export const AdminProfileInput: Prisma.AdminSelect = {
   location: true,
   bio: true,
   image: true,
-  password: true,
 }
 
 export type TypeProjectInput = Prisma.ProjectCreateInput

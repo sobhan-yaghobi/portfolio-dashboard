@@ -11,39 +11,33 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 
 export type PasswordTextFiledProps = {
-  id: number
-  visible: boolean
-  toggleVisible: (id: PasswordTextFiledProps["id"]) => void
+  label: string
   password?: string
 }
 
-const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({
-  id,
-  visible,
-  toggleVisible,
-  password,
-}) => {
+const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({ label, password }) => {
+  const [toggleVisible, setToggleVisible] = useState(false)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
   return (
-    <FormControl variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-password">{`${id}.`}</InputLabel>
+    <FormControl variant="outlined" className="w-full">
+      <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
         autoComplete="off"
-        label={`${id}.`}
+        label={label}
         id="outlined-adornment-password"
-        type={visible ? "text" : "password"}
+        type={toggleVisible ? "text" : "password"}
         defaultValue={password}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
-              onClick={() => toggleVisible(id)}
+              onClick={() => setToggleVisible((prev) => !prev)}
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {visible ? <VisibilityOff /> : <Visibility />}
+              {toggleVisible ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }
