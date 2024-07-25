@@ -25,7 +25,6 @@ type ProfileProps = {
 }
 
 const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
-  const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
@@ -43,7 +42,6 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         } else {
           message && toast.error(message)
         }
-        formRef.current?.reset()
       }
     }
   }
