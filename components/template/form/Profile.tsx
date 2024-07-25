@@ -1,4 +1,11 @@
-import React from "react"
+"use client"
+
+import React, { useRef, useState } from "react"
+import { toast } from "react-toastify"
+
+import { editProfile } from "@/actions/profile"
+
+import { TypeError } from "@/lib/definition"
 import { TypeAdminProfile } from "@/lib/types"
 
 import AccountCircle from "@mui/icons-material/AccountCircle"
@@ -7,17 +14,42 @@ import EmailIcon from "@mui/icons-material/Email"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
 
 import Typography from "@mui/material/Typography"
-import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
+import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
+import TextError from "@/components/modules/TextError"
 
 type ProfileProps = {
+  id?: string
   defaultValues?: TypeAdminProfile | null
 }
 
-const Profile: React.FC<ProfileProps> = ({ defaultValues }) => {
+const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
+  const formRef = useRef<HTMLFormElement>(null)
+  const [errors, setErrors] = useState<TypeError>({} as TypeError)
+
+  const clientAction = async (event: FormData) => {
+    if (id) {
+      const actionResult = await editProfile(id, event)
+      if (actionResult) {
+        if ("errors" in actionResult) {
+          return setErrors({ ...actionResult.errors } as TypeError)
+        }
+
+        const message = actionResult.message
+        if (actionResult.status) {
+          setErrors({} as TypeError)
+          message && toast.success(message)
+        } else {
+          message && toast.error(message)
+        }
+        formRef.current?.reset()
+      }
+    }
+  }
+
   return (
-    <form className="[&>section]:mt-6 [&>section>*]:mb-3">
+    <form action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           آواتار
@@ -25,9 +57,17 @@ const Profile: React.FC<ProfileProps> = ({ defaultValues }) => {
         <div className="flex items-center gap-6">
           <div className="w-44 h-44 bg-white/50 rounded-full" />
           <div className="max-w-72 flex flex-col items-start gap-6">
-            <Button variant="outlined" size="large">
-              عکس جدید آپلود کن
-            </Button>
+            <TextError message={errors && errors.image}>
+              <input id="image" name="image" type="file" accept="image/*" className="hidden" />
+              <label
+                htmlFor="image"
+                className={`h-10 w-full p-4 flex items-center justify-center rounded-md border border-solid ${
+                  errors && errors?.image ? "border-red-500" : "border-white"
+                }`}
+              >
+                آپلود کن عکس جدید
+              </label>
+            </TextError>
             <p>
               پیشنهاد میشود مقدار حجم عکس زیر 5 مگابایت باشد و فرمت عکس JPG یا PNG باشد و همچنین
               فرمت GIF نامعتبر میباشد
@@ -139,9 +179,7 @@ const Profile: React.FC<ProfileProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Button className="w-full py-3" variant="contained" size="large">
-          آپدیت
-        </Button>
+        <SubmitLoadingButton submitText="آپدیت" />
       </section>
     </form>
   )

@@ -25,24 +25,26 @@ export type TypeSessionPayload = {
   expiresAt: Date
 }
 
-export const SchemaProfile = z.object({
-  password: z.string().trim().min(8, "حداقل طول پسورد 8 کارکتر میباشد"),
-  image: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file.size) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "عکس اجباری میباشد",
-        path: ["image"],
-      })
-    }
-  }),
+export const SchemaAdminProfile = z.object({
+  // image: z
+  //   .instanceof(File)
+  //   .superRefine((file, ctx) => {
+  //     if (!file.size) {
+  //       ctx.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "عکس اجباری میباشد",
+  //         path: ["image"],
+  //       })
+  //     }
+  //   })
+  //   .or(z.string().trim().min(1, "عکس اجباری میباشد")),
   name: z.string().trim().min(1, "نام اجباری میباشد"),
-  phone: z.number().min(1, "تلفن اجباری میباشد"),
+  phone: z.string().trim().min(1, "تلفن اجباری میباشد"),
   email: z.string().email("ایمیل معتبر نمیباشد").trim().min(1, "ایمیل اجباری میباشد"),
   location: z.string().trim().min(1, "موقعیت جغرافیایی اجباری میباشد"),
   bio: z.string().trim().min(1, "بیو اجباری میباشد"),
 })
-export type TypeProfileFrom = z.infer<typeof SchemaProfile>
+export type TypeAdminProfileFrom = z.infer<typeof SchemaAdminProfile>
 
 export const SchemaAddProject = z.object({
   image: z.instanceof(File).superRefine((file, ctx) => {

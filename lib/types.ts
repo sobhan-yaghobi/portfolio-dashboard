@@ -7,8 +7,9 @@ export const AdminProfileInput: Prisma.AdminSelect = {
   email: true,
   location: true,
   bio: true,
-  image: true,
+  // image: true,
 }
+export const AdminProfileInputWithId: Prisma.AdminSelect = { ...AdminProfileInput, id: true }
 
 export type TypeProjectInput = Prisma.ProjectCreateInput
 export const ProjectCreateInput: Prisma.ProjectSelect = {
