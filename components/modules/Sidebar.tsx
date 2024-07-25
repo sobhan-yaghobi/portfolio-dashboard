@@ -6,14 +6,12 @@ import { logout } from "@/actions/signIn"
 
 import Person4Icon from "@mui/icons-material/Person4"
 import KeyIcon from "@mui/icons-material/Key"
-import NotificationsIcon from "@mui/icons-material/Notifications"
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd"
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import RecentActorsIcon from "@mui/icons-material/RecentActors"
 import FolderOpenIcon from "@mui/icons-material/FolderOpen"
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder"
 import FolderCopyIcon from "@mui/icons-material/FolderCopy"
-import NewspaperIcon from "@mui/icons-material/Newspaper"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import TimelineIcon from "@mui/icons-material/Timeline"
@@ -38,7 +36,6 @@ type TypeSidebarItem = {
 const items: TypeSidebarItem[] = [
   { id: 1, href: "/dashboard", title: "پروفایل", icon: <Person4Icon /> },
   { id: 2, href: "/dashboard/password", title: "گذرواژه", icon: <KeyIcon /> },
-  { id: 3, href: "/dashboard/notify", title: "اعلانات", icon: <NotificationsIcon /> },
   {
     id: 4,
     title: "تجربه ها",
@@ -64,7 +61,6 @@ const items: TypeSidebarItem[] = [
       { id: 52, href: "/dashboard/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
-  { id: 6, href: "/dashboard/blogs", title: "بلاک", icon: <NewspaperIcon /> },
   { id: 7, href: "/dashboard/tec_growth", title: "رشد فنی", icon: <TimelineIcon /> },
 ]
 
