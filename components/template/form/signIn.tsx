@@ -3,9 +3,9 @@
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
 
-import { signIn } from "@/actions/signIn"
+import { SignInFormAction } from "@/actions/signIn"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"
 import KeyIcon from "@mui/icons-material/Key"
@@ -20,31 +20,34 @@ const SignIn: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
-  const clientAction = async (event: FormData) => {
-    const actionResult = await signIn(event)
-    console.log("actionResult", actionResult)
+  const action = async (event: FormData) => {
+    const actionResult = await SignInFormAction(event)
 
-    if (actionResult) {
-      if ("errors" in actionResult) {
-        return setErrors({ ...actionResult.errors } as TypeError)
-      }
+    if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-      const message = actionResult.message
-      if (actionResult.status) {
-        message && toast.success(message)
-      } else {
-        message && toast.error(message)
-      }
-      setErrors({} as TypeError)
-      formRef.current?.reset()
+    showMessage(actionResult)
+    resetForm()
+  }
+
+  const showMessage = (actionResult: TypeReturnSererAction) => {
+    const message = actionResult.message
+    if (actionResult.status) {
+      message && toast.success(message)
+    } else {
+      message && toast.error(message)
     }
+  }
+
+  const resetForm = () => {
+    setErrors({} as TypeError)
+    formRef.current?.reset()
   }
 
   return (
     <form
       className="bg-black/20 max-w-96 p-6 backdrop-blur-lg shadow-xl shadow-black/10 rounded-lg absolute [&>*]:mt-1 [&]:first:*:!mt-0"
       ref={formRef}
-      action={clientAction}
+      action={action}
     >
       <section className="mb-6">
         <Typography variant="h4" component="h2" className="mt-0">

@@ -8,14 +8,14 @@ datasource db {
 }
 
 model Admin {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   password String
-  image    String
-  name     String
-  phone    String
-  email    String @unique
-  location String
-  bio      String
+  image    String?
+  name     String?
+  phone    String?
+  email    String  @unique
+  location String?
+  bio      String?
 }
 
 model Project {

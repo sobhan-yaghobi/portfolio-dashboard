@@ -6,30 +6,54 @@ import prisma from "@/lib/prisma"
 import { comparePassword } from "@/auth/auth"
 import { createSession, deleteSession } from "@/auth/session"
 
-export const signIn = async (formData: FormData): Promise<TypeReturnSererAction | undefined> => {
-  const validationResult = SchemaSignIn.safeParse({
+export const SignInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
+  const validateResult = validateSignInForm(formData)
+
+  if (validateResult.success) return Sign(validateResult.data)
+
+  return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
+}
+
+const validateSignInForm = (formData: FormData) =>
+  SchemaSignIn.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   } as TypeSignInForm)
 
-  if (validationResult.success) {
-    const { email, password } = validationResult.data
-    const admin = await prisma.admin.findFirst({ where: { email } })
+const Sign = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
+  const isAdminEmpty = !Boolean(await prisma.admin.count())
 
-    if (admin) {
-      const comparePasswordResult = await comparePassword(admin.password, password)
-
-      if (comparePasswordResult) {
-        await createSession(admin.id)
-        return { message: "success sign in", status: true }
-      }
-    }
-    return { message: "admin not found", status: false }
-  } else {
-    console.log("validationResult.error", validationResult.error)
-
-    return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
+  if (isAdminEmpty) {
+    return createAdmin(AdminInfoForm)
   }
+  return checkAdminForLogin(AdminInfoForm)
+}
+
+const createAdmin = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
+  const adminCreationResult = await prisma.admin.create({ data: { ...AdminInfoForm } })
+
+  if (adminCreationResult) {
+    await createSession(adminCreationResult.id)
+    return { message: "admin create successfully", status: true }
+  }
+  return { message: "admin create failure", status: false }
+}
+
+const checkAdminForLogin = async (
+  AdminInfoForm: TypeSignInForm
+): Promise<TypeReturnSererAction> => {
+  const { email, password } = AdminInfoForm
+  const adminInfoResult = await prisma.admin.findUnique({ where: { email } })
+
+  if (adminInfoResult) {
+    const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
+
+    if (comparePasswordResult) {
+      await createSession(adminInfoResult.id)
+      return { message: "admin login successfully", status: true }
+    }
+  }
+  return { message: "sorry you are not admin", status: false }
 }
 
 export const logout = () => deleteSession()
