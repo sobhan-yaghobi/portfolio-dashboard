@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { toast } from "react-toastify"
 
-import { editProfile } from "@/actions/profile"
+import { editProfileFormAction } from "@/actions/profile"
 
 import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 import { TypeAdminProfile } from "@/lib/types"
@@ -29,7 +29,7 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
 
   const action = async (event: FormData) => {
     if (id) {
-      const actionResult = await editProfile(id, event)
+      const actionResult = await editProfileFormAction(id, event)
       if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
       showMessage(actionResult)
