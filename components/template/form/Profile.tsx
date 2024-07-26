@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { toast } from "react-toastify"
 
 import { editProfile } from "@/actions/profile"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 import { TypeAdminProfile } from "@/lib/types"
 
 import AccountCircle from "@mui/icons-material/AccountCircle"
@@ -27,27 +27,27 @@ type ProfileProps = {
 const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
-  const clientAction = async (event: FormData) => {
+  const action = async (event: FormData) => {
     if (id) {
       const actionResult = await editProfile(id, event)
-      if (actionResult) {
-        if ("errors" in actionResult) {
-          return setErrors({ ...actionResult.errors } as TypeError)
-        }
+      if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-        const message = actionResult.message
-        if (actionResult.status) {
-          setErrors({} as TypeError)
-          message && toast.success(message)
-        } else {
-          message && toast.error(message)
-        }
-      }
+      showMessage(actionResult)
+    }
+  }
+
+  const showMessage = (actionResult: TypeReturnSererAction) => {
+    const message = actionResult.message
+    if (actionResult.status) {
+      setErrors({} as TypeError)
+      message && toast.success(message)
+    } else {
+      message && toast.error(message)
     }
   }
 
   return (
-    <form action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+    <form action={action} className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           آواتار
@@ -78,102 +78,112 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         <Typography variant="subtitle1" component={"h5"}>
           نام
         </Typography>
-        <TextField
-          size="small"
-          className="w-full"
-          name="name"
-          placeholder="نام خود را وارد کنید"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            ),
-          }}
-          variant="outlined"
-          defaultValue={defaultValues?.name}
-        />
+        <TextError message={errors && errors.name}>
+          <TextField
+            size="small"
+            className="w-full"
+            name="name"
+            placeholder="نام خود را وارد کنید"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="outlined"
+            defaultValue={defaultValues?.name}
+          />
+        </TextError>
       </section>
 
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           تلفن
         </Typography>
-        <TextField
-          dir="ltr"
-          size="small"
-          className="w-full"
-          name="phone"
-          placeholder="+00 000 000 0000"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocalPhoneIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="outlined"
-          defaultValue={defaultValues?.phone}
-        />
+        <TextError message={errors && errors.phone}>
+          <TextField
+            dir="ltr"
+            size="small"
+            className="w-full"
+            name="phone"
+            placeholder="+00 000 000 0000"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LocalPhoneIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="outlined"
+            defaultValue={defaultValues?.phone}
+          />
+        </TextError>
       </section>
 
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           ایمیل
         </Typography>
-        <TextField
-          dir="ltr"
-          size="small"
-          className="w-full"
-          placeholder="example@gmail.com"
-          name="email"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="outlined"
-          defaultValue={defaultValues?.email}
-        />
+        <TextError message={errors && errors.email}>
+          <TextField
+            dir="ltr"
+            size="small"
+            className="w-full"
+            placeholder="example@gmail.com"
+            name="email"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="outlined"
+            defaultValue={defaultValues?.email}
+          />
+        </TextError>
       </section>
 
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           موقعیت
         </Typography>
-        <TextField
-          size="small"
-          className="w-full"
-          name="location"
-          placeholder="ایران ، تهران"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="outlined"
-          defaultValue={defaultValues?.location}
-        />
+        <TextError message={errors && errors.location}>
+          <TextField
+            size="small"
+            className="w-full"
+            name="location"
+            placeholder="ایران ، تهران"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LocationOnIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="outlined"
+            defaultValue={defaultValues?.location}
+          />
+        </TextError>
       </section>
 
       <section>
         <Typography variant="subtitle1" component={"h5"}>
           در باره ی خود
         </Typography>
-        <TextField
-          size="small"
-          className="w-full"
-          name="bio"
-          placeholder="iran, tehran"
-          multiline
-          rows={4}
-          variant="outlined"
-          defaultValue={defaultValues?.bio}
-        />
+        <TextError message={errors && errors.bio}>
+          <TextField
+            size="small"
+            className="w-full"
+            name="bio"
+            placeholder="iran, tehran"
+            multiline
+            rows={4}
+            variant="outlined"
+            defaultValue={defaultValues?.bio}
+          />
+        </TextError>
       </section>
 
       <section>
