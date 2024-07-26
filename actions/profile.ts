@@ -1,15 +1,17 @@
 "use server"
 
+import prisma from "@/lib/prisma"
+import { createImage, updateImage } from "./image"
+import { isEqual } from "lodash"
+
 import {
   SchemaAdminProfile,
   TypeAdminProfileFrom,
   TypeErrors,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import prisma from "@/lib/prisma"
-import { createImage, updateImage } from "./image"
+
 import { AdminProfileInput } from "@/lib/types"
-import { isEqual } from "lodash"
 
 export const editProfileFormAction = async (
   adminId: string,
