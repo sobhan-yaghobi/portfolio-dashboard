@@ -10,9 +10,7 @@ export type TypeErrors = {
 
 export type TypeReturnSererAction = {
   message?: string
-  status: boolean
-  errors?: TypeErrors
-}
+} & ({ status: false; errors?: TypeErrors } | { status: true; data?: unknown })
 
 export const SchemaSignIn = z.object({
   email: z.string().email("ایمیل معتبر نمیباشد").trim().min(1, "ایمیل اجباری میباشد"),
@@ -26,18 +24,7 @@ export type TypeSessionPayload = {
 }
 
 export const SchemaAdminProfile = z.object({
-  // image: z
-  //   .instanceof(File)
-  //   .superRefine((file, ctx) => {
-  //     if (!file.size) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: "عکس اجباری میباشد",
-  //         path: ["image"],
-  //       })
-  //     }
-  //   })
-  //   .or(z.string().trim().min(1, "عکس اجباری میباشد")),
+  image: z.instanceof(File).optional(),
   name: z.string().trim().min(1, "نام اجباری میباشد"),
   phone: z.string().trim().min(1, "تلفن اجباری میباشد"),
   email: z.string().email("ایمیل معتبر نمیباشد").trim().min(1, "ایمیل اجباری میباشد"),
