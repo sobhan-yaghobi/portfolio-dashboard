@@ -1,48 +1,66 @@
 "use server"
 
 import { comparePassword, hashPassword } from "@/auth/auth"
-import { SchemaAdminPassword, TypeAdminPasswordForm, TypeErrors } from "@/lib/definition"
+import {
+  SchemaAdminPassword,
+  TypeAdminPasswordForm,
+  TypeErrors,
+  TypeReturnSererAction,
+} from "@/lib/definition"
 import prisma from "@/lib/prisma"
 import { PasswordAdminInput } from "@/lib/types"
 
-const getPasswords = (formData: FormData) =>
-  ({
+export const changePasswordFormAction = async (
+  adminId: string,
+  formData: FormData
+): Promise<TypeReturnSererAction> => {
+  const validateResult = validatePasswordFrom(formData)
+
+  if (validateResult.success) return checkPassword(adminId, validateResult.data)
+
+  return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
+}
+
+const validatePasswordFrom = (formData: FormData) =>
+  SchemaAdminPassword.safeParse({
     currentPassword: formData.get("currentPassword"),
     newPassword: formData.get("newPassword"),
   } as TypeAdminPasswordForm)
 
-export const changePassword = async (id: string, formData: FormData) => {
-  const validationResult = SchemaAdminPassword.safeParse(getPasswords(formData))
+const checkPassword = async (
+  adminId: string,
+  passwordFormInfo: TypeAdminPasswordForm
+): Promise<TypeReturnSererAction> => {
+  const adminInfo = await getAdmin(adminId)
+  if (adminInfo) {
+    const comparePasswordResult = await comparePassword(
+      adminInfo.password,
+      passwordFormInfo.currentPassword
+    )
 
-  if (validationResult.success) {
-    const adminPassword = await prisma.admin.findUnique({
-      where: { id },
-      select: PasswordAdminInput,
-    })
-
-    if (adminPassword) {
-      const comparePasswordResult = await comparePassword(
-        adminPassword.password,
-        validationResult.data.currentPassword
-      )
-
-      if (comparePasswordResult) {
-        const newHashedPassword = await hashPassword(validationResult.data.newPassword)
-        const changePasswordResult = await prisma.admin.update({
-          where: { id },
-          data: { password: newHashedPassword },
-        })
-
-        if (changePasswordResult) {
-          return { message: "password change successfully", status: true }
-        }
-        return { message: "password change failure", status: false }
-      }
-
-      return { message: "password in not correct", status: false }
+    if (comparePasswordResult) {
+      return changePassword(adminId, passwordFormInfo.newPassword)
     }
-    return { message: "admin not found", status: false }
+    return { status: false, message: "Current password is incorrect" }
   }
+  return { status: false, message: "Admin not found" }
+}
 
-  return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
+const getAdmin = async (adminId: string) =>
+  await prisma.admin.findUnique({
+    where: { id: adminId },
+    select: PasswordAdminInput,
+  })
+
+const changePassword = async (adminId: string, newPassword: string) => {
+  const newHashedPassword = await hashPassword(newPassword)
+  const changePasswordResult = await prisma.admin.update({
+    where: { id: adminId },
+    data: { password: newHashedPassword },
+  })
+
+  if (changePasswordResult) {
+    return { message: "password change successfully", status: true }
+  }
+  return { message: "password change failure", status: false }
 }

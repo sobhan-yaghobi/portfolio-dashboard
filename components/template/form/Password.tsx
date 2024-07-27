@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 
-import { changePassword } from "@/actions/password"
+import { changePasswordFormAction } from "@/actions/password"
 
 import PasswordTextFiled from "@/components/modules/PasswordTextFiled"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
@@ -21,7 +21,7 @@ const Password: React.FC<PasswordProps> = ({ id }) => {
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await changePassword(id, event)
+      const actionResult = await changePasswordFormAction(id, event)
       if (actionResult) {
         if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
