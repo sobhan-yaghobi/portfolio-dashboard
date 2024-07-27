@@ -18,18 +18,18 @@ export type PasswordTextFiledProps = {
 
 const PasswordTextFiled: React.FC<PasswordTextFiledProps> = ({ name, label, password }) => {
   const [toggleVisible, setToggleVisible] = useState(false)
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) =>
     event.preventDefault()
-  }
+
   return (
     <FormControl variant="outlined" className="w-full">
       <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
+        id="outlined-adornment-password"
+        type={toggleVisible ? "text" : "password"}
         autoComplete="off"
         name={name}
         label={label}
-        id="outlined-adornment-password"
-        type={toggleVisible ? "text" : "password"}
         defaultValue={password}
         endAdornment={
           <InputAdornment position="end">
