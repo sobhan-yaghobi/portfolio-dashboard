@@ -17,12 +17,12 @@ export const editProfileFormAction = async (
   adminId: string,
   formData: FormData
 ): Promise<TypeReturnSererAction> => {
-  const validationProfileResult = validateProfileForm(formData)
+  const validateProfileResult = validateProfileForm(formData)
 
-  if (validationProfileResult.success) return setProfile(adminId, validationProfileResult.data)
+  if (validateProfileResult.success) return setProfile(adminId, validateProfileResult.data)
 
   return {
-    errors: validationProfileResult.error.flatten().fieldErrors as TypeErrors,
+    errors: validateProfileResult.error.flatten().fieldErrors as TypeErrors,
     status: false,
   }
 }
@@ -41,16 +41,16 @@ const setProfile = async (
   adminId: string,
   profileInfoForm: TypeAdminProfileFrom
 ): Promise<TypeReturnSererAction> => {
-  const AdminImageStatus = await setAdminProfileImage(adminId, profileInfoForm.image)
-  if (AdminImageStatus.status) {
+  const adminImageStatus = await setAdminProfileImage(adminId, profileInfoForm.image)
+  if (adminImageStatus.status) {
     const isAdminInfoEqual = await newAdminInfoIsEqual(adminId, profileInfoForm)
     if (!isAdminInfoEqual)
-      return updateAdmin(adminId, profileInfoForm, AdminImageStatus.data as string | undefined)
+      return updateAdmin(adminId, profileInfoForm, adminImageStatus.data as string | undefined)
 
-    return { message: "please update some filed", status: false }
+    return { message: "Please update some fields", status: false }
   }
 
-  return { message: AdminImageStatus.message, status: false }
+  return { message: adminImageStatus.message, status: false }
 }
 
 const setAdminProfileImage = async (
@@ -58,16 +58,19 @@ const setAdminProfileImage = async (
   profileImageFile: TypeAdminProfileFrom["image"]
 ): Promise<TypeReturnSererAction> => {
   const databaseHasAdminImage = await hasAdminImageInDatabase(adminId)
-  const profileFromHasImage = typeof profileImageFile !== "undefined" && profileImageFile.size
+  const profileFormHasImage = profileImageFile && profileImageFile.size
 
-  if (!databaseHasAdminImage && !profileFromHasImage)
-    return { message: "image is required", status: false }
+  if (!databaseHasAdminImage && !profileFormHasImage) {
+    return imageIsRequired()
+  }
 
-  if (databaseHasAdminImage && profileFromHasImage)
-    return await updateImage(adminId, profileImageFile)
+  if (databaseHasAdminImage && profileFormHasImage) {
+    return await updateAdminImage(adminId, profileImageFile)
+  }
 
-  if (!databaseHasAdminImage && profileFromHasImage)
-    return createAminImage(adminId, profileImageFile)
+  if (!databaseHasAdminImage && profileFormHasImage) {
+    return await createAdminImage(adminId, profileImageFile)
+  }
 
   return { status: true }
 }
@@ -80,15 +83,20 @@ const hasAdminImageInDatabase = async (adminId: string) => {
   return Boolean(isAdminHasImage?.image)
 }
 
-const createAminImage = async (
+const imageIsRequired = () => ({ message: "Image is required", status: false })
+
+const updateAdminImage = async (adminId: string, profileImageFile: File) =>
+  await updateImage(adminId, profileImageFile)
+
+const createAdminImage = async (
   adminId: string,
   profileImageFile: File
 ): Promise<TypeReturnSererAction> => {
   const createResult = await createImage(adminId, profileImageFile)
   if (createResult.path) {
-    return { message: "image creation successfully", status: true, data: createResult.path }
+    return { message: "Image created successfully", status: true, data: createResult.path }
   }
-  return { message: "image creation failure", status: false }
+  return { message: "Image creation failed", status: false }
 }
 
 const newAdminInfoIsEqual = async (adminId: string, profileInfoForm: TypeAdminProfileFrom) => {
@@ -115,7 +123,7 @@ const updateAdmin = async (
     data: { ...profileInfoForm, image: imageUrlPath },
   })
 
-  if (updateResult) return { message: "profile updated successfully", status: true }
+  if (updateResult) return { message: "Profile updated successfully", status: true }
 
-  return { message: "profile update got failure", status: false }
+  return { message: "Profile update failed", status: false }
 }
