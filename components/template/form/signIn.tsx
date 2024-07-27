@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
 
-import { SignInFormAction } from "@/actions/signIn"
+import { signInFormAction } from "@/actions/signIn"
 
 import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 
@@ -21,7 +21,7 @@ const SignIn: React.FC = () => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const action = async (event: FormData) => {
-    const actionResult = await SignInFormAction(event)
+    const actionResult = await signInFormAction(event)
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 

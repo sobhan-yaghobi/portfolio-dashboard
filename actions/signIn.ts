@@ -6,10 +6,10 @@ import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
 import { createSession, deleteSession } from "@/auth/session"
 
-export const SignInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
+export const signInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
   const validateResult = validateSignInForm(formData)
 
-  if (validateResult.success) return Sign(validateResult.data)
+  if (validateResult.success) return handleSignIn(validateResult.data)
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
@@ -20,12 +20,11 @@ const validateSignInForm = (formData: FormData) =>
     password: formData.get("password"),
   } as TypeSignInForm)
 
-const Sign = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
+const handleSignIn = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
   const isAdminEmpty = !Boolean(await prisma.admin.count())
 
-  if (isAdminEmpty) {
-    return createAdmin(AdminInfoForm)
-  }
+  if (isAdminEmpty) return createAdmin(AdminInfoForm)
+
   return checkAdminForLogin(AdminInfoForm)
 }
 
@@ -37,15 +36,15 @@ const createAdmin = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSer
 
   if (adminCreationResult) {
     await createSession(adminCreationResult.id)
-    return { message: "admin create successfully", status: true }
+    return { message: "Admin created successfully", status: true }
   }
-  return { message: "admin create failure", status: false }
+  return { message: "Admin creation failed", status: false }
 }
 
 const checkAdminForLogin = async (
-  AdminInfoForm: TypeSignInForm
+  adminInfoForm: TypeSignInForm
 ): Promise<TypeReturnSererAction> => {
-  const { email, password } = AdminInfoForm
+  const { email, password } = adminInfoForm
   const adminInfoResult = await prisma.admin.findUnique({ where: { email } })
 
   if (adminInfoResult) {
@@ -53,10 +52,10 @@ const checkAdminForLogin = async (
 
     if (comparePasswordResult) {
       await createSession(adminInfoResult.id)
-      return { message: "admin login successfully", status: true }
+      return { message: "Admin login successfully", status: true }
     }
   }
-  return { message: "sorry you are not admin", status: false }
+  return { message: "Sorry, you are not an admin", status: false }
 }
 
 export const logout = () => deleteSession()
