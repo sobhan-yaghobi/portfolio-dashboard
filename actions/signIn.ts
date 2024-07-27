@@ -3,7 +3,7 @@
 import { SchemaSignIn, TypeErrors, TypeReturnSererAction, TypeSignInForm } from "@/lib/definition"
 
 import prisma from "@/lib/prisma"
-import { comparePassword } from "@/auth/auth"
+import { comparePassword, hashPassword } from "@/auth/auth"
 import { createSession, deleteSession } from "@/auth/session"
 
 export const SignInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
@@ -30,7 +30,10 @@ const Sign = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererActio
 }
 
 const createAdmin = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
-  const adminCreationResult = await prisma.admin.create({ data: { ...AdminInfoForm } })
+  const hashedPassword = await hashPassword(AdminInfoForm.password)
+  const adminCreationResult = await prisma.admin.create({
+    data: { ...AdminInfoForm, password: hashedPassword },
+  })
 
   if (adminCreationResult) {
     await createSession(adminCreationResult.id)
