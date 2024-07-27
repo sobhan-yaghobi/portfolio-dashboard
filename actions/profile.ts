@@ -93,8 +93,8 @@ const createAdminImage = async (
   profileImageFile: File
 ): Promise<TypeReturnSererAction> => {
   const createResult = await createImage(adminId, profileImageFile)
-  if (createResult.path) {
-    return { message: "Image created successfully", status: true, data: createResult.path }
+  if (createResult.status) {
+    return { message: "Image created successfully", status: true, data: createResult.data }
   }
   return { message: "Image creation failed", status: false }
 }
