@@ -72,11 +72,15 @@ export const editSkill = async (
   return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-export const deleteSkill = async (id: string, path: string): Promise<TypeReturnSererAction> => {
+export const deleteSkillFormAction = async (
+  id: string,
+  reValidPath: string
+): Promise<TypeReturnSererAction> => {
   const deleteResult = await prisma.skills.delete({ where: { id } })
+
   if (deleteResult) {
-    revalidatePath(path)
-    return { message: "project removed successfully", status: true }
+    revalidatePath(reValidPath)
+    return { message: "Project removed successfully", status: true }
   }
-  return { message: "project remove got failure", status: false }
+  return { message: "Project remove got failure", status: false }
 }

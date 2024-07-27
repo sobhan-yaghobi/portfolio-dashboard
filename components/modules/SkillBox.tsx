@@ -1,28 +1,32 @@
 "use client"
 
-import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material"
-import { Skills } from "@prisma/client"
 import React from "react"
+import { toast } from "react-toastify"
+import { Skills } from "@prisma/client"
+
+import { deleteSkillFormAction } from "@/actions/skill"
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
+
 import Link from "next/link"
-import { deleteSkill } from "@/actions/skill"
-import { toast } from "react-toastify"
+import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material"
 
 const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
-  const deleteAction = async () => {
-    const deleteResult = await deleteSkill(id, "/skills")
+  const deleteSkill = async () => {
+    const deleteResult = await deleteSkillFormAction(id, "/skills")
+
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
     }
     return toast.error(deleteResult.message)
   }
+
   return (
     <Card className="min-w-72 max-w-80 relative">
       <IconButton
-        onClick={deleteAction}
+        onClick={deleteSkill}
         title="delete"
         className="absolute right-1 top-1 bg-black/30"
         color="error"
