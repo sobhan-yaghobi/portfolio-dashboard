@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react"
 import { Project } from "@prisma/client"
-import { addSkill } from "@/actions/skill"
+import { addSkillFormAction } from "@/actions/skill"
 import { toast } from "react-toastify"
 
 import { TypeError } from "@/lib/definition"
@@ -22,7 +22,7 @@ const AddSkill: React.FC<AddSkillProps> = ({ projects, selectionProjects }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addSkill(event, selectedProjects, "/skills")
+    const actionResult = await addSkillFormAction(event, selectedProjects, "/skills")
     if (actionResult) {
       if ("errors" in actionResult) {
         return setErrors({ ...actionResult.errors } as TypeError)

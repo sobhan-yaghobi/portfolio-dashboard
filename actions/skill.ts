@@ -1,40 +1,85 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { SchemaAddSkill, TypeAddSkill, TypeErrors, TypeReturnSererAction } from "../lib/definition"
+import { SchemaSkill, TypeSkillForm, TypeErrors, TypeReturnSererAction } from "../lib/definition"
 import { revalidatePath } from "next/cache"
-import { SkillCreateInput } from "@/lib/types"
+import { SkillCreateInput, TypeCreateSkillParam } from "@/lib/types"
 import { isEqual } from "lodash"
 import { Project } from "@prisma/client"
+import { v4 as uuid } from "uuid"
+import { createImage } from "./image"
 
-const skillObject = (formData: FormData) =>
-  ({
+export const addSkillFormAction = async (
+  formData: FormData,
+  relatedProjects: Project[],
+  reValidPath: string
+): Promise<TypeReturnSererAction> => {
+  const validateResult = validateSkillForm(formData)
+
+  if (validateResult.success) return setSkill(validateResult.data, relatedProjects, reValidPath)
+
+  return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
+}
+
+const validateSkillForm = (formData: FormData) =>
+  SchemaSkill.safeParse({
     name: formData.get("name"),
-    image: (formData.get("image") as File).name === "undefined" ? "" : "imageSrc",
+    image: formData.get("image") as File,
     link: formData.get("link"),
     description: formData.get("description"),
-  } as TypeAddSkill)
+  } as TypeSkillForm)
 
-export const addSkill = async (
-  formData: FormData,
-  projects: Project[],
-  path: string
+const setSkill = async (
+  skillInfoForm: TypeSkillForm,
+  relatedProjects: Project[],
+  reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const validationResult = SchemaAddSkill.safeParse(skillObject(formData))
+  const skillId = uuid()
 
-  if (!validationResult.success) {
-    return { errors: validationResult.error.flatten().fieldErrors as TypeErrors, status: false }
+  const skillImageStatus = await setImageSkill(skillId, skillInfoForm.image)
+  if (skillImageStatus?.status) {
+    const imagePath = skillImageStatus.data as string
+    return createSkill({
+      skill: { id: skillId, imagePath, infoForm: skillInfoForm, relatedProjects },
+      reValidPath,
+    })
   }
 
+  return { message: skillImageStatus?.message, status: false }
+}
+
+const setImageSkill = async (skillId: string, skillImageFile: TypeSkillForm["image"]) => {
+  if (!skillImageFile || !skillImageFile.size) {
+    return imageIsRequired()
+  }
+
+  return await createImage(skillId, skillImageFile)
+}
+
+const imageIsRequired = (): TypeReturnSererAction => ({
+  message: "Image is required",
+  status: false,
+})
+
+const createSkill = async ({
+  skill,
+  reValidPath,
+}: TypeCreateSkillParam): Promise<TypeReturnSererAction> => {
   const skillResult = await prisma.skills.create({
-    data: { ...validationResult.data, projects: { connect: projects || [] } },
+    data: {
+      ...skill.infoForm,
+      id: skill.id,
+      image: skill.imagePath,
+      projects: { connect: skill.relatedProjects || [] },
+    },
   })
+
   if (skillResult) {
-    revalidatePath(path)
-    return { message: "skill create, successfully", status: true }
+    revalidatePath(reValidPath)
+    return { message: "Skill create, successfully", status: true }
   }
 
-  return { message: "skill creation failure", status: false }
+  return { message: "Skill create failure", status: false }
 }
 
 export const editSkill = async (
@@ -43,10 +88,9 @@ export const editSkill = async (
   projects: Project[],
   path: string
 ): Promise<TypeReturnSererAction> => {
-  const skill = skillObject(formData)
-  const validationResult = SchemaAddSkill.safeParse(skill)
+  const validateResult = validateSkillForm(formData)
 
-  if (validationResult.success) {
+  if (validateResult) {
     const skillResult = await prisma.skills.findUnique({
       where: { id },
       select: SkillCreateInput,

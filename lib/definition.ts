@@ -56,13 +56,13 @@ export const SchemaAddProject = z.object({
 })
 export type TypeAddProject = z.infer<typeof SchemaAddProject>
 
-export const SchemaAddSkill = z.object({
+export const SchemaSkill = z.object({
   name: z.string().trim().min(1, "name is required"),
-  image: z.string().trim().min(1, "image is required"),
+  image: z.instanceof(File).optional(),
   link: z.string().trim().min(1, "link is required"),
   description: z.string().trim().min(1, "description is required"),
 })
-export type TypeAddSkill = z.infer<typeof SchemaAddSkill>
+export type TypeSkillForm = z.infer<typeof SchemaSkill>
 
 export const SchemaTechnicalGrowth = z.object({
   title: z.string().trim().min(1, "title is required"),

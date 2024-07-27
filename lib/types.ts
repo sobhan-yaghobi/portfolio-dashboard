@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client"
+import { Prisma, Project } from "@prisma/client"
+import { TypeSkillForm } from "./definition"
 
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
 export const AdminProfileInput: Prisma.AdminSelect = {
@@ -31,6 +32,16 @@ export const SkillCreateInput: Prisma.SkillsSelect = {
   image: true,
   link: true,
   description: true,
+}
+
+export type TypeCreateSkillParam = {
+  skill: {
+    id: string
+    infoForm: TypeSkillForm
+    relatedProjects: Project[]
+    imagePath: string
+  }
+  reValidPath: string
 }
 
 export type TypeTechnicalGrowth = Prisma.TechnicalGrowthCreateInput
