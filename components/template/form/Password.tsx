@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError, TypeReturnSererAction } from "@/lib/definition"
 
 import { changePassword } from "@/actions/password"
 
@@ -23,20 +23,26 @@ const Password: React.FC<PasswordProps> = ({ id }) => {
     if (id) {
       const actionResult = await changePassword(id, event)
       if (actionResult) {
-        if ("errors" in actionResult) {
-          return setErrors({ ...actionResult.errors } as TypeError)
-        }
+        if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-        const message = actionResult.message
-        if (actionResult.status) {
-          setErrors({} as TypeError)
-          message && toast.success(message)
-        } else {
-          message && toast.error(message)
-        }
-        formRef.current?.reset()
+        showMessage(actionResult)
+        resetForm()
       }
     }
+  }
+
+  const showMessage = (actionResult: TypeReturnSererAction) => {
+    const { message } = actionResult
+    if (actionResult.status) {
+      message && toast.success(message)
+    } else {
+      message && toast.error(message)
+    }
+  }
+
+  const resetForm = () => {
+    setErrors({} as TypeError)
+    formRef.current?.reset()
   }
   return (
     <form ref={formRef} action={clientAction} className="[&>section]:mt-6 [&>section>*]:mb-3">

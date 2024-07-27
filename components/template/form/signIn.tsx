@@ -30,7 +30,7 @@ const SignIn: React.FC = () => {
   }
 
   const showMessage = (actionResult: TypeReturnSererAction) => {
-    const message = actionResult.message
+    const { message } = actionResult
     if (actionResult.status) {
       message && toast.success(message)
     } else {
