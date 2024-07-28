@@ -63,6 +63,7 @@ export const SchemaSkill = z.object({
   description: z.string().trim().min(1, "description is required"),
 })
 export type TypeSkillForm = z.infer<typeof SchemaSkill>
+export type TypeSkillFormWithoutImage = Omit<TypeSkillForm, "image">
 
 export const SchemaTechnicalGrowth = z.object({
   title: z.string().trim().min(1, "title is required"),

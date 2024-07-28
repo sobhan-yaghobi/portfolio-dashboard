@@ -4,7 +4,7 @@ import React from "react"
 import { toast } from "react-toastify"
 import { Skills } from "@prisma/client"
 
-import { deleteSkillFormAction } from "@/actions/skill"
+import { deleteSkillFormAction } from "@/actions/skill/deleteSkill"
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
@@ -49,7 +49,7 @@ const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
           </Button>
         </Link>
 
-        <Link href={`/skills/${id}`}>
+        <Link href={`/dashboard/skills/${id}`}>
           <Button variant="outlined" size="small" endIcon={<EditIcon />}>
             edit
           </Button>

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { editSkill } from "@/actions/skill"
+import { editSkillFormAction } from "@/actions/skill/editSkill"
 import { TypeError } from "@/lib/definition"
 import { Project } from "@prisma/client"
 import { toast } from "react-toastify"
@@ -31,7 +31,12 @@ const EditSkill: React.FC<EditSkillsProps> = ({
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editSkill(id, event, selectedProjects, "/skills")
+      const actionResult = await editSkillFormAction(
+        id,
+        event,
+        selectedProjects,
+        "/dashboard/skills"
+      )
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)
