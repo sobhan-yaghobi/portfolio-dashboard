@@ -1,14 +1,15 @@
 "use server"
 
+import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
+
 import {
   SchemaAdminPassword,
   TypeAdminPasswordForm,
   TypeErrors,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import prisma from "@/lib/prisma"
-import { PasswordAdminInput } from "@/lib/types"
+import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types"
 
 export const changePasswordFormAction = async (
   adminId: string,
@@ -31,7 +32,7 @@ const checkPassword = async (
   adminId: string,
   passwordFormInfo: TypeAdminPasswordForm
 ): Promise<TypeReturnSererAction> => {
-  const adminInfo = await getAdmin(adminId)
+  const adminInfo = await fetchAdminIdAndPassword(adminId)
   if (adminInfo) {
     const comparePasswordResult = await comparePassword(
       adminInfo.password,
@@ -46,7 +47,7 @@ const checkPassword = async (
   return { status: false, message: "Admin not found" }
 }
 
-const getAdmin = async (adminId: string) =>
+const fetchAdminIdAndPassword = async (adminId: string): Promise<TypePasswordAdminInput | null> =>
   await prisma.admin.findUnique({
     where: { id: adminId },
     select: PasswordAdminInput,

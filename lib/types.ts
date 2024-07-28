@@ -1,4 +1,4 @@
-import { Prisma, Project, Skills } from "@prisma/client"
+import { Admin, Prisma, Project, Skills } from "@prisma/client"
 import { TypeSkillForm } from "./definition"
 
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
@@ -11,7 +11,7 @@ export const AdminProfileInput: Prisma.AdminSelect = {
   image: true,
 }
 
-export type TypePasswordAdminInput = Pick<Prisma.AdminCreateInput, "password" | "id">
+export type TypePasswordAdminInput = Pick<Admin, "password" | "id">
 export const PasswordAdminInput: Prisma.AdminSelect = {
   password: true,
   id: true,
