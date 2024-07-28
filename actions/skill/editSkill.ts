@@ -1,7 +1,7 @@
 "use server"
 
 import {
-  fetchSkill,
+  fetchSkillCreateInput,
   newSkillInfoIsEqual,
   saveUpdatedSkill,
   updateSkillImage,
@@ -32,7 +32,7 @@ const setEditSkill = async (
   relatedProjects: Project[],
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const getSkillResult = await fetchSkill(skillId)
+  const getSkillResult = await fetchSkillCreateInput(skillId)
   if (!getSkillResult) return { status: false, message: "Skill not found" }
 
   const { image: skillInfoImagePath, ...skillInfo } = getSkillResult

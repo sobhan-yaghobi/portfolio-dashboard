@@ -4,7 +4,12 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
 
-import { SkillCreateInput, TypeCreateSkillParam } from "@/lib/types"
+import {
+  SkillCreateInput,
+  SkillIdAndImagePath,
+  TypeCreateSkillParam,
+  TypeSkillIdAndImagePath,
+} from "@/lib/types"
 import {
   SchemaSkill,
   TypeReturnSererAction,
@@ -13,7 +18,7 @@ import {
 } from "@/lib/definition"
 import { Project } from "@prisma/client"
 
-import { createImage, updateImage } from "@/actions/image"
+import { createImage, deleteImage, updateImage } from "@/actions/image"
 
 export const validateSkillForm = (formData: FormData) =>
   SchemaSkill.safeParse({
@@ -57,7 +62,7 @@ export const createSkill = async ({
   return { message: "Skill create failure", status: false }
 }
 
-export const fetchSkill = async (skillId: string) =>
+export const fetchSkillCreateInput = async (skillId: string) =>
   await prisma.skills.findUnique({ where: { id: skillId }, select: SkillCreateInput })
 
 export const updateSkillImage = async (
@@ -93,3 +98,13 @@ export const saveUpdatedSkill = async (
 
   return { message: "Profile update failed", status: false }
 }
+
+export const fetchSkillIdAndImagePath = async (
+  skillId: string
+): Promise<TypeSkillIdAndImagePath | null> =>
+  await prisma.skills.findUnique({ where: { id: skillId }, select: SkillIdAndImagePath })
+
+export const deleteImageFromBucket = async (imagePath: string) => await deleteImage(imagePath)
+
+export const deleteSkill = async (skillId: string) =>
+  await prisma.skills.delete({ where: { id: skillId } })
