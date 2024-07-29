@@ -24,9 +24,6 @@ const setDeleteProject = async (
   const deleteImageResult = await deleteImageFromBucket(image)
   const deleteProjectResult = await deleteProject(id)
 
-  console.log("deleteImageResult", deleteImageResult)
-  console.log("deleteProjectResult", deleteProjectResult)
-
   if (deleteImageResult.status && deleteProjectResult) {
     revalidatePath(reValidPath)
     return { status: true, message: "Project remove successfully" }
