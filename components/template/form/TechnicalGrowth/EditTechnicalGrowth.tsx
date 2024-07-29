@@ -2,15 +2,15 @@
 
 import React, { useRef, useState } from "react"
 import { TypeError } from "@/lib/definition"
-import { TypeTechnicalGrowth } from "@/lib/types"
+import { TypeTechnicalGrowthInput } from "@/lib/types"
+import { editTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editTechnicalGrowth"
 
 import Form from "./TechnicalGrowthForm"
-import { editTechnicalGrowth } from "@/actions/TechnicalGrowth"
 import { toast } from "react-toastify"
 
 type EditTechnicalGrowthProps = {
   id: string
-  defaultValues: TypeTechnicalGrowth | null
+  defaultValues: TypeTechnicalGrowthInput | null
 }
 
 const EditTechnicalGrowth: React.FC<EditTechnicalGrowthProps> = ({ id, defaultValues }) => {
@@ -19,7 +19,7 @@ const EditTechnicalGrowth: React.FC<EditTechnicalGrowthProps> = ({ id, defaultVa
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editTechnicalGrowth(id, event, "/tec_growth")
+      const actionResult = await editTechnicalGrowthFormAction(id, event, "/tec_growth")
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)

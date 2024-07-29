@@ -143,7 +143,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
                   >
                     <DeleteIcon />
                   </IconButton>
-                  <Link href={`/tec_growth/${item.id}`}>
+                  <Link href={`/dashboard/tec_growth/${item.id}`}>
                     <IconButton
                       title="edit"
                       className="bg-black/30 hidden group-hover:flex"

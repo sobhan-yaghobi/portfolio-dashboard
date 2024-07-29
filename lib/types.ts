@@ -58,7 +58,7 @@ export type TypeCreateSkillParam = {
   reValidPath: string
 }
 
-export type TypeTechnicalGrowth = Prisma.TechnicalGrowthCreateInput
+export type TypeTechnicalGrowthInput = Prisma.TechnicalGrowthCreateInput
 export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
   title: true,
   subtitle: true,
