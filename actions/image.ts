@@ -2,6 +2,7 @@
 
 import { TypeReturnSererAction } from "@/lib/definition"
 import supabase from "@/lib/supabase"
+import { getImagePath } from "@/lib/utils"
 import { env } from "process"
 
 const bucket = env.NEXT_PUBLIC_IMAGE_BUCKET
@@ -70,5 +71,3 @@ export const deleteImage = async (imageUrl: string): Promise<TypeReturnSererActi
 
   return { message: "Remove image failure", status: false }
 }
-
-const getImagePath = (imageUrl: string) => imageUrl.split("/").pop()

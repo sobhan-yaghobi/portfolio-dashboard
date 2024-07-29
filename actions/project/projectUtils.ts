@@ -15,6 +15,7 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
 import { Skill } from "@prisma/client"
+import { getImagePath } from "@/lib/utils"
 
 export const validateProjectForm = (formData: FormData) =>
   SchemaProject.safeParse({
@@ -104,7 +105,12 @@ export const fetchProjectIdAndImagePath = async (
 ): Promise<TypeProjectIdAndImagePath | null> =>
   await prisma.project.findUnique({ where: { id: projectId }, select: ProjectIdAndImagePath })
 
-export const deleteImageFromBucket = async (imagePath: string) => await deleteImage(imagePath)
+export const deleteImageFromBucket = async (imageUrl: string) => {
+  const imagePath = getImagePath(imageUrl)
+  if (imagePath) return await deleteImage(imagePath)
+
+  return { status: false }
+}
 
 export const deleteProject = async (projectId: string) =>
   await prisma.project.delete({ where: { id: projectId } })

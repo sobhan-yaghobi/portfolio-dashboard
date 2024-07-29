@@ -1,9 +1,9 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { deleteImageFromBucket, deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
 
 import { TypeReturnSererAction } from "@/lib/definition"
-import { deleteImageFromBucket, deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
 import { TypeProjectIdAndImagePath } from "@/lib/types"
 
 export const deleteProjectFormAction = async (
@@ -14,7 +14,7 @@ export const deleteProjectFormAction = async (
 
   if (projectInfo) return setDeleteProject(projectInfo, reValidPath)
 
-  return { message: "Project remove got failure", status: false }
+  return { message: "Project not found", status: false }
 }
 
 const setDeleteProject = async (
@@ -23,6 +23,9 @@ const setDeleteProject = async (
 ): Promise<TypeReturnSererAction> => {
   const deleteImageResult = await deleteImageFromBucket(image)
   const deleteProjectResult = await deleteProject(id)
+
+  console.log("deleteImageResult", deleteImageResult)
+  console.log("deleteProjectResult", deleteProjectResult)
 
   if (deleteImageResult.status && deleteProjectResult) {
     revalidatePath(reValidPath)
