@@ -1,7 +1,7 @@
 import React from "react"
 import prisma from "@/lib/prisma"
 
-import AddTechnicalGrowth from "@/components/template/form/TechnicalGrowth/AddTechnicalGrowth"
+import AddTechnicalGrowthForm from "@/components/template/form/TechnicalGrowth/AddTechnicalGrowth"
 import TechGrTimeLine from "@/components/template/TechGrTimeLine"
 import { Button, Divider, Typography } from "@mui/material"
 import Link from "next/link"
@@ -28,7 +28,7 @@ const page: React.FC = async () => {
         <Typography variant="h4" component="h2" className="mt-0">
           Add Technical Growth
         </Typography>
-        <AddTechnicalGrowth path="/tec_growth" />
+        <AddTechnicalGrowthForm path="/tec_growth" />
       </section>
     </div>
   )

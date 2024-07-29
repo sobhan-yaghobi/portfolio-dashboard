@@ -63,4 +63,4 @@ export const SchemaTechnicalGrowth = z.object({
   subtitle: z.string().trim().min(1, "subtitle is required"),
   description: z.string().trim().min(1, "description is required"),
 })
-export type TypeTechnicalGrowth = z.infer<typeof SchemaTechnicalGrowth>
+export type TypeTechnicalGrowthForm = z.infer<typeof SchemaTechnicalGrowth>

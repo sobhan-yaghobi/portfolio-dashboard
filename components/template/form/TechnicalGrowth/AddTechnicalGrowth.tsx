@@ -2,10 +2,11 @@
 
 import React, { useRef, useState } from "react"
 
+import { addTechnicalGrowthFormAction } from "@/actions/technicalGrowth/createTechnicalGrowth"
+
 import { TypeError } from "@/lib/definition"
 
 import Form from "./TechnicalGrowthForm"
-import { addTechnicalGrowth } from "@/actions/TechnicalGrowth"
 import { toast } from "react-toastify"
 
 type AddTechnicalGrowthProps = {
@@ -17,7 +18,7 @@ const AddTechnicalGrowth: React.FC<AddTechnicalGrowthProps> = ({ path }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addTechnicalGrowth(event, path)
+    const actionResult = await addTechnicalGrowthFormAction(event, path)
     if (actionResult) {
       if (!actionResult.status) {
         ref.current?.reset()
