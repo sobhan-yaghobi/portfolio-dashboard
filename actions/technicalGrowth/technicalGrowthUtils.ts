@@ -5,6 +5,7 @@ import {
 } from "@/lib/definition"
 import prisma from "@/lib/prisma"
 import { TechnicalGrowthInput } from "@/lib/types"
+import { TechnicalGrowth } from "@prisma/client"
 import { isEqual } from "lodash"
 import { revalidatePath } from "next/cache"
 
@@ -58,4 +59,16 @@ export const saveUpdatedTechnicalGrowth = async (
   }
 
   return { message: "Technical Growth update failed", status: false }
+}
+
+export const setNewOrderTechnicalGrowthList = (technicalGrowths: TechnicalGrowth[]) =>
+  technicalGrowths.map((tech, index) => ({ ...tech, order: index }))
+
+export const updateTechnicalGrowthOrder = async ({ id, order }: TechnicalGrowth) => {
+  await prisma.technicalGrowth.update({
+    where: { id },
+    data: {
+      order,
+    },
+  })
 }

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { isEqual, map, reject, slice } from "lodash"
 import { toast } from "react-toastify"
 
-import { deleteTechnicalGrowth, editOrder } from "@/actions/TechnicalGrowth"
+import { deleteTechnicalGrowth } from "@/actions/TechnicalGrowth"
 
 import {
   Timeline,
@@ -20,6 +20,7 @@ import EmptyBox from "../modules/EmptyBox"
 import { Button, IconButton, Typography } from "@mui/material"
 import Link from "next/link"
 import { Delete as DeleteIcon, EditNote as EditNoteIcon } from "@mui/icons-material"
+import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editTechnicalGrowthOrder"
 
 type TechGrTimeLineProps = {
   techs: TechnicalGrowth[]
@@ -86,7 +87,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
   }
 
   const updateAction = async () => {
-    const updateResult = await editOrder(list, "/tec_growth")
+    const updateResult = await editOrderTechnicalGrowthFormAction(list, "/dashboard/tec_growth")
     setIsUpdate(false)
     if (updateResult.status) {
       dragAndDropRef.current.originalArray = list
