@@ -3,18 +3,27 @@
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
 
-import { addProject } from "@/actions/project"
+import { addProjectFormAction } from "@/actions/project/createProject"
 
 import { TypeError } from "@/lib/definition"
 
 import Form from "./ProjectForm"
+import { Skill } from "@prisma/client"
 
-const AddProject: React.FC = () => {
+type AddProjectProps = {
+  skills: Skill[]
+  selectionSkills?: Skill[]
+}
+
+const AddProject: React.FC<AddProjectProps> = ({ skills, selectionSkills }) => {
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
+    selectionSkills ? selectionSkills : ([] as Skill[])
+  )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addProject(event, "/projects")
+    const actionResult = await addProjectFormAction(event, selectedSkills, "/projects")
     if (actionResult) {
       if ("errors" in actionResult) {
         return setErrors({ ...actionResult.errors } as TypeError)
@@ -31,7 +40,15 @@ const AddProject: React.FC = () => {
     }
   }
   return (
-    <Form ref={formRef} submitText="Add Project" errors={errors} submitFunction={clientAction} />
+    <Form
+      skills={skills}
+      selectedSkills={selectedSkills}
+      setSelectedSkills={setSelectedSkills}
+      ref={formRef}
+      submitText="Add Project"
+      errors={errors}
+      submitFunction={clientAction}
+    />
   )
 }
 

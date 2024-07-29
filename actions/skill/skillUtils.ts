@@ -43,7 +43,7 @@ export const createSkill = async ({
   skill,
   reValidPath,
 }: TypeCreateSkillParam): Promise<TypeReturnSererAction> => {
-  const skillResult = await prisma.skills.create({
+  const skillResult = await prisma.skill.create({
     data: {
       ...skill.infoForm,
       id: skill.id,
@@ -61,7 +61,7 @@ export const createSkill = async ({
 }
 
 export const fetchSkillCreateInput = async (skillId: string) =>
-  await prisma.skills.findUnique({ where: { id: skillId }, select: SkillCreateInput })
+  await prisma.skill.findUnique({ where: { id: skillId }, select: SkillCreateInput })
 
 export const updateSkillImage = async (
   skillImageFile: TypeSkillForm["image"],
@@ -84,7 +84,7 @@ export const saveUpdatedSkill = async (
   relatedProjects: Project[],
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const updateResult = await prisma.skills.update({
+  const updateResult = await prisma.skill.update({
     where: { id: skillId },
     data: { ...skillInfoFormWithoutImage, projects: { connect: relatedProjects } },
   })
@@ -100,9 +100,9 @@ export const saveUpdatedSkill = async (
 export const fetchSkillIdAndImagePath = async (
   skillId: string
 ): Promise<TypeSkillIdAndImagePath | null> =>
-  await prisma.skills.findUnique({ where: { id: skillId }, select: SkillIdAndImagePath })
+  await prisma.skill.findUnique({ where: { id: skillId }, select: SkillIdAndImagePath })
 
 export const deleteImageFromBucket = async (imagePath: string) => await deleteImage(imagePath)
 
 export const deleteSkill = async (skillId: string) =>
-  await prisma.skills.delete({ where: { id: skillId } })
+  await prisma.skill.delete({ where: { id: skillId } })

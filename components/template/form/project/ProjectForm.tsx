@@ -1,11 +1,12 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 
 import { TypeError } from "@/lib/definition"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 
 import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
@@ -13,15 +14,64 @@ import InputAdornment from "@mui/material/InputAdornment"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import { TypeProjectInput } from "@/lib/types"
+import { Skill } from "@prisma/client"
+import { find, some } from "lodash"
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material"
 
 type ProjectFormProps = {
+  skills?: Skill[]
+  selectedSkills: Skill[]
+  setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
   defaultValues?: TypeProjectInput | null
   submitText: string
   errors: TypeError
   submitFunction: (formData: FormData) => void | any
 }
+
 const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
-  ({ defaultValues, submitText, submitFunction, errors }, ref) => {
+  (
+    {
+      skills,
+      selectedSkills,
+      setSelectedSkills,
+      defaultValues,
+      submitText,
+      submitFunction,
+      errors,
+    },
+    ref
+  ) => {
+    const [mainSkill, setMainSkill] = useState<Skill | null>(null)
+    const handleChangeAction = (e: SelectChangeEvent<string>) => {
+      const mainSkill = find(skills, function (item) {
+        return item.id === e.target.value
+      })
+      setMainSkill(mainSkill ? mainSkill : ({} as Skill))
+    }
+    const addSkillAction = () => {
+      if (mainSkill && "id" in mainSkill) {
+        const isSelect = selectedSkills.some((selectedSkills) => selectedSkills.id === mainSkill.id)
+
+        if (!isSelect) {
+          setSelectedSkills((prev) => [...prev, mainSkill])
+          setMainSkill({} as Skill)
+        }
+      }
+    }
+    const removeSkillAction = (id: string) =>
+      setSelectedSkills((prev) => prev.filter((item) => item.id !== id))
+    const isSelected = (id: string) =>
+      some(selectedSkills, function (selectedSkills) {
+        return selectedSkills.id === id
+      })
+
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
@@ -111,6 +161,47 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
               defaultValue={defaultValues && defaultValues.source}
             />
           </TextError>
+        </section>
+
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            Skills Usage {skills?.length}
+          </Typography>
+          <div className="w-full flex gap-3">
+            <FormControl className="flex-1" onBlur={addSkillAction}>
+              <InputLabel id="demo-simple-select-helper-label">Skills</InputLabel>
+              <Select
+                label="Select Skill"
+                onChange={handleChangeAction}
+                value={mainSkill?.id || ""}
+              >
+                {skills &&
+                  skills?.map((item) => (
+                    <MenuItem key={item.id} disabled={isSelected(item.id)} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </div>
+          <ul className="min-h-14 w-full flex flex-wrap gap-3">
+            {selectedSkills.map((item) => (
+              <li
+                className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer"
+                key={item.id}
+              >
+                <span className="px-2 mr-1">{item.name}</span>
+                <IconButton
+                  onClick={() => removeSkillAction(item.id)}
+                  className="flex-1"
+                  size="small"
+                  color="error"
+                >
+                  <DeleteOutlineOutlinedIcon />
+                </IconButton>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section>

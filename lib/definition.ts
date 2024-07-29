@@ -39,22 +39,14 @@ export const SchemaAdminPassword = z.object({
 })
 export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
 
-export const SchemaAddProject = z.object({
-  image: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file.size) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "عکس اجباری میباشد",
-        path: ["image"],
-      })
-    }
-  }),
+export const SchemaProject = z.object({
+  image: z.instanceof(File).optional(),
   title: z.string().trim().min(1, "title is required"),
   link: z.string().trim().min(1, "link is required"),
   source: z.string().trim().min(1, "source is required"),
   description: z.string().trim().min(1, "description is required"),
 })
-export type TypeAddProject = z.infer<typeof SchemaAddProject>
+export type TypeProjectForm = z.infer<typeof SchemaProject>
 
 export const SchemaSkill = z.object({
   name: z.string().trim().min(1, "name is required"),

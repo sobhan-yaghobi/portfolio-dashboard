@@ -3,12 +3,7 @@
 import prisma from "@/lib/prisma"
 import { v4 as uuid } from "uuid"
 import { isEqual } from "lodash"
-import {
-  SchemaAddProject,
-  TypeAddProject,
-  TypeErrors,
-  TypeReturnSererAction,
-} from "../lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "../lib/definition"
 import { ProjectCreateInput } from "@/lib/types"
 import { revalidatePath } from "next/cache"
 import { createImage, deleteImage, updateImage } from "./image"

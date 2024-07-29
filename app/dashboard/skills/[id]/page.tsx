@@ -9,7 +9,7 @@ const Page: React.FC<{
   params: { [slug: string]: string }
 }> = async ({ params }) => {
   const id = params?.id
-  const mainSkill = await prisma.skills.findUnique({ where: { id } })
+  const mainSkill = await prisma.skill.findUnique({ where: { id } })
 
   if (!mainSkill) {
     redirect("/skills")

@@ -7,7 +7,6 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-
 model Admin {
   id       String  @id @default(uuid())
   password String
@@ -20,16 +19,16 @@ model Admin {
 }
 
 model Project {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   image       String
   title       String
   link        String
   source      String
   description String
-  skills      Skills[]
+  skills      Skill[]
 }
 
-model Skills {
+model Skill {
   id          String    @id @default(uuid())
   name        String
   image       String

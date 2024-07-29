@@ -8,7 +8,7 @@ import EmptyBox from "@/components/modules/EmptyBox"
 export const dynamic = "force-dynamic"
 
 const page: React.FC = async () => {
-  const skills = await prisma.skills.findMany()
+  const skills = await prisma.skill.findMany()
   return (
     <div className="h-full flex flex-col">
       <Typography variant="h4" component="h2" className="mb-8">
