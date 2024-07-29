@@ -31,28 +31,44 @@ const uploadImage = async ({
     .from(bucket)
     .upload(image.path, image.file)
 
-  if (imageUploadResult)
-    return { message: "Image successfully created", status: true, data: imageUploadResult.path }
+  if (imageUploadResult) {
+    return getImageUrl(imageUploadResult.path, bucket)
+  }
 
   return { message: "Image created failure", status: false }
 }
 
-export const updateImage = async (path: string, file: File): Promise<TypeReturnSererAction> => {
+const getImageUrl = (imagePath: string, bucket: string) => {
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(bucket).getPublicUrl(imagePath)
+  return { message: "Image successfully created", status: true, data: publicUrl }
+}
+
+export const updateImage = async (imageUrl: string, file: File): Promise<TypeReturnSererAction> => {
   if (!bucket) return { status: false, message: "Bucket name not found" }
 
-  const { data } = await supabase.storage.from(bucket).update(path, file)
+  const imagePath = getImagePath(imageUrl)
+  if (imagePath) {
+    const { data } = await supabase.storage.from(bucket).update(imagePath, file)
 
-  if (data) return { message: "Update image successfully", status: true }
+    if (data) return { message: "Update image successfully", status: true }
+  }
 
   return { message: "Update image failure", status: false }
 }
 
-export const deleteImage = async (path: string): Promise<TypeReturnSererAction> => {
+export const deleteImage = async (imageUrl: string): Promise<TypeReturnSererAction> => {
   if (!bucket) return { status: false, message: "Bucket name not found" }
 
-  const { data } = await supabase.storage.from(bucket).remove([path])
+  const imagePath = getImagePath(imageUrl)
+  if (imagePath) {
+    const { data } = await supabase.storage.from(bucket).remove([imagePath])
 
-  if (data) return { message: "Remove image successfully", status: true }
+    if (data) return { message: "Remove image successfully", status: true }
+  }
 
   return { message: "Remove image failure", status: false }
 }
+
+const getImagePath = (imageUrl: string) => imageUrl.split("/").pop()
