@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react"
 import { TypeError } from "@/lib/definition"
 import { TypeTechnicalGrowthInput } from "@/lib/types"
-import { editTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editTechnicalGrowthInfo"
+import { editTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editInfoTechnicalGrowth"
 
 import Form from "./TechnicalGrowthForm"
 import { toast } from "react-toastify"

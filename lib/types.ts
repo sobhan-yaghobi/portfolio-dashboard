@@ -1,4 +1,4 @@
-import { Admin, Prisma, Project, Skill } from "@prisma/client"
+import { Admin, Prisma, Project, Skill, TechnicalGrowth } from "@prisma/client"
 import { TypeProjectForm, TypeSkillForm } from "./definition"
 
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">

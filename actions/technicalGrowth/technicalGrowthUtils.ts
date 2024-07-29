@@ -72,3 +72,9 @@ export const updateTechnicalGrowthOrder = async ({ id, order }: TechnicalGrowth)
     },
   })
 }
+
+export const isTechnicalGrowthExist = async (technicalGrowthId: string) =>
+  Boolean(await prisma.technicalGrowth.findMany({ where: { id: technicalGrowthId } }))
+
+export const deleteTechnicalGrowth = async (technicalGrowthId: string) =>
+  await prisma.technicalGrowth.delete({ where: { id: technicalGrowthId } })

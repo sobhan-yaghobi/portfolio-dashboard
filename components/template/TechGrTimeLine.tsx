@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils"
 import { isEqual, map, reject, slice } from "lodash"
 import { toast } from "react-toastify"
 
-import { deleteTechnicalGrowth } from "@/actions/TechnicalGrowth"
+import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editOrderTechnicalGrowth"
+import { deleteTechnicalGrowthFormAction } from "@/actions/technicalGrowth/deleteTechnicalGrowth"
 
 import {
   Timeline,
@@ -20,7 +21,6 @@ import EmptyBox from "../modules/EmptyBox"
 import { Button, IconButton, Typography } from "@mui/material"
 import Link from "next/link"
 import { Delete as DeleteIcon, EditNote as EditNoteIcon } from "@mui/icons-material"
-import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editTechnicalGrowthOrder"
 
 type TechGrTimeLineProps = {
   techs: TechnicalGrowth[]
@@ -102,7 +102,7 @@ const TechGrTimeLine: React.FC<TechGrTimeLineProps> = ({ techs }) => {
   }
 
   const deleteAction = async (id: string) => {
-    const deleteResult = await deleteTechnicalGrowth(id, "/tec_growth")
+    const deleteResult = await deleteTechnicalGrowthFormAction(id, "/dashboard/tec_growth")
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
     }
