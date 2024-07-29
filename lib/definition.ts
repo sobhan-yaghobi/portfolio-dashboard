@@ -47,6 +47,7 @@ export const SchemaProject = z.object({
   description: z.string().trim().min(1, "description is required"),
 })
 export type TypeProjectForm = z.infer<typeof SchemaProject>
+export type TypeProjectFormWithoutImage = Omit<TypeProjectForm, "image">
 
 export const SchemaSkill = z.object({
   name: z.string().trim().min(1, "name is required"),

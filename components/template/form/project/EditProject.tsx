@@ -6,21 +6,37 @@ import { toast } from "react-toastify"
 import { TypeError } from "@/lib/definition"
 
 import Form from "./ProjectForm"
-import { editProject } from "@/actions/project"
+import { editProjectFormAction } from "@/actions/project/editProject"
 import { TypeProjectInput } from "@/lib/types"
+import { Skill } from "@prisma/client"
 
 type EditProjectProps = {
   id: string
   defaultValues: TypeProjectInput | null
+  skills: Skill[]
+  selectionSkills?: Skill[]
 }
 
-const EditProject: React.FC<EditProjectProps> = ({ id, defaultValues }) => {
+const EditProject: React.FC<EditProjectProps> = ({
+  id,
+  defaultValues,
+  skills,
+  selectionSkills,
+}) => {
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
+    selectionSkills ? selectionSkills : ([] as Skill[])
+  )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editProject(id, event)
+      const actionResult = await editProjectFormAction(
+        id,
+        event,
+        selectedSkills,
+        "/dashboard/projects"
+      )
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)
@@ -39,6 +55,9 @@ const EditProject: React.FC<EditProjectProps> = ({ id, defaultValues }) => {
   }
   return (
     <Form
+      skills={skills}
+      selectedSkills={selectedSkills}
+      setSelectedSkills={setSelectedSkills}
       ref={formRef}
       submitText="Add Project"
       errors={errors}

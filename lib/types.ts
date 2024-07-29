@@ -25,6 +25,8 @@ export const ProjectCreateInput: Prisma.ProjectSelect = {
   source: true,
   description: true,
 }
+export type TypeProjectIdAndImagePath = Pick<Project, "id" | "image">
+export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: true }
 
 export type TypeCreateProjectParam = {
   project: {

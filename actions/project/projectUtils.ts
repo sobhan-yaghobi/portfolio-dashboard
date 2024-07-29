@@ -2,12 +2,15 @@ import {
   SchemaProject,
   SchemaSkill,
   TypeProjectForm,
+  TypeProjectFormWithoutImage,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import { createImage } from "../image"
-import { TypeCreateProjectParam } from "@/lib/types"
+import { createImage, updateImage } from "../image"
+import { ProjectCreateInput, TypeCreateProjectParam } from "@/lib/types"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { isEqual } from "lodash"
+import { Skill } from "@prisma/client"
 
 export const validateProjectForm = (formData: FormData) =>
   SchemaProject.safeParse({
@@ -53,4 +56,41 @@ export const createProject = async ({
   }
 
   return { message: "Project create failure", status: false }
+}
+
+export const fetchProjectCreateInput = async (projectId: string) =>
+  await prisma.project.findUnique({ where: { id: projectId }, select: ProjectCreateInput })
+
+export const updateProjectImage = async (
+  projectImageFile: TypeProjectForm["image"],
+  projectImagePath: string
+): Promise<TypeReturnSererAction> => {
+  if (projectImageFile?.size) {
+    return await updateImage(projectImagePath, projectImageFile)
+  }
+  return { status: true }
+}
+
+export const newProjectInfoIsEqual = (
+  currentProjectInfo: TypeProjectFormWithoutImage,
+  newProjectInfo: TypeProjectFormWithoutImage
+) => isEqual(currentProjectInfo, newProjectInfo)
+
+export const saveUpdatedProject = async (
+  projectId: string,
+  projectInfoFormWithoutImage: TypeProjectFormWithoutImage,
+  relatedSkills: Skill[],
+  reValidPath: string
+): Promise<TypeReturnSererAction> => {
+  const updateResult = await prisma.project.update({
+    where: { id: projectId },
+    data: { ...projectInfoFormWithoutImage, skills: { connect: relatedSkills } },
+  })
+
+  if (updateResult) {
+    revalidatePath(reValidPath)
+    return { message: "Project updated successfully", status: true }
+  }
+
+  return { message: "Project update failed", status: false }
 }
