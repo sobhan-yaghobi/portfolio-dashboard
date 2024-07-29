@@ -4,8 +4,6 @@ import React from "react"
 import { Project } from "@prisma/client"
 import { toast } from "react-toastify"
 
-import { deleteProject } from "@/actions/project"
-
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -20,10 +18,11 @@ import {
   IconButton,
   Typography,
 } from "@mui/material"
+import { deleteProjectFormAction } from "@/actions/project/deleteProject"
 
 const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, description }) => {
   const deleteAction = async () => {
-    const deleteResult = await deleteProject(id, "/projects")
+    const deleteResult = await deleteProjectFormAction(id, "/projects")
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
     }

@@ -1,12 +1,16 @@
 import {
   SchemaProject,
-  SchemaSkill,
   TypeProjectForm,
   TypeProjectFormWithoutImage,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import { createImage, updateImage } from "../image"
-import { ProjectCreateInput, TypeCreateProjectParam } from "@/lib/types"
+import { createImage, deleteImage, updateImage } from "../image"
+import {
+  ProjectCreateInput,
+  ProjectIdAndImagePath,
+  TypeCreateProjectParam,
+  TypeProjectIdAndImagePath,
+} from "@/lib/types"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
@@ -94,3 +98,13 @@ export const saveUpdatedProject = async (
 
   return { message: "Project update failed", status: false }
 }
+
+export const fetchProjectIdAndImagePath = async (
+  projectId: string
+): Promise<TypeProjectIdAndImagePath | null> =>
+  await prisma.project.findUnique({ where: { id: projectId }, select: ProjectIdAndImagePath })
+
+export const deleteImageFromBucket = async (imagePath: string) => await deleteImage(imagePath)
+
+export const deleteProject = async (projectId: string) =>
+  await prisma.project.delete({ where: { id: projectId } })
