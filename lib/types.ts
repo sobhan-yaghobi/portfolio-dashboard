@@ -33,7 +33,7 @@ export type TypeCreateProjectParam = {
     id: string
     infoForm: TypeProjectForm
     relatedSkills: Skill[]
-    imagePath: string
+    imageUrl: string
   }
   reValidPath: string
 }

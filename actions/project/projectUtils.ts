@@ -49,7 +49,7 @@ export const createProject = async ({
     data: {
       ...project.infoForm,
       id: project.id,
-      image: project.imagePath,
+      image: project.imageUrl,
       skills: { connect: project.relatedSkills || [] },
     },
   })

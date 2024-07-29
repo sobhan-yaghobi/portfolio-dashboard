@@ -27,9 +27,9 @@ const setProject = async (
 
   const projectImageStatus = await setImageProject(projectId, projectInfoForm.image)
   if (projectImageStatus?.status) {
-    const imagePath = projectImageStatus.data as string
+    const imageUrl = projectImageStatus.data as string
     return createProject({
-      project: { id: projectId, imagePath, infoForm: projectInfoForm, relatedSkills },
+      project: { id: projectId, imageUrl, infoForm: projectInfoForm, relatedSkills },
       reValidPath,
     })
   }
