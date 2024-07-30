@@ -5,17 +5,13 @@ import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/definition"
 import { Skill } from "@prisma/client"
+import { CreateProjectComponentProps } from "@/lib/types"
 
 import { createProjectFormAction } from "@/actions/project/createProject"
 
 import Form from "./ProjectForm"
 
-type CreateProjectProps = {
-  skills: Skill[]
-  selectionSkills?: Skill[]
-}
-
-const CreateProject: React.FC<CreateProjectProps> = ({ skills, selectionSkills }) => {
+const CreateProject: React.FC<CreateProjectComponentProps> = ({ skills, selectionSkills }) => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
     selectionSkills ? selectionSkills : ([] as Skill[])
   )

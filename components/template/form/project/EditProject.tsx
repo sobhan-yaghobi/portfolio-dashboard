@@ -7,19 +7,12 @@ import { showActionReturnMessage } from "@/lib/utils"
 import { editProjectFormAction } from "@/actions/project/editProject"
 
 import { TypeError } from "@/lib/definition"
-import { TypeProjectInput } from "@/lib/types"
 import { Skill } from "@prisma/client"
+import { EditProjectComponentProps } from "@/lib/types"
 
 import Form from "./ProjectForm"
 
-type EditProjectProps = {
-  id: string
-  defaultValues: TypeProjectInput | null
-  skills: Skill[]
-  selectionSkills?: Skill[]
-}
-
-const EditProject: React.FC<EditProjectProps> = ({
+const EditProject: React.FC<EditProjectComponentProps> = ({
   id,
   defaultValues,
   skills,
@@ -46,7 +39,6 @@ const EditProject: React.FC<EditProjectProps> = ({
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
     showActionReturnMessage({ actionResult })
-
     formRef.current?.reset()
   }
 

@@ -89,6 +89,17 @@ export type TypeSaveUpdatedProjectParam = {
   }
   reValidPath: string
 }
+export type CreateProjectComponentProps = {
+  skills: Skill[]
+  selectionSkills?: Skill[]
+}
+export type EditProjectComponentProps = {
+  id: string
+  defaultValues: TypeProjectInput | null
+  skills: Skill[]
+  selectionSkills?: Skill[]
+}
+
 export type ProjectFormProps = {
   skills?: Skill[]
   selectedSkills: Skill[]
