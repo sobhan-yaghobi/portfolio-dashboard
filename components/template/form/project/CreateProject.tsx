@@ -1,30 +1,21 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { toast } from "react-toastify"
 import { showActionReturnMessage } from "@/lib/utils"
 
-import { editProjectFormAction } from "@/actions/project/editProject"
-
 import { TypeError } from "@/lib/definition"
-import { TypeProjectInput } from "@/lib/types"
 import { Skill } from "@prisma/client"
+
+import { createProjectFormAction } from "@/actions/project/createProject"
 
 import Form from "./ProjectForm"
 
-type EditProjectProps = {
-  id: string
-  defaultValues: TypeProjectInput | null
+type CreateProjectProps = {
   skills: Skill[]
   selectionSkills?: Skill[]
 }
 
-const EditProject: React.FC<EditProjectProps> = ({
-  id,
-  defaultValues,
-  skills,
-  selectionSkills,
-}) => {
+const CreateProject: React.FC<CreateProjectProps> = ({ skills, selectionSkills }) => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
     selectionSkills ? selectionSkills : ([] as Skill[])
   )
@@ -32,36 +23,30 @@ const EditProject: React.FC<EditProjectProps> = ({
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    if (!id) return toast.error("Project Id not found")
-
-    const actionResult = await editProjectFormAction({
-      project: {
-        id,
-        formData: event,
-        relatedSkills: selectedSkills,
-      },
-      reValidPath: "/dashboard/projects",
-    })
+    const actionResult = await createProjectFormAction(event, selectedSkills, "/projects")
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-    showActionReturnMessage({ actionResult })
-
+    showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetFrom } })
     formRef.current?.reset()
+  }
+
+  const resetFrom = () => {
+    setErrors({} as TypeError)
+    setSelectedSkills([] as Skill[])
   }
 
   return (
     <Form
-      defaultValues={defaultValues}
       errors={errors}
       ref={formRef}
       skills={skills}
       selectedSkills={selectedSkills}
       setSelectedSkills={setSelectedSkills}
       submitFunction={clientAction}
-      submitText="ویرایش"
+      submitText="اضافه کن"
     />
   )
 }
 
-export default EditProject
+export default CreateProject

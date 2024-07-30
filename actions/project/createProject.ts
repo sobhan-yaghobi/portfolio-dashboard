@@ -6,7 +6,7 @@ import { createProject, setImageProject, validateProjectForm } from "./projectUt
 import { TypeErrors, TypeReturnSererAction, TypeProjectForm } from "@/lib/definition"
 import { Skill } from "@prisma/client"
 
-export const addProjectFormAction = async (
+export const createProjectFormAction = async (
   formData: FormData,
   relatedSkills: Skill[],
   reValidPath: string

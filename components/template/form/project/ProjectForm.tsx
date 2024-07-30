@@ -49,7 +49,7 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
     }
 
     const addSkill = () => {
-      if (!mainSkill || !("id" in mainSkill)) return toast.error("Please select skill first")
+      if (!mainSkill || !("id" in mainSkill)) return false
 
       const isSkillExistInSelectedSkills = isSkillSelected(mainSkill.id)
 

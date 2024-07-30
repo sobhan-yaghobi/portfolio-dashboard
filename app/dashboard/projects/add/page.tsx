@@ -1,6 +1,6 @@
 import React from "react"
 import Typography from "@mui/material/Typography"
-import AddProject from "@/components/template/form/project/AddProject"
+import AddProject from "@/components/template/form/project/CreateProject"
 import prisma from "@/lib/prisma"
 
 const page: React.FC = async () => {
