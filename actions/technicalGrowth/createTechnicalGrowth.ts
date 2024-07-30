@@ -30,5 +30,5 @@ const setTechnicalGrowth = async (
 
   if (createTechnicalGrowthResult.status) return createTechnicalGrowthResult
 
-  return { message: "technical growth creation failure", status: false }
+  return { message: "Technical Growth creation failure", status: false }
 }
