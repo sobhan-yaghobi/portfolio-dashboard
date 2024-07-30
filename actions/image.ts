@@ -1,25 +1,19 @@
 "use server"
 
-import { TypeReturnSererAction } from "@/lib/definition"
 import supabase from "@/lib/supabase"
 import { getImagePath } from "@/lib/utils"
 import { env } from "process"
 
-const bucket = env.NEXT_PUBLIC_IMAGE_BUCKET
+import { TypeUploadImageParam } from "@/lib/types"
+import { TypeReturnSererAction } from "@/lib/definition"
 
-type TypeUploadImageParam = {
-  image: {
-    file: File
-    path: string
-  }
-  bucket: string
-}
+const bucket = env.NEXT_PUBLIC_IMAGE_BUCKET
 
 export const createImage = async (
   imagePath: string,
   file: File
 ): Promise<TypeReturnSererAction> => {
-  if (!bucket) return { message: "bucket name not found", status: false }
+  if (!bucket) return { message: "Bucket name not found", status: false }
 
   return await uploadImage({ image: { file, path: imagePath }, bucket })
 }
@@ -56,7 +50,7 @@ export const updateImage = async (imageUrl: string, file: File): Promise<TypeRet
     if (data) return { message: "Update image successfully", status: true }
   }
 
-  return { message: "Update image failure", status: false }
+  return { message: "Update image got failure", status: false }
 }
 
 export const deleteImage = async (imageUrl: string): Promise<TypeReturnSererAction> => {
@@ -69,5 +63,5 @@ export const deleteImage = async (imageUrl: string): Promise<TypeReturnSererActi
     if (data) return { message: "Remove image successfully", status: true }
   }
 
-  return { message: "Remove image failure", status: false }
+  return { message: "Remove image got failure", status: false }
 }

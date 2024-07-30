@@ -128,3 +128,11 @@ export type TypeSetEditTechnicalGrowthParam = {
   }
   reValidPath: string
 }
+
+export type TypeUploadImageParam = {
+  image: {
+    file: File
+    path: string
+  }
+  bucket: string
+}
