@@ -1,8 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
+import { find, some } from "lodash"
 
 import { TypeError } from "@/lib/definition"
+import { TypeProjectInput } from "@/lib/types"
+import { Skill } from "@prisma/client"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -13,9 +16,6 @@ import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
-import { TypeProjectInput } from "@/lib/types"
-import { Skill } from "@prisma/client"
-import { find, some } from "lodash"
 import {
   FormControl,
   IconButton,
@@ -24,6 +24,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material"
+import Image from "next/image"
 
 type ProjectFormProps = {
   skills?: Skill[]
@@ -78,6 +79,17 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
           <Typography variant="subtitle1" component={"h5"}>
             Image
           </Typography>
+          {defaultValues?.image && (
+            <div className="bg-gray-500/40 w-fit h-72 p-3 rounded-xl overflow-hidden">
+              <Image
+                height={1000}
+                width={1000}
+                src={defaultValues?.image}
+                className="h-full w-auto rounded-2xl"
+                alt="project image"
+              />
+            </div>
+          )}
           <TextError message={errors && errors.image}>
             <input
               name="image"
@@ -87,7 +99,6 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
                 errors && errors?.image ? "border-red-500" : "border-white"
               }`}
             />
-            {defaultValues && defaultValues.image && <span>Default : {defaultValues.image}</span>}
           </TextError>
         </section>
 

@@ -20,7 +20,7 @@ const Page: React.FC<{
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        Edit Project
+        ویرایش پروژه
       </Typography>
       <EditProject id={id} defaultValues={mainProject} skills={skills} />
     </>

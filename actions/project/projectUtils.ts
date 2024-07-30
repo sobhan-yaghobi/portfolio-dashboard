@@ -88,7 +88,11 @@ export const saveUpdatedProject = async ({
 }: TypeSaveUpdatedProjectParam): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.project.update({
     where: { id: project.id },
-    data: { ...project.InfoFormWithoutImage, skills: { connect: project.relatedSkills } },
+    data: {
+      ...project.InfoFormWithoutImage,
+      ...(project.imageUrl && { image: project.imageUrl }),
+      skills: { connect: project.relatedSkills },
+    },
   })
 
   if (updateResult) {

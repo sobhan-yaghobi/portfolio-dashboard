@@ -83,6 +83,7 @@ export type TypeSaveUpdatedProjectParam = {
     id: string
     InfoFormWithoutImage: TypeProjectFormWithoutImage
     relatedSkills: Skill[]
+    imageUrl?: string
   }
   reValidPath: string
 }

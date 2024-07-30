@@ -56,6 +56,7 @@ const setEditProject = async ({
       id: project.id,
       InfoFormWithoutImage: projectInfoFormWithoutImage,
       relatedSkills: project.relatedSkills,
+      imageUrl: typeof updatedImageResult.data === "string" ? updatedImageResult.data : undefined,
     },
     reValidPath,
   })

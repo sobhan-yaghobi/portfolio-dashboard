@@ -1,7 +1,7 @@
 "use server"
 
 import supabase from "@/lib/supabase"
-import { getImagePath } from "@/lib/utils"
+import { getImagePath, updateUrl } from "@/lib/utils"
 import { env } from "process"
 
 import { TypeUploadImageParam } from "@/lib/types"
@@ -46,8 +46,9 @@ export const updateImage = async (imageUrl: string, file: File): Promise<TypeRet
   const imagePath = getImagePath(imageUrl)
   if (imagePath) {
     const { data } = await supabase.storage.from(bucket).update(imagePath, file)
+    const updatedImageUrl = updateUrl(imageUrl)
 
-    if (data) return { message: "Update image successfully", status: true }
+    if (data) return { message: "Update image successfully", status: true, data: updatedImageUrl }
   }
 
   return { message: "Update image got failure", status: false }

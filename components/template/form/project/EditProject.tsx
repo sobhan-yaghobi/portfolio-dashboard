@@ -2,13 +2,15 @@
 
 import React, { useRef, useState } from "react"
 import { toast } from "react-toastify"
+import { showActionReturnMessage } from "@/lib/utils"
+
+import { editProjectFormAction } from "@/actions/project/editProject"
 
 import { TypeError } from "@/lib/definition"
-
-import Form from "./ProjectForm"
-import { editProjectFormAction } from "@/actions/project/editProject"
 import { TypeProjectInput } from "@/lib/types"
 import { Skill } from "@prisma/client"
+
+import Form from "./ProjectForm"
 
 type EditProjectProps = {
   id: string
@@ -30,31 +32,24 @@ const EditProject: React.FC<EditProjectProps> = ({
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    if (id) {
-      const actionResult = await editProjectFormAction({
-        project: {
-          id,
-          formData: event,
-          relatedSkills: selectedSkills,
-        },
-        reValidPath: "/dashboard/projects",
-      })
-      if (actionResult) {
-        if ("errors" in actionResult) {
-          return setErrors({ ...actionResult.errors } as TypeError)
-        }
+    if (!id) return toast.error("Project Id not found")
 
-        const message = actionResult.message
-        if (actionResult.status) {
-          setErrors({} as TypeError)
-          message && toast.success(message)
-        } else {
-          message && toast.error(message)
-        }
-        formRef.current?.reset()
-      }
-    }
+    const actionResult = await editProjectFormAction({
+      project: {
+        id,
+        formData: event,
+        relatedSkills: selectedSkills,
+      },
+      reValidPath: "/dashboard/projects",
+    })
+
+    if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
+
+    showActionReturnMessage(actionResult)
+
+    formRef.current?.reset()
   }
+
   return (
     <Form
       skills={skills}
