@@ -70,7 +70,7 @@ export type TypeCreateSkillParam = {
     id: string
     infoForm: TypeSkillForm
     relatedProjects: Project[]
-    imagePath: string
+    imageUrl: string
   }
   reValidPath: string
 }

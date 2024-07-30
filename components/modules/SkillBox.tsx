@@ -2,7 +2,7 @@
 
 import React from "react"
 import { toast } from "react-toastify"
-import { Skills } from "@prisma/client"
+import { Skill } from "@prisma/client"
 
 import { deleteSkillFormAction } from "@/actions/skill/deleteSkill"
 
@@ -11,9 +11,18 @@ import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 
 import Link from "next/link"
-import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material"
+import Image from "next/image"
 
-const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
+const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
   const deleteSkill = async () => {
     const deleteResult = await deleteSkillFormAction(id, "/skills")
 
@@ -28,13 +37,21 @@ const SkillBox: React.FC<Skills> = ({ id, image, name, link, description }) => {
       <IconButton
         onClick={deleteSkill}
         title="delete"
-        className="absolute right-1 top-1 bg-black/30"
+        className="!absolute left-1 top-1 bg-black/30"
         color="error"
       >
         <DeleteIcon />
       </IconButton>
       <CardContent>
-        <div className="bg-white/50 w-20 h-10 mb-3 rounded-md" />
+        <CardMedia>
+          <Image
+            className="bg-white/50 w-20 h-10 mb-3 rounded-md"
+            height={40}
+            width={80}
+            src={image}
+            alt="skill image"
+          />
+        </CardMedia>
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>

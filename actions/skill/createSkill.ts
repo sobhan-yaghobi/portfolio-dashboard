@@ -6,7 +6,7 @@ import { createSkill, setImageSkill, validateSkillForm } from "./skillUtils"
 import { TypeSkillForm, TypeErrors, TypeReturnSererAction } from "@/lib/definition"
 import { Project } from "@prisma/client"
 
-export const addSkillFormAction = async (
+export const createSkillFormAction = async (
   formData: FormData,
   relatedProjects: Project[],
   reValidPath: string
@@ -25,14 +25,15 @@ const setSkill = async (
 ): Promise<TypeReturnSererAction> => {
   const skillId = uuid()
 
-  const skillImageStatus = await setImageSkill(skillId, skillInfoForm.image)
-  if (skillImageStatus?.status) {
-    const imagePath = skillImageStatus.data as string
+  const skillImageResult = await setImageSkill(skillId, skillInfoForm.image)
+
+  if (skillImageResult?.status) {
+    const imageUrl = skillImageResult.data as string
     return createSkill({
-      skill: { id: skillId, imagePath, infoForm: skillInfoForm, relatedProjects },
+      skill: { id: skillId, imageUrl, infoForm: skillInfoForm, relatedProjects },
       reValidPath,
     })
   }
 
-  return { message: skillImageStatus?.message, status: false }
+  return { message: skillImageResult?.message, status: false }
 }
