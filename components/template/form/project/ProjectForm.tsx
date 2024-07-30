@@ -51,9 +51,9 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
     const addSkill = () => {
       if (!mainSkill || !("id" in mainSkill)) return false
 
-      const isSkillExistInSelectedSkills = isSkillSelected(mainSkill.id)
+      const isSkillExistInSelectedSkillList = isSkillSelected(mainSkill.id)
 
-      if (isSkillExistInSelectedSkills) return toast.error("Skill is already in selected skills")
+      if (isSkillExistInSelectedSkillList) return toast.error("Skill is already in selected skills")
 
       setSelectedSkills((prev) => [...prev, mainSkill])
       setMainSkill({} as Skill)
@@ -151,11 +151,14 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
           </Typography>
           <TextError message={errors && errors.source}>
             <TextField
-              dir="ltr"
-              size="small"
               className="w-full"
+              defaultValue={defaultValues && defaultValues.source}
+              dir="ltr"
+              error={Boolean(errors && errors?.source)}
               name="source"
               placeholder="https://source.com"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -163,9 +166,6 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              error={Boolean(errors && errors?.source)}
-              defaultValue={defaultValues && defaultValues.source}
             />
           </TextError>
         </section>

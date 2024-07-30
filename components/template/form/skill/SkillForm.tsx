@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import { find, some } from "lodash"
+import { toast } from "react-toastify"
 
 import { Project } from "@prisma/client"
 import { SkillFormComponentProps } from "@/lib/types"
@@ -20,7 +21,6 @@ import MenuItem from "@mui/material/MenuItem"
 import IconButton from "@mui/material/IconButton"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
-import { toast } from "react-toastify"
 import Image from "next/image"
 
 const SkillForm = React.forwardRef<HTMLFormElement, SkillFormComponentProps>(
