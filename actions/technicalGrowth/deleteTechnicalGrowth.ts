@@ -1,10 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-
-import { TypeReturnSererAction } from "@/lib/definition"
 import { isTechnicalGrowthExist } from "./technicalGrowthUtils"
 import { deleteTechnicalGrowth } from "./technicalGrowthUtils"
+
+import { TypeReturnSererAction } from "@/lib/definition"
 
 export const deleteTechnicalGrowthFormAction = async (
   technicalGrowthId: string,
@@ -14,7 +14,7 @@ export const deleteTechnicalGrowthFormAction = async (
 
   if (isTechnicalGrowthResult) return setDeleteSkill(technicalGrowthId, reValidPath)
 
-  return { message: "Project remove got failure", status: false }
+  return { message: "Technical Growth not found", status: false }
 }
 
 const setDeleteSkill = async (
