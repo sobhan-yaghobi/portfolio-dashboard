@@ -52,14 +52,14 @@ const EditProject: React.FC<EditProjectProps> = ({
 
   return (
     <Form
+      defaultValues={defaultValues}
+      errors={errors}
+      ref={formRef}
       skills={skills}
       selectedSkills={selectedSkills}
       setSelectedSkills={setSelectedSkills}
-      ref={formRef}
-      submitText="Add Project"
-      errors={errors}
       submitFunction={clientAction}
-      defaultValues={defaultValues}
+      submitText="اضافه کردن پروژه"
     />
   )
 }

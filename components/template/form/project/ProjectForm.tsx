@@ -2,9 +2,9 @@
 
 import React, { useState } from "react"
 import { find, some } from "lodash"
+import { toast } from "react-toastify"
 
-import { TypeError } from "@/lib/definition"
-import { TypeProjectInput } from "@/lib/types"
+import { ProjectFormProps } from "@/lib/types"
 import { Skill } from "@prisma/client"
 
 import TitleIcon from "@mui/icons-material/Title"
@@ -26,16 +26,6 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 
-type ProjectFormProps = {
-  skills?: Skill[]
-  selectedSkills: Skill[]
-  setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
-  defaultValues?: TypeProjectInput | null
-  submitText: string
-  errors: TypeError
-  submitFunction: (formData: FormData) => void | any
-}
-
 const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
   (
     {
@@ -50,68 +40,75 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
     ref
   ) => {
     const [mainSkill, setMainSkill] = useState<Skill | null>(null)
-    const handleChangeAction = (e: SelectChangeEvent<string>) => {
+
+    const onChangeSkill = (e: SelectChangeEvent<string>) => {
       const mainSkill = find(skills, function (item) {
         return item.id === e.target.value
       })
       setMainSkill(mainSkill ? mainSkill : ({} as Skill))
     }
-    const addSkillAction = () => {
-      if (mainSkill && "id" in mainSkill) {
-        const isSelect = selectedSkills.some((selectedSkills) => selectedSkills.id === mainSkill.id)
 
-        if (!isSelect) {
-          setSelectedSkills((prev) => [...prev, mainSkill])
-          setMainSkill({} as Skill)
-        }
-      }
+    const addSkill = () => {
+      if (!mainSkill || !("id" in mainSkill)) return toast.error("Please select skill first")
+
+      const isSkillExistInSelectedSkills = isSkillSelected(mainSkill.id)
+
+      if (isSkillExistInSelectedSkills) return toast.error("Skill is already in selected skills")
+
+      setSelectedSkills((prev) => [...prev, mainSkill])
+      setMainSkill({} as Skill)
     }
-    const removeSkillAction = (id: string) =>
+
+    const removeSkill = (id: string) =>
       setSelectedSkills((prev) => prev.filter((item) => item.id !== id))
-    const isSelected = (id: string) =>
+
+    const isSkillSelected = (id: string) =>
       some(selectedSkills, function (selectedSkills) {
         return selectedSkills.id === id
       })
 
     return (
-      <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+      <form action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3" ref={ref}>
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Image
+            عکس
           </Typography>
           {defaultValues?.image && (
             <div className="bg-gray-500/40 w-fit h-72 p-3 rounded-xl overflow-hidden">
               <Image
-                height={1000}
-                width={1000}
-                src={defaultValues?.image}
-                className="h-full w-auto rounded-2xl"
                 alt="project image"
+                className="h-full w-auto rounded-2xl"
+                height={500}
+                src={defaultValues?.image}
+                width={500}
               />
             </div>
           )}
           <TextError message={errors && errors.image}>
             <input
-              name="image"
-              type="file"
               accept="image/*"
               className={`w-full p-4 rounded-md border border-solid ${
                 errors && errors?.image ? "border-red-500" : "border-white"
               }`}
+              name="image"
+              type="file"
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Title
+            عنوان
           </Typography>
           <TextError message={errors && errors.title}>
             <TextField
-              size="small"
               className="w-full"
+              defaultValue={defaultValues && defaultValues.title}
+              error={Boolean(errors && errors?.title)}
               name="title"
-              placeholder="like next js dashboard"
+              placeholder="مانند داشبورد با next js"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -119,23 +116,24 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              error={Boolean(errors && errors?.title)}
-              defaultValue={defaultValues && defaultValues.title}
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Project Link
+            لینک پروژه
           </Typography>
           <TextError message={errors && errors.link}>
             <TextField
-              size="small"
               className="w-full"
+              defaultValue={defaultValues && defaultValues.link}
+              dir="ltr"
+              error={Boolean(errors && errors?.link)}
               name="link"
               placeholder="https://project.com"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -143,19 +141,17 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              error={Boolean(errors && errors?.link)}
-              defaultValue={defaultValues && defaultValues.link}
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Source Link
+            لینک منبع پروژه
           </Typography>
           <TextError message={errors && errors.source}>
             <TextField
+              dir="ltr"
               size="small"
               className="w-full"
               name="source"
@@ -176,19 +172,19 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Skills Usage {skills?.length}
+            مهارت های استفاده شده
           </Typography>
           <div className="w-full flex gap-3">
-            <FormControl className="flex-1" onBlur={addSkillAction}>
-              <InputLabel id="demo-simple-select-helper-label">Skills</InputLabel>
+            <FormControl className="flex-1" onBlur={addSkill}>
+              <InputLabel id="demo-simple-select-helper-label">مهارت ها</InputLabel>
               <Select
-                label="Select Skill"
-                onChange={handleChangeAction}
+                label="مهارتی انتخاب کنید"
+                onChange={onChangeSkill}
                 value={mainSkill?.id || ""}
               >
                 {skills &&
                   skills?.map((item) => (
-                    <MenuItem key={item.id} disabled={isSelected(item.id)} value={item.id}>
+                    <MenuItem disabled={isSkillSelected(item.id)} key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
                   ))}
@@ -203,10 +199,10 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
               >
                 <span className="px-2 mr-1">{item.name}</span>
                 <IconButton
-                  onClick={() => removeSkillAction(item.id)}
                   className="flex-1"
-                  size="small"
                   color="error"
+                  onClick={() => removeSkill(item.id)}
+                  size="small"
                 >
                   <DeleteOutlineOutlinedIcon />
                 </IconButton>
@@ -217,19 +213,19 @@ const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormProps>(
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Desc
+            متن توضیح پروژه
           </Typography>
           <TextError message={errors && errors.description}>
             <TextField
-              size="small"
               className="w-full"
-              name="description"
-              placeholder="about project"
+              defaultValue={defaultValues && defaultValues.description}
+              error={Boolean(errors && errors?.description)}
+              size="small"
               multiline
+              name="description"
+              placeholder="درمورد پروژه ی خود بنویسید"
               rows={4}
               variant="outlined"
-              error={Boolean(errors && errors?.description)}
-              defaultValue={defaultValues && defaultValues.description}
             />
           </TextError>
         </section>

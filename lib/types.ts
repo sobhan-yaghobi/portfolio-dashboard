@@ -2,6 +2,7 @@ import { Admin, Prisma, Project, Skill } from "@prisma/client"
 import {
   TypeAdminProfileFrom,
   TypeAdminProfileFromWithoutImage,
+  TypeError,
   TypeProjectForm,
   TypeProjectFormWithoutImage,
   TypeReturnSererAction,
@@ -87,6 +88,15 @@ export type TypeSaveUpdatedProjectParam = {
     imageUrl?: string
   }
   reValidPath: string
+}
+export type ProjectFormProps = {
+  skills?: Skill[]
+  selectedSkills: Skill[]
+  setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
+  defaultValues?: TypeProjectInput | null
+  submitText: string
+  errors: TypeError
+  submitFunction: (formData: FormData) => void | any
 }
 
 export type TypeSkillInput = Prisma.SkillCreateInput
