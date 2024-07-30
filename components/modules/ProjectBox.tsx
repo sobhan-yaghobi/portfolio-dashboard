@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@mui/material"
 import { deleteProjectFormAction } from "@/actions/project/deleteProject"
+import Image from "next/image"
 
 const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, description }) => {
   const deleteAction = async () => {
@@ -33,16 +34,14 @@ const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, descrip
       <IconButton
         onClick={deleteAction}
         title="delete"
-        className="absolute right-1 top-1 bg-black/30"
+        className="!absolute right-1 top-1 bg-black/30"
         color="error"
       >
         <DeleteIcon />
       </IconButton>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="https://picsum.photos/id/870/200/300?grayscale&blur=2"
-        title="project image"
-      />
+      <CardMedia>
+        <Image height={400} width={300} className="w-full" src={image} alt="project image" />
+      </CardMedia>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}

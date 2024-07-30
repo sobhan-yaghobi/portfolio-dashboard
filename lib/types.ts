@@ -38,6 +38,15 @@ export type TypeCreateProjectParam = {
   reValidPath: string
 }
 
+export type TypeEditProjectFormActionParam = {
+  project: {
+    id: string
+    formData: FormData
+    relatedSkills: Skill[]
+  }
+  reValidPath: string
+}
+
 export type TypeSkillInput = Prisma.SkillCreateInput
 export const SkillCreateInput: Prisma.SkillSelect = {
   name: true,

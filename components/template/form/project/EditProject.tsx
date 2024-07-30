@@ -31,12 +31,14 @@ const EditProject: React.FC<EditProjectProps> = ({
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editProjectFormAction(
-        id,
-        event,
-        selectedSkills,
-        "/dashboard/projects"
-      )
+      const actionResult = await editProjectFormAction({
+        project: {
+          id,
+          formData: event,
+          relatedSkills: selectedSkills,
+        },
+        reValidPath: "/dashboard/projects",
+      })
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)
