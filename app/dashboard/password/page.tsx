@@ -5,7 +5,7 @@ import { decrypt } from "@/auth/session"
 import PasswordForm from "@/components/template/form/Password"
 import Typography from "@mui/material/Typography"
 
-const page = async () => {
+const page: React.FC = async () => {
   const cookie = cookies().get("session")?.value
   const sessionResult = await decrypt(cookie)
 

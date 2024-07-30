@@ -32,16 +32,17 @@ const checkPassword = async (
   adminId: string,
   passwordFormInfo: TypeAdminPasswordForm
 ): Promise<TypeReturnSererAction> => {
+  const { currentPassword, newPassword } = passwordFormInfo
+  if (currentPassword === newPassword)
+    return { message: "two password is equal, change it", status: false }
+
   const adminInfo = await fetchAdminIdAndPassword(adminId)
 
   if (!adminInfo) return { status: false, message: "Admin not found" }
 
-  const comparePasswordResult = await comparePassword(
-    adminInfo.password,
-    passwordFormInfo.currentPassword
-  )
+  const comparePasswordResult = await comparePassword(adminInfo.password, currentPassword)
 
-  if (comparePasswordResult) return changePassword(adminId, passwordFormInfo.newPassword)
+  if (comparePasswordResult) return changePassword(adminId, newPassword)
 
   return { status: false, message: "Current password is incorrect" }
 }
