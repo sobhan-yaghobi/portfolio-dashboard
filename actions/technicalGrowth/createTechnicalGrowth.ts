@@ -20,17 +20,15 @@ const setTechnicalGrowth = async (
   technicalGrowthInfoForm: TypeTechnicalGrowthForm,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const technicalGrowthLengths = await prisma.technicalGrowth.count()
+  const technicalGrowthListCount = await prisma.technicalGrowth.count()
 
   const createTechnicalGrowthResult = await createTechnicalGrowth(
     technicalGrowthInfoForm,
-    technicalGrowthLengths,
+    technicalGrowthListCount,
     reValidPath
   )
 
-  if (createTechnicalGrowthResult.status) {
-    return createTechnicalGrowthResult
-  }
+  if (createTechnicalGrowthResult.status) return createTechnicalGrowthResult
 
   return { message: "technical growth creation failure", status: false }
 }

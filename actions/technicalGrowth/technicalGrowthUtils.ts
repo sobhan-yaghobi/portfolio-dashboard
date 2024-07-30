@@ -1,13 +1,14 @@
+import prisma from "@/lib/prisma"
+import { isEqual } from "lodash"
+import { revalidatePath } from "next/cache"
+
+import { TechnicalGrowthInput } from "@/lib/types"
+import { TechnicalGrowth } from "@prisma/client"
 import {
   SchemaTechnicalGrowth,
   TypeReturnSererAction,
   TypeTechnicalGrowthForm,
 } from "@/lib/definition"
-import prisma from "@/lib/prisma"
-import { TechnicalGrowthInput } from "@/lib/types"
-import { TechnicalGrowth } from "@prisma/client"
-import { isEqual } from "lodash"
-import { revalidatePath } from "next/cache"
 
 export const validateTechnicalGrowthForm = (formData: FormData) =>
   SchemaTechnicalGrowth.safeParse({
@@ -18,12 +19,13 @@ export const validateTechnicalGrowthForm = (formData: FormData) =>
 
 export const createTechnicalGrowth = async (
   technicalGrowthInfoForm: TypeTechnicalGrowthForm,
-  technicalGrowthOrder: number,
+  technicalGrowthListCount: number,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
   const technicalGrowthResult = await prisma.technicalGrowth.create({
-    data: { ...technicalGrowthInfoForm, order: technicalGrowthOrder },
+    data: { ...technicalGrowthInfoForm, order: technicalGrowthListCount },
   })
+
   if (technicalGrowthResult) {
     revalidatePath(reValidPath)
     return { message: "Technical Growth create successfully", status: true }
