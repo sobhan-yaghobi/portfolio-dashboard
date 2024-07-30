@@ -1,6 +1,6 @@
 import React from "react"
 import Typography from "@mui/material/Typography"
-import AddSkill from "@/components/template/form/skill/AddSkill"
+import CreateSkillForm from "@/components/template/form/skill/CreateSkill"
 import prisma from "@/lib/prisma"
 
 const page: React.FC = async () => {
@@ -8,9 +8,9 @@ const page: React.FC = async () => {
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        Add Skill
+        اضافه کردن مهارت
       </Typography>
-      <AddSkill projects={projects} />
+      <CreateSkillForm projects={projects} />
     </>
   )
 }

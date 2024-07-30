@@ -142,6 +142,15 @@ export type CreateSkillComponentProps = {
   projects: Project[]
   selectionProjects?: Project[]
 }
+export type SkillFormComponentProps = {
+  projects?: Project[]
+  selectedProjects: Project[]
+  setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
+  defaultValues?: TypeSkillInput | null
+  submitText: string
+  submitFunction: (formData: FormData) => void | any
+  errors: TypeError
+}
 
 export type TypeTechnicalGrowthInput = Prisma.TechnicalGrowthCreateInput
 export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {

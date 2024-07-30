@@ -4,8 +4,7 @@ import React, { useState } from "react"
 import { find, some } from "lodash"
 
 import { Project } from "@prisma/client"
-import { TypeError } from "@/lib/definition"
-import { TypeSkillInput } from "@/lib/types"
+import { SkillFormComponentProps } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -18,21 +17,13 @@ import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
-import { IconButton } from "@mui/material"
+import IconButton from "@mui/material/IconButton"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
+import { toast } from "react-toastify"
+import Image from "next/image"
 
-type SkillFormProps = {
-  projects?: Project[]
-  selectedProjects: Project[]
-  setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
-  defaultValues?: TypeSkillInput | null
-  submitText: string
-  submitFunction: (formData: FormData) => void | any
-  errors: TypeError
-}
-
-const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
+const SkillForm = React.forwardRef<HTMLFormElement, SkillFormComponentProps>(
   (
     {
       projects,
@@ -46,60 +37,76 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
     ref
   ) => {
     const [mainProject, setMainProject] = useState<Project | null>(null)
-    const handleChangeAction = (e: SelectChangeEvent<string>) => {
+
+    const onChangeProject = (e: SelectChangeEvent<string>) => {
       const mainProject = find(projects, function (item) {
         return item.id === e.target.value
       })
       setMainProject(mainProject ? mainProject : ({} as Project))
     }
-    const addProjectAction = () => {
-      if (mainProject && "id" in mainProject) {
-        const isSelect = selectedProjects.some(
-          (selectedProject) => selectedProject.id === mainProject.id
-        )
 
-        if (!isSelect) {
-          setSelectedProjects((prev) => [...prev, mainProject])
-          setMainProject({} as Project)
-        }
-      }
+    const createProject = () => {
+      if (!mainProject || !("id" in mainProject)) return false
+
+      const isProjectExistInSelectedProjectList = isProjectSelected(mainProject.id)
+
+      if (isProjectExistInSelectedProjectList)
+        return toast.error("Project is already in selected project list")
+
+      setSelectedProjects((prev) => [...prev, mainProject])
+      setMainProject({} as Project)
     }
-    const removeProjectAction = (id: string) =>
-      setSelectedProjects((prev) => prev.filter((item) => item.id !== id))
-    const isSelected = (id: string) =>
+
+    const removeProject = (projectId: string) =>
+      setSelectedProjects((prev) => prev.filter((item) => item.id !== projectId))
+
+    const isProjectSelected = (projectId: string) =>
       some(selectedProjects, function (selectedProject) {
-        return selectedProject.id === id
+        return selectedProject.id === projectId
       })
 
     return (
-      <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
+      <form action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3" ref={ref}>
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Image
+            عکس
           </Typography>
+          {defaultValues?.image && (
+            <div className="bg-gray-500/40 w-fit h-72 p-3 rounded-xl overflow-hidden">
+              <Image
+                alt="skill image"
+                className="h-full w-auto rounded-2xl"
+                height={500}
+                src={defaultValues.image}
+                width={500}
+              />
+            </div>
+          )}
           <TextError message={errors && errors.image}>
             <input
-              name="image"
-              type="file"
+              accept="image/*"
               className={`w-full p-4 rounded-md border border-solid ${
                 errors && errors?.image ? "border-red-500" : "border-white"
               }`}
+              name="image"
+              type="file"
             />
-            {defaultValues && defaultValues.image && <span>Default : {defaultValues.image}</span>}
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Name
+            نام مهارت
           </Typography>
           <TextError message={errors && errors?.name}>
             <TextField
-              error={Boolean(errors && errors?.name)}
-              size="small"
               className="w-full"
+              defaultValue={defaultValues && defaultValues.name}
+              error={Boolean(errors && errors?.name)}
               name="name"
-              placeholder="like JavaScript"
+              placeholder="مانند javaScript"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -107,27 +114,25 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              defaultValue={defaultValues && defaultValues.name}
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Project Usage
+            پروژه های استفاده شده
           </Typography>
           <div className="w-full flex gap-3">
-            <FormControl className="flex-1" onBlur={addProjectAction}>
-              <InputLabel id="demo-simple-select-helper-label">Projects</InputLabel>
+            <FormControl className="flex-1" onBlur={createProject}>
+              <InputLabel id="demo-simple-select-helper-label">پروژه ها</InputLabel>
               <Select
-                label="Select Projects"
-                onChange={handleChangeAction}
+                label="پروژه ای انتخاب کنید"
+                onChange={onChangeProject}
                 value={mainProject?.id || ""}
               >
                 {projects &&
                   projects?.map((item) => (
-                    <MenuItem key={item.id} disabled={isSelected(item.id)} value={item.id}>
+                    <MenuItem disabled={isProjectSelected(item.id)} key={item.id} value={item.id}>
                       {item.title}
                     </MenuItem>
                   ))}
@@ -142,9 +147,9 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
               >
                 <span className="px-2 mr-1">{item.title}</span>
                 <IconButton
-                  onClick={() => removeProjectAction(item.id)}
                   className="flex-1"
                   size="small"
+                  onClick={() => removeProject(item.id)}
                   color="error"
                 >
                   <DeleteOutlineOutlinedIcon />
@@ -157,14 +162,17 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
         <section>
           <TextError message={errors && errors?.link}>
             <Typography variant="subtitle1" component={"h5"}>
-              Article Link
+              لینک داکیومنت
             </Typography>
             <TextField
-              error={Boolean(errors && errors?.link)}
-              size="small"
               className="w-full"
+              defaultValue={defaultValues && defaultValues.link}
+              dir="ltr"
+              error={Boolean(errors && errors?.link)}
               name="link"
               placeholder="https://javascript.org"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -172,8 +180,6 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              defaultValue={defaultValues && defaultValues.link}
             />
           </TextError>
         </section>
@@ -181,18 +187,18 @@ const SkillForm = React.forwardRef<HTMLFormElement, SkillFormProps>(
         <section>
           <TextError message={errors && errors?.description}>
             <Typography variant="subtitle1" component={"h5"}>
-              Desc
+              متن توضیح مهارت
             </Typography>
             <TextField
+              className="w-full"
+              defaultValue={defaultValues && defaultValues.description}
               error={Boolean(errors && errors?.description)}
               size="small"
-              className="w-full"
-              name="description"
-              placeholder="about JavaScript"
               multiline
+              name="description"
+              placeholder="در مورد مهارت خود بنویسید"
               rows={4}
               variant="outlined"
-              defaultValue={defaultValues && defaultValues.description}
             />
           </TextError>
         </section>
