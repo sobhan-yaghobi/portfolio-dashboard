@@ -1,10 +1,10 @@
 "use server"
 
-import { SchemaSignIn, TypeErrors, TypeReturnSererAction, TypeSignInForm } from "@/lib/definition"
-
 import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
 import { createSession, deleteSession } from "@/auth/session"
+
+import { SchemaSignIn, TypeErrors, TypeReturnSererAction, TypeSignInForm } from "@/lib/definition"
 
 export const signInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
   const validateResult = validateSignInForm(formData)
@@ -46,16 +46,13 @@ const checkAdminForLogin = async (
 ): Promise<TypeReturnSererAction> => {
   const { email, password } = adminInfoForm
   const adminInfoResult = await prisma.admin.findUnique({ where: { email } })
+  if (!adminInfoResult) return { message: "Admin not found", status: false }
 
-  if (adminInfoResult) {
-    const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
+  const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
+  if (!comparePasswordResult) return { message: "Wrong Info", status: false }
 
-    if (comparePasswordResult) {
-      await createSession(adminInfoResult.id)
-      return { message: "Admin login successfully", status: true }
-    }
-  }
-  return { message: "Sorry, you are not an admin", status: false }
+  await createSession(adminInfoResult.id)
+  return { message: "Admin login successfully", status: true }
 }
 
 export const logout = () => deleteSession()
