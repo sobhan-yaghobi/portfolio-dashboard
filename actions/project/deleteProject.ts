@@ -1,7 +1,8 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { deleteImageFromBucket, deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
+import { deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
+import { deleteImage } from "../image"
 
 import { TypeReturnSererAction } from "@/lib/definition"
 import { TypeProjectIdAndImagePath } from "@/lib/types"
@@ -21,7 +22,7 @@ const setDeleteProject = async (
   { id, image }: TypeProjectIdAndImagePath,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const deleteImageResult = await deleteImageFromBucket(image)
+  const deleteImageResult = await deleteImage(image)
   const deleteProjectResult = await deleteProject(id)
 
   if (deleteImageResult.status && deleteProjectResult) {

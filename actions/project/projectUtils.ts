@@ -4,7 +4,6 @@ import { isEqual } from "lodash"
 import { getImagePath } from "@/lib/utils"
 import { createImage, deleteImage, updateImage } from "../image"
 
-import { Skill } from "@prisma/client"
 import {
   SchemaProject,
   TypeProjectForm,
@@ -70,10 +69,10 @@ export const fetchProjectCreateInput = async (projectId: string) =>
 
 export const updateProjectImage = async (
   projectImageFile: TypeProjectForm["image"],
-  projectImagePath: string
+  projectImageUrl: string
 ): Promise<TypeReturnSererAction> => {
   if (projectImageFile?.size) {
-    return await updateImage(projectImagePath, projectImageFile)
+    return await updateImage(projectImageUrl, projectImageFile)
   }
 
   return { status: true }
@@ -105,13 +104,6 @@ export const fetchProjectIdAndImagePath = async (
   projectId: string
 ): Promise<TypeProjectIdAndImagePath | null> =>
   await prisma.project.findUnique({ where: { id: projectId }, select: ProjectIdAndImagePath })
-
-export const deleteImageFromBucket = async (imageUrl: string) => {
-  const imagePath = getImagePath(imageUrl)
-  if (imagePath) return await deleteImage(imagePath)
-
-  return { status: false }
-}
 
 export const deleteProject = async (projectId: string) =>
   await prisma.project.delete({ where: { id: projectId } })

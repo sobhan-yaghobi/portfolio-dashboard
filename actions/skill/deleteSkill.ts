@@ -1,7 +1,8 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { deleteImageFromBucket, deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
+import { deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
+import { deleteImage } from "../image"
 
 import { TypeReturnSererAction } from "@/lib/definition"
 import { TypeSkillIdAndImagePath } from "@/lib/types"
@@ -21,7 +22,7 @@ const setDeleteSkill = async (
   { id, image }: TypeSkillIdAndImagePath,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
-  const deleteImageResult = await deleteImageFromBucket(image)
+  const deleteImageResult = await deleteImage(image)
   const deleteSkillResult = await deleteSkill(id)
 
   if (deleteImageResult.status && deleteSkillResult) {
