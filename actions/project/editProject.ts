@@ -59,10 +59,12 @@ const setEditProject = async ({
   if (!isImageFormExist && isProjectInfoEqual)
     return { status: false, message: "Please update filed first" }
 
-  return saveUpdatedProject(
-    project.id,
-    projectInfoFormWithoutImage,
-    project.relatedSkills,
-    reValidPath
-  )
+  return saveUpdatedProject({
+    project: {
+      id: project.id,
+      InfoFormWithoutImage: projectInfoFormWithoutImage,
+      relatedSkills: project.relatedSkills,
+    },
+    reValidPath,
+  })
 }

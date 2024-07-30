@@ -1,21 +1,23 @@
+import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
+import { isEqual } from "lodash"
+import { getImagePath } from "@/lib/utils"
+import { createImage, deleteImage, updateImage } from "../image"
+
+import { Skill } from "@prisma/client"
 import {
   SchemaProject,
   TypeProjectForm,
   TypeProjectFormWithoutImage,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import { createImage, deleteImage, updateImage } from "../image"
 import {
   ProjectCreateInput,
   ProjectIdAndImagePath,
   TypeCreateProjectParam,
   TypeProjectIdAndImagePath,
+  TypeSaveUpdatedProjectParam,
 } from "@/lib/types"
-import prisma from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
-import { isEqual } from "lodash"
-import { Skill } from "@prisma/client"
-import { getImagePath } from "@/lib/utils"
 
 export const validateProjectForm = (formData: FormData) =>
   SchemaProject.safeParse({
@@ -73,6 +75,7 @@ export const updateProjectImage = async (
   if (projectImageFile?.size) {
     return await updateImage(projectImagePath, projectImageFile)
   }
+
   return { status: true }
 }
 
@@ -81,15 +84,13 @@ export const newProjectInfoIsEqual = (
   newProjectInfo: TypeProjectFormWithoutImage
 ) => isEqual(currentProjectInfo, newProjectInfo)
 
-export const saveUpdatedProject = async (
-  projectId: string,
-  projectInfoFormWithoutImage: TypeProjectFormWithoutImage,
-  relatedSkills: Skill[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+export const saveUpdatedProject = async ({
+  project,
+  reValidPath,
+}: TypeSaveUpdatedProjectParam): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.project.update({
-    where: { id: projectId },
-    data: { ...projectInfoFormWithoutImage, skills: { connect: relatedSkills } },
+    where: { id: project.id },
+    data: { ...project.InfoFormWithoutImage, skills: { connect: project.relatedSkills } },
   })
 
   if (updateResult) {
