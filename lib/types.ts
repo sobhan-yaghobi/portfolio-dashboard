@@ -4,6 +4,7 @@ import {
   TypeAdminProfileFromWithoutImage,
   TypeProjectForm,
   TypeProjectFormWithoutImage,
+  TypeReturnSererAction,
   TypeSkillForm,
   TypeSkillFormWithoutImage,
   TypeTechnicalGrowthForm,
@@ -156,4 +157,12 @@ export type TypeUploadImageParam = {
     path: string
   }
   bucket: string
+}
+
+export type TypeShowActionReturnMessageParam = {
+  actionResult: TypeReturnSererAction
+  functions?: {
+    doActionIfTrue?: () => void
+    doActionIfFalse?: () => void
+  }
 }

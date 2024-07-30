@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { toast } from "react-toastify"
 
 import { TypeReturnSererAction } from "./definition"
+import { TypeShowActionReturnMessageParam } from "./types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -10,12 +11,19 @@ export function cn(...inputs: ClassValue[]) {
 
 export const getImagePath = (imageUrl: string) => imageUrl.split("/").pop()
 
-export const showActionReturnMessage = (actionResult: TypeReturnSererAction) => {
+export const showActionReturnMessage = ({
+  actionResult,
+  functions,
+}: TypeShowActionReturnMessageParam) => {
   const { message } = actionResult
   if (actionResult.status) {
     message && toast.success(message)
+
+    functions?.doActionIfTrue && functions?.doActionIfTrue()
   } else {
     message && toast.error(message)
+
+    functions?.doActionIfFalse && functions?.doActionIfFalse()
   }
 }
 

@@ -45,7 +45,7 @@ const EditProject: React.FC<EditProjectProps> = ({
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-    showActionReturnMessage(actionResult)
+    showActionReturnMessage({ actionResult })
 
     formRef.current?.reset()
   }
