@@ -1,9 +1,9 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { deleteImageFromBucket, deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
 
 import { TypeReturnSererAction } from "@/lib/definition"
-import { deleteImageFromBucket, deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
 import { TypeSkillIdAndImagePath } from "@/lib/types"
 
 export const deleteSkillFormAction = async (
@@ -14,7 +14,7 @@ export const deleteSkillFormAction = async (
 
   if (skillInfo) return setDeleteSkill(skillInfo, reValidPath)
 
-  return { message: "Project remove got failure", status: false }
+  return { message: "Skill remove got failure", status: false }
 }
 
 const setDeleteSkill = async (
