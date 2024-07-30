@@ -33,18 +33,17 @@ const checkPassword = async (
   passwordFormInfo: TypeAdminPasswordForm
 ): Promise<TypeReturnSererAction> => {
   const adminInfo = await fetchAdminIdAndPassword(adminId)
-  if (adminInfo) {
-    const comparePasswordResult = await comparePassword(
-      adminInfo.password,
-      passwordFormInfo.currentPassword
-    )
 
-    if (comparePasswordResult) {
-      return changePassword(adminId, passwordFormInfo.newPassword)
-    }
-    return { status: false, message: "Current password is incorrect" }
-  }
-  return { status: false, message: "Admin not found" }
+  if (!adminInfo) return { status: false, message: "Admin not found" }
+
+  const comparePasswordResult = await comparePassword(
+    adminInfo.password,
+    passwordFormInfo.currentPassword
+  )
+
+  if (comparePasswordResult) return changePassword(adminId, passwordFormInfo.newPassword)
+
+  return { status: false, message: "Current password is incorrect" }
 }
 
 const fetchAdminIdAndPassword = async (adminId: string): Promise<TypePasswordAdminInput | null> =>
@@ -60,8 +59,7 @@ const changePassword = async (adminId: string, newPassword: string) => {
     data: { password: newHashedPassword },
   })
 
-  if (changePasswordResult) {
-    return { message: "password change successfully", status: true }
-  }
+  if (changePasswordResult) return { message: "password change successfully", status: true }
+
   return { message: "password change failure", status: false }
 }
