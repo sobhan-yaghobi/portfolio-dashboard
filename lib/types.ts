@@ -100,7 +100,7 @@ export type EditProjectComponentProps = {
   selectionSkills?: Skill[]
 }
 
-export type ProjectFormProps = {
+export type ProjectFormComponentProps = {
   skills?: Skill[]
   selectedSkills: Skill[]
   setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
@@ -183,6 +183,10 @@ export type TypeSetEditTechnicalGrowthParam = {
     InfoForm: TypeTechnicalGrowthForm
   }
   reValidPath: string
+}
+
+export type AddTechnicalGrowthComponentProps = {
+  path: string
 }
 
 export type TypeUploadImageParam = {
