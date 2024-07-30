@@ -1,5 +1,7 @@
 import { Admin, Prisma, Project, Skill } from "@prisma/client"
 import {
+  TypeAdminProfileFrom,
+  TypeAdminProfileFromWithoutImage,
   TypeProjectForm,
   TypeProjectFormWithoutImage,
   TypeSkillForm,
@@ -15,6 +17,24 @@ export const AdminProfileInput: Prisma.AdminSelect = {
   location: true,
   bio: true,
   image: true,
+}
+export type TypeEditProfileFormActionParam = {
+  admin: { id: string; formData: FormData }
+  reValidPath: string
+}
+export type TypeSetProfileParam = {
+  admin: {
+    id: string
+    InfoForm: TypeAdminProfileFrom
+  }
+  reValidPath: string
+}
+export type TypeUpdateAdminParam = {
+  admin: {
+    id: string
+    infoFormWithoutImage: TypeAdminProfileFromWithoutImage
+  }
+  reValidPath: string
 }
 
 export type TypePasswordAdminInput = Pick<Admin, "password" | "id">

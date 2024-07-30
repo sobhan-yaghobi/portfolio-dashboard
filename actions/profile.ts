@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma"
 import { createImage, updateImage } from "./image"
 import { isEqual } from "lodash"
+import { revalidatePath } from "next/cache"
 
 import {
   SchemaAdminProfile,
@@ -10,19 +11,31 @@ import {
   TypeErrors,
   TypeReturnSererAction,
 } from "@/lib/definition"
+import {
+  AdminProfileInput,
+  TypeAdminProfile,
+  TypeEditProfileFormActionParam,
+  TypeSetProfileParam,
+  TypeUpdateAdminParam,
+} from "@/lib/types"
 
-import { AdminProfileInput } from "@/lib/types"
+export const editProfileFormAction = async ({
+  admin,
+  reValidPath,
+}: TypeEditProfileFormActionParam): Promise<TypeReturnSererAction> => {
+  const validateResult = validateProfileForm(admin.formData)
 
-export const editProfileFormAction = async (
-  adminId: string,
-  formData: FormData
-): Promise<TypeReturnSererAction> => {
-  const validateProfileResult = validateProfileForm(formData)
-
-  if (validateProfileResult.success) return setProfile(adminId, validateProfileResult.data)
+  if (validateResult.success)
+    return setProfile({
+      admin: {
+        id: admin.id,
+        InfoForm: validateResult.data,
+      },
+      reValidPath,
+    })
 
   return {
-    errors: validateProfileResult.error.flatten().fieldErrors as TypeErrors,
+    errors: validateResult.error.flatten().fieldErrors as TypeErrors,
     status: false,
   }
 }
@@ -37,21 +50,37 @@ const validateProfileForm = (formData: FormData) =>
     bio: formData.get("bio"),
   } as TypeAdminProfileFrom)
 
-const setProfile = async (
-  adminId: string,
-  profileInfoForm: TypeAdminProfileFrom
-): Promise<TypeReturnSererAction> => {
-  const adminImageStatus = await setAdminProfileImage(adminId, profileInfoForm.image)
-  if (adminImageStatus.status) {
-    const isAdminInfoEqual = await newAdminInfoIsEqual(adminId, profileInfoForm)
-    if (!isAdminInfoEqual)
-      return updateAdmin(adminId, profileInfoForm, adminImageStatus.data as string | undefined)
+const setProfile = async ({
+  admin,
+  reValidPath,
+}: TypeSetProfileParam): Promise<TypeReturnSererAction> => {
+  const getAdminInfo = await fetchAdminProfileInput(admin.id)
+  if (!getAdminInfo) return { status: false, message: "Admin not found" }
 
-    return { message: "Please update some fields", status: false }
-  }
+  const { image: adminInfoImage, ...adminInfoWithoutImage } = getAdminInfo
+  const { image: adminImageForm, ...profileInfoFormWithoutImage } = admin.InfoForm
 
-  return { message: adminImageStatus.message, status: false }
+  const isImageFormExist = Boolean(adminImageForm?.size)
+
+  const adminImageResult = await setAdminProfileImage(admin.id, adminImageForm)
+  if (!adminImageResult.status) return { status: false, message: adminImageResult.message }
+
+  const isAdminInfoEqual = await newAdminInfoIsEqual(
+    adminInfoWithoutImage,
+    profileInfoFormWithoutImage
+  )
+
+  if (!isImageFormExist && isAdminInfoEqual)
+    return { message: "Please update filed first", status: false }
+
+  return updateAdmin({
+    admin: { id: admin.id, infoFormWithoutImage: profileInfoFormWithoutImage },
+    reValidPath,
+  })
 }
+
+const fetchAdminProfileInput = async (adminId: string): Promise<TypeAdminProfile | null> =>
+  await prisma.admin.findUnique({ where: { id: adminId }, select: AdminProfileInput })
 
 const setAdminProfileImage = async (
   adminId: string,
@@ -99,31 +128,24 @@ const createAdminImage = async (
   return { message: "Image creation failed", status: false }
 }
 
-const newAdminInfoIsEqual = async (adminId: string, profileInfoForm: TypeAdminProfileFrom) => {
-  const adminInfo = await prisma.admin.findUnique({
-    where: { id: adminId },
-    select: AdminProfileInput,
-  })
-  if (adminInfo) {
-    const { image: AdminInfoImage, ...adminInfoWithoutImage } = adminInfo
-    const { image: formImage, ...profileInfoFormWithoutImage } = profileInfoForm
+const newAdminInfoIsEqual = async (
+  currentAdminInfo: TypeAdminProfile,
+  newAdminInfo: TypeAdminProfile
+) => isEqual(currentAdminInfo, newAdminInfo)
 
-    return isEqual(adminInfoWithoutImage, profileInfoFormWithoutImage)
-  }
-  return false
-}
-
-const updateAdmin = async (
-  adminId: string,
-  profileInfoForm: TypeAdminProfileFrom,
-  imageUrlPath: string | undefined
-): Promise<TypeReturnSererAction> => {
+const updateAdmin = async ({
+  admin,
+  reValidPath,
+}: TypeUpdateAdminParam): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.admin.update({
-    where: { id: adminId },
-    data: { ...profileInfoForm, image: imageUrlPath },
+    where: { id: admin.id },
+    data: { ...admin.infoFormWithoutImage },
   })
 
-  if (updateResult) return { message: "Profile updated successfully", status: true }
+  if (updateResult) {
+    revalidatePath(reValidPath)
+    return { message: "Profile updated successfully", status: true }
+  }
 
   return { message: "Profile update failed", status: false }
 }

@@ -32,6 +32,7 @@ export const SchemaAdminProfile = z.object({
   bio: z.string().trim().min(1, "بیو اجباری میباشد"),
 })
 export type TypeAdminProfileFrom = z.infer<typeof SchemaAdminProfile>
+export type TypeAdminProfileFromWithoutImage = Omit<TypeAdminProfileFrom, "image">
 
 export const SchemaAdminPassword = z.object({
   currentPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است"),

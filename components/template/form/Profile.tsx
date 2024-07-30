@@ -29,7 +29,10 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
 
   const action = async (event: FormData) => {
     if (id) {
-      const actionResult = await editProfileFormAction(id, event)
+      const actionResult = await editProfileFormAction({
+        admin: { id, formData: event },
+        reValidPath: "/dashboard",
+      })
       if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
       showMessage(actionResult)
