@@ -4,6 +4,7 @@ import {
   TypeProjectFormWithoutImage,
   TypeSkillForm,
   TypeSkillFormWithoutImage,
+  TypeTechnicalGrowthForm,
 } from "./definition"
 
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
@@ -111,4 +112,19 @@ export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
   title: true,
   subtitle: true,
   description: true,
+}
+
+export type TypeEditTechnicalGrowthFormActionParam = {
+  technicalGrowth: {
+    id: string
+    formData: FormData
+  }
+  reValidPath: string
+}
+export type TypeSetEditTechnicalGrowthParam = {
+  technicalGrowth: {
+    id: string
+    InfoForm: TypeTechnicalGrowthForm
+  }
+  reValidPath: string
 }

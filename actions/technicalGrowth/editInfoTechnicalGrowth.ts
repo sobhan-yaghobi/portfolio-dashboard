@@ -1,6 +1,5 @@
 "use server"
 
-import { TypeErrors, TypeReturnSererAction, TypeTechnicalGrowthForm } from "@/lib/definition"
 import {
   fetchTechnicalCreateInput,
   newTechnicalGrowthInfoIsEqual,
@@ -8,34 +7,40 @@ import {
   validateTechnicalGrowthForm,
 } from "./technicalGrowthUtils"
 
-export const editTechnicalGrowthFormAction = async (
-  technicalGrowthId: string,
-  formData: FormData,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const validateResult = validateTechnicalGrowthForm(formData)
+import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import {
+  TypeEditTechnicalGrowthFormActionParam,
+  TypeSetEditTechnicalGrowthParam,
+} from "@/lib/types"
 
-  if (validateResult.success) {
-    return setEditTechnicalGrowth(technicalGrowthId, validateResult.data, reValidPath)
-  }
+export const editTechnicalGrowthFormAction = async ({
+  technicalGrowth,
+  reValidPath,
+}: TypeEditTechnicalGrowthFormActionParam): Promise<TypeReturnSererAction> => {
+  const validateResult = validateTechnicalGrowthForm(technicalGrowth.formData)
+
+  if (validateResult.success)
+    return setEditTechnicalGrowth({
+      technicalGrowth: { id: technicalGrowth.id, InfoForm: validateResult.data },
+      reValidPath,
+    })
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-const setEditTechnicalGrowth = async (
-  technicalGrowthId: string,
-  technicalGrowthInfoForm: TypeTechnicalGrowthForm,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const getTechnicalGrowthResult = await fetchTechnicalCreateInput(technicalGrowthId)
+const setEditTechnicalGrowth = async ({
+  technicalGrowth,
+  reValidPath,
+}: TypeSetEditTechnicalGrowthParam): Promise<TypeReturnSererAction> => {
+  const getTechnicalGrowthResult = await fetchTechnicalCreateInput(technicalGrowth.id)
   if (!getTechnicalGrowthResult) return { status: false, message: "Technical Growth not found" }
 
   const isSkillInfoEqual = newTechnicalGrowthInfoIsEqual(
     getTechnicalGrowthResult,
-    technicalGrowthInfoForm
+    technicalGrowth.InfoForm
   )
 
   if (isSkillInfoEqual) return { status: false, message: "Please update filed first" }
 
-  return saveUpdatedTechnicalGrowth(technicalGrowthId, technicalGrowthInfoForm, reValidPath)
+  return saveUpdatedTechnicalGrowth(technicalGrowth.id, technicalGrowth.InfoForm, reValidPath)
 }

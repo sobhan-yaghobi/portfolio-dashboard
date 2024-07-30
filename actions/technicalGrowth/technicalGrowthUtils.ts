@@ -66,14 +66,13 @@ export const saveUpdatedTechnicalGrowth = async (
 export const setNewOrderTechnicalGrowthList = (technicalGrowths: TechnicalGrowth[]) =>
   technicalGrowths.map((tech, index) => ({ ...tech, order: index }))
 
-export const updateTechnicalGrowthOrder = async ({ id, order }: TechnicalGrowth) => {
+export const updateTechnicalGrowthOrder = async ({ id, order }: TechnicalGrowth) =>
   await prisma.technicalGrowth.update({
     where: { id },
     data: {
       order,
     },
   })
-}
 
 export const isTechnicalGrowthExist = async (technicalGrowthId: string) =>
   Boolean(await prisma.technicalGrowth.findMany({ where: { id: technicalGrowthId } }))
