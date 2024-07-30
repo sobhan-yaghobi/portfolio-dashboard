@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
-import { createImage, deleteImage, updateImage } from "@/actions/image"
+import { createImage, updateImage } from "@/actions/image"
 
 import {
   SkillCreateInput,

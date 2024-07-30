@@ -1,8 +1,7 @@
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
-import { getImagePath } from "@/lib/utils"
-import { createImage, deleteImage, updateImage } from "../image"
+import { createImage, updateImage } from "../image"
 
 import {
   SchemaProject,
