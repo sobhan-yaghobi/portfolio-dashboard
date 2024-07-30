@@ -31,12 +31,10 @@ const EditSkill: React.FC<EditSkillsProps> = ({
 
   const clientAction = async (event: FormData) => {
     if (id) {
-      const actionResult = await editSkillFormAction(
-        id,
-        event,
-        selectedProjects,
-        "/dashboard/skills"
-      )
+      const actionResult = await editSkillFormAction({
+        skill: { id, formData: event, relatedProjects: selectedProjects },
+        reValidPath: "/dashboard/skills",
+      })
       if (actionResult) {
         if ("errors" in actionResult) {
           return setErrors({ ...actionResult.errors } as TypeError)

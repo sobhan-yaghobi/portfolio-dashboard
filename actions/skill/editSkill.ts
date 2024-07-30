@@ -8,45 +8,54 @@ import {
   validateSkillForm,
 } from "./skillUtils"
 
-import { Project } from "@prisma/client"
-import { TypeErrors, TypeReturnSererAction, TypeSkillForm } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeEditSkillFormActionParma, TypeSetEditSkillParam } from "@/lib/types"
 
-export const editSkillFormAction = async (
-  skillId: string,
-  formData: FormData,
-  relatedProjects: Project[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const validateResult = validateSkillForm(formData)
+export const editSkillFormAction = async ({
+  skill,
+  reValidPath,
+}: TypeEditSkillFormActionParma): Promise<TypeReturnSererAction> => {
+  const validateResult = validateSkillForm(skill.formData)
 
-  if (validateResult.success) {
-    return setEditSkill(skillId, validateResult.data, relatedProjects, reValidPath)
-  }
+  if (validateResult.success)
+    return setEditSkill({
+      skill: {
+        id: skill.id,
+        infoForm: validateResult.data,
+        relatedProjects: skill.relatedProjects,
+      },
+      reValidPath,
+    })
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-const setEditSkill = async (
-  skillId: string,
-  skillInfoForm: TypeSkillForm,
-  relatedProjects: Project[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const getSkillResult = await fetchSkillCreateInput(skillId)
+const setEditSkill = async ({
+  skill,
+  reValidPath,
+}: TypeSetEditSkillParam): Promise<TypeReturnSererAction> => {
+  const getSkillResult = await fetchSkillCreateInput(skill.id)
   if (!getSkillResult) return { status: false, message: "Skill not found" }
 
   const { image: skillInfoImagePath, ...skillInfo } = getSkillResult
-  const { image: skillImageForm, ...skillInfoFormWithoutImage } = skillInfoForm
+  const { image: skillImageForm, ...skillInfoFormWithoutImage } = skill.infoForm
 
-  const isImageFormExist = Boolean(skillInfoForm.image?.size)
+  const isImageFormExist = Boolean(skill.infoForm.image?.size)
 
-  const isImageInForm = await updateSkillImage(skillInfoForm.image, skillInfoImagePath)
-  if (!isImageInForm.status) return { status: false, message: "Update image got failure" }
+  const updatedImageResult = await updateSkillImage(skill.infoForm.image, skillInfoImagePath)
+  if (!updatedImageResult.status) return { status: false, message: "Update image got failure" }
 
   const isSkillInfoEqual = newSkillInfoIsEqual(skillInfo, skillInfoFormWithoutImage)
 
   if (!isImageFormExist && isSkillInfoEqual)
     return { status: false, message: "Please update filed first" }
 
-  return saveUpdatedSkill(skillId, skillInfoFormWithoutImage, relatedProjects, reValidPath)
+  return saveUpdatedSkill({
+    skill: {
+      id: skill.id,
+      InfoFormWithoutImage: skillInfoFormWithoutImage,
+      relatedProjects: skill.relatedProjects,
+    },
+    reValidPath,
+  })
 }

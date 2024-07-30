@@ -1,5 +1,10 @@
-import { Admin, Prisma, Project, Skill, TechnicalGrowth } from "@prisma/client"
-import { TypeProjectForm, TypeProjectFormWithoutImage, TypeSkillForm } from "./definition"
+import { Admin, Prisma, Project, Skill } from "@prisma/client"
+import {
+  TypeProjectForm,
+  TypeProjectFormWithoutImage,
+  TypeSkillForm,
+  TypeSkillFormWithoutImage,
+} from "./definition"
 
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
 export const AdminProfileInput: Prisma.AdminSelect = {
@@ -27,7 +32,6 @@ export const ProjectCreateInput: Prisma.ProjectSelect = {
 }
 export type TypeProjectIdAndImagePath = Pick<Project, "id" | "image">
 export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: true }
-
 export type TypeCreateProjectParam = {
   project: {
     id: string
@@ -37,11 +41,18 @@ export type TypeCreateProjectParam = {
   }
   reValidPath: string
 }
-
 export type TypeEditProjectFormActionParam = {
   project: {
     id: string
     formData: FormData
+    relatedSkills: Skill[]
+  }
+  reValidPath: string
+}
+export type TypeSetEditProjectParam = {
+  project: {
+    id: string
+    infoForm: TypeProjectForm
     relatedSkills: Skill[]
   }
   reValidPath: string
@@ -72,6 +83,26 @@ export type TypeCreateSkillParam = {
     relatedProjects: Project[]
     imageUrl: string
   }
+  reValidPath: string
+}
+export type TypeEditSkillFormActionParma = {
+  skill: {
+    id: string
+    formData: FormData
+    relatedProjects: Project[]
+  }
+  reValidPath: string
+}
+export type TypeSaveUpdatedSkillParam = {
+  skill: {
+    id: string
+    InfoFormWithoutImage: TypeSkillFormWithoutImage
+    relatedProjects: Project[]
+  }
+  reValidPath: string
+}
+export type TypeSetEditSkillParam = {
+  skill: { id: string; infoForm: TypeSkillForm; relatedProjects: Project[] }
   reValidPath: string
 }
 

@@ -8,9 +8,8 @@ import {
   validateProjectForm,
 } from "./projectUtils"
 
-import { Skill } from "@prisma/client"
-import { TypeErrors, TypeProjectForm, TypeReturnSererAction } from "@/lib/definition"
-import { TypeEditProjectFormActionParam } from "@/lib/types"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeEditProjectFormActionParam, TypeSetEditProjectParam } from "@/lib/types"
 
 export const editProjectFormAction = async ({
   project,
@@ -31,14 +30,7 @@ export const editProjectFormAction = async ({
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
-export type TypeSetEditProjectParam = {
-  project: {
-    id: string
-    infoForm: TypeProjectForm
-    relatedSkills: Skill[]
-  }
-  reValidPath: string
-}
+
 const setEditProject = async ({
   project,
   reValidPath,

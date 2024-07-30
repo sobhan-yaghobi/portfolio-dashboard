@@ -6,6 +6,7 @@ import {
   SkillCreateInput,
   SkillIdAndImagePath,
   TypeCreateSkillParam,
+  TypeSaveUpdatedSkillParam,
   TypeSkillIdAndImagePath,
 } from "@/lib/types"
 import {
@@ -78,23 +79,21 @@ export const newSkillInfoIsEqual = (
   newSkillInfo: TypeSkillFormWithoutImage
 ) => isEqual(currentSkillInfo, newSkillInfo)
 
-export const saveUpdatedSkill = async (
-  skillId: string,
-  skillInfoFormWithoutImage: TypeSkillFormWithoutImage,
-  relatedProjects: Project[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+export const saveUpdatedSkill = async ({
+  skill,
+  reValidPath,
+}: TypeSaveUpdatedSkillParam): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.skill.update({
-    where: { id: skillId },
-    data: { ...skillInfoFormWithoutImage, projects: { connect: relatedProjects } },
+    where: { id: skill.id },
+    data: { ...skill.InfoFormWithoutImage, projects: { connect: skill.relatedProjects } },
   })
 
   if (updateResult) {
     revalidatePath(reValidPath)
-    return { message: "Profile updated successfully", status: true }
+    return { message: "Skill updated successfully", status: true }
   }
 
-  return { message: "Profile update failed", status: false }
+  return { message: "Skill update failed", status: false }
 }
 
 export const fetchSkillIdAndImagePath = async (
