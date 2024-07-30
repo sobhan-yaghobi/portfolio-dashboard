@@ -138,6 +138,10 @@ export type TypeSetEditSkillParam = {
   skill: { id: string; infoForm: TypeSkillForm; relatedProjects: Project[] }
   reValidPath: string
 }
+export type CreateSkillComponentProps = {
+  projects: Project[]
+  selectionProjects?: Project[]
+}
 
 export type TypeTechnicalGrowthInput = Prisma.TechnicalGrowthCreateInput
 export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
