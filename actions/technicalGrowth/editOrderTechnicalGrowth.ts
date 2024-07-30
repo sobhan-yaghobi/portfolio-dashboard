@@ -1,9 +1,10 @@
 "use server"
 
-import { TypeReturnSererAction } from "@/lib/definition"
 import { setNewOrderTechnicalGrowthList, updateTechnicalGrowthOrder } from "./technicalGrowthUtils"
 import { TechnicalGrowth } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+
+import { TypeReturnSererAction } from "@/lib/definition"
 
 export const editOrderTechnicalGrowthFormAction = async (
   updateTechnicalGrowthList: TechnicalGrowth[],
@@ -20,7 +21,7 @@ const setTechnicalGrowthList = async (
 ): Promise<TypeReturnSererAction> => {
   try {
     for (const technicalGrowth of technicalGrowthList) {
-      updateTechnicalGrowthOrder(technicalGrowth)
+      await updateTechnicalGrowthOrder(technicalGrowth)
     }
     revalidatePath(reValidPath)
     return { message: "Update orders successfully", status: true }
