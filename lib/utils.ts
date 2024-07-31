@@ -40,5 +40,9 @@ export const getAdminToken = async () => {
 
 export const getAdminId = async () => {
   const adminId = await getAdminToken()
-  return await prisma.admin.findUnique({ where: { id: adminId }, select: { id: true } })
+  const adminResult = await prisma.admin.findUnique({
+    where: { id: adminId },
+    select: { id: true },
+  })
+  return adminResult?.id
 }

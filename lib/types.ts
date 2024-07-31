@@ -21,14 +21,14 @@ export const AdminProfileInput: Prisma.AdminSelect = {
   image: true,
 }
 export type TypeEditProfileFormActionParam = {
-  admin: { id: string; formData: FormData }
+  formData: FormData
   reValidPath: string
 }
+export type ProfileComponentProps = {
+  defaultValues?: TypeAdminProfile | null
+}
 export type TypeSetProfileParam = {
-  admin: {
-    id: string
-    InfoForm: TypeAdminProfileFrom
-  }
+  infoForm: TypeAdminProfileFrom
   reValidPath: string
 }
 export type TypeUpdateAdminParam = {

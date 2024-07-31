@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
-import { toast } from "react-toastify"
+import { showActionReturnMessage } from "@/lib/utils"
 
 import { editProfileFormAction } from "@/actions/profile"
 
-import { TypeError, TypeReturnSererAction } from "@/lib/definition"
-import { TypeAdminProfile } from "@/lib/types"
+import { TypeError } from "@/lib/definition"
+import { ProfileComponentProps } from "@/lib/types"
 
 import AccountCircle from "@mui/icons-material/AccountCircle"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
@@ -19,35 +19,20 @@ import InputAdornment from "@mui/material/InputAdornment"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 
-type ProfileProps = {
-  id?: string
-  defaultValues?: TypeAdminProfile | null
-}
-
-const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
+const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const action = async (event: FormData) => {
-    if (id) {
-      const actionResult = await editProfileFormAction({
-        admin: { id, formData: event },
-        reValidPath: "/dashboard",
-      })
-      if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
+    const actionResult = await editProfileFormAction({
+      formData: event,
+      reValidPath: "/dashboard",
+    })
+    if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-      showMessage(actionResult)
-    }
+    showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
   }
 
-  const showMessage = (actionResult: TypeReturnSererAction) => {
-    const message = actionResult.message
-    if (actionResult.status) {
-      setErrors({} as TypeError)
-      message && toast.success(message)
-    } else {
-      message && toast.error(message)
-    }
-  }
+  const resetForm = () => setErrors({} as TypeError)
 
   return (
     <form action={action} className="[&>section]:mt-6 [&>section>*]:mb-3">
@@ -56,15 +41,15 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
           آواتار
         </Typography>
         <div className="flex items-center gap-6">
-          <div className="w-44 h-44 bg-white/50 rounded-full" />
+          <div className="bg-white/50 size-44 rounded-full" />
           <div className="max-w-72 flex flex-col items-start gap-6">
             <TextError message={errors && errors.image}>
-              <input id="image" name="image" type="file" accept="image/*" className="hidden" />
+              <input accept="image/*" className="hidden" id="image" name="image" type="file" />
               <label
-                htmlFor="image"
                 className={`h-10 w-full p-4 flex items-center justify-center rounded-md border border-solid ${
                   errors && errors?.image ? "border-red-500" : "border-white"
                 }`}
+                htmlFor="image"
               >
                 آپلود کن عکس جدید
               </label>
@@ -83,10 +68,12 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         </Typography>
         <TextError message={errors && errors.name}>
           <TextField
-            size="small"
             className="w-full"
+            defaultValue={defaultValues?.name}
             name="name"
             placeholder="نام خود را وارد کنید"
+            size="small"
+            variant="outlined"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -94,8 +81,6 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
                 </InputAdornment>
               ),
             }}
-            variant="outlined"
-            defaultValue={defaultValues?.name}
           />
         </TextError>
       </section>
@@ -106,11 +91,13 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         </Typography>
         <TextError message={errors && errors.phone}>
           <TextField
-            dir="ltr"
-            size="small"
             className="w-full"
+            defaultValue={defaultValues?.phone}
+            dir="ltr"
             name="phone"
             placeholder="+00 000 000 0000"
+            size="small"
+            variant="outlined"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -118,8 +105,6 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
                 </InputAdornment>
               ),
             }}
-            variant="outlined"
-            defaultValue={defaultValues?.phone}
           />
         </TextError>
       </section>
@@ -130,11 +115,13 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         </Typography>
         <TextError message={errors && errors.email}>
           <TextField
-            dir="ltr"
-            size="small"
             className="w-full"
-            placeholder="example@gmail.com"
+            defaultValue={defaultValues?.email}
+            dir="ltr"
             name="email"
+            placeholder="example@gmail.com"
+            size="small"
+            variant="outlined"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -142,8 +129,6 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
                 </InputAdornment>
               ),
             }}
-            variant="outlined"
-            defaultValue={defaultValues?.email}
           />
         </TextError>
       </section>
@@ -154,10 +139,12 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         </Typography>
         <TextError message={errors && errors.location}>
           <TextField
-            size="small"
             className="w-full"
+            defaultValue={defaultValues?.location}
             name="location"
             placeholder="ایران ، تهران"
+            size="small"
+            variant="outlined"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -165,8 +152,6 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
                 </InputAdornment>
               ),
             }}
-            variant="outlined"
-            defaultValue={defaultValues?.location}
           />
         </TextError>
       </section>
@@ -177,14 +162,14 @@ const Profile: React.FC<ProfileProps> = ({ id, defaultValues }) => {
         </Typography>
         <TextError message={errors && errors.bio}>
           <TextField
-            size="small"
             className="w-full"
+            defaultValue={defaultValues?.bio}
+            multiline
             name="bio"
             placeholder="iran, tehran"
-            multiline
             rows={4}
+            size="small"
             variant="outlined"
-            defaultValue={defaultValues?.bio}
           />
         </TextError>
       </section>

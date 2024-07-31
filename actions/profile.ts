@@ -18,19 +18,17 @@ import {
   TypeSetProfileParam,
   TypeUpdateAdminParam,
 } from "@/lib/types"
+import { getAdminId } from "@/lib/utils"
 
 export const editProfileFormAction = async ({
-  admin,
+  formData,
   reValidPath,
 }: TypeEditProfileFormActionParam): Promise<TypeReturnSererAction> => {
-  const validateResult = validateProfileForm(admin.formData)
+  const validateResult = validateProfileForm(formData)
 
   if (validateResult.success)
     return setProfile({
-      admin: {
-        id: admin.id,
-        InfoForm: validateResult.data,
-      },
+      infoForm: validateResult.data,
       reValidPath,
     })
 
@@ -51,18 +49,19 @@ const validateProfileForm = (formData: FormData) =>
   } as TypeAdminProfileFrom)
 
 const setProfile = async ({
-  admin,
+  infoForm,
   reValidPath,
 }: TypeSetProfileParam): Promise<TypeReturnSererAction> => {
-  const getAdminInfo = await fetchAdminProfileInput(admin.id)
-  if (!getAdminInfo) return { status: false, message: "Admin not found" }
+  const adminIdResult = await getAdminId()
+  const getAdminInfo = await fetchAdminProfileInput(adminIdResult)
+  if (!getAdminInfo || !adminIdResult) return { status: false, message: "Admin not found" }
 
   const { image: adminInfoImage, ...adminInfoWithoutImage } = getAdminInfo
-  const { image: adminImageForm, ...profileInfoFormWithoutImage } = admin.InfoForm
+  const { image: adminImageForm, ...profileInfoFormWithoutImage } = infoForm
 
   const isImageFormExist = Boolean(adminImageForm?.size)
 
-  const adminImageResult = await setAdminProfileImage(admin.id, adminImageForm)
+  const adminImageResult = await setAdminProfileImage(adminIdResult, adminImageForm)
   if (!adminImageResult.status) return { status: false, message: adminImageResult.message }
 
   const isAdminInfoEqual = await newAdminInfoIsEqual(
@@ -74,12 +73,14 @@ const setProfile = async ({
     return { message: "Please update filed first", status: false }
 
   return updateAdmin({
-    admin: { id: admin.id, infoFormWithoutImage: profileInfoFormWithoutImage },
+    admin: { id: adminIdResult, infoFormWithoutImage: profileInfoFormWithoutImage },
     reValidPath,
   })
 }
 
-const fetchAdminProfileInput = async (adminId: string): Promise<TypeAdminProfile | null> =>
+const fetchAdminProfileInput = async (
+  adminId: string | undefined
+): Promise<TypeAdminProfile | null> =>
   await prisma.admin.findUnique({ where: { id: adminId }, select: AdminProfileInput })
 
 const setAdminProfileImage = async (
