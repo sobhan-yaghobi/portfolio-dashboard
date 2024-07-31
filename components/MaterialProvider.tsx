@@ -29,9 +29,6 @@ const theme = createTheme({
 
 const cacheRtl = createCache({
   key: "muirtl",
-  // prefixer is the only stylis plugin by default, so when
-  // overriding the plugins you need to include it explicitly
-  // if you want to retain the auto-prefixing behavior.
   stylisPlugins: [prefixer, rtlPlugin],
 })
 

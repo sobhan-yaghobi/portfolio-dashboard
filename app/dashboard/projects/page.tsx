@@ -13,12 +13,20 @@ const page: React.FC = async () => {
   return (
     <div className="h-full flex flex-col">
       <Typography variant="h4" component="h2" className="mb-8">
-        Projects
+        پروژه ها
       </Typography>
       {projects.length ? (
         <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
           {projects.map((item) => (
-            <ProjectBox key={item.id} {...item} />
+            <div
+              className={`${
+                item.title.length >= 70 || item.description.length >= 300
+                  ? "col-span-3"
+                  : "col-span-1"
+              } w-full`}
+            >
+              <ProjectBox key={item.id} {...item} />
+            </div>
           ))}
         </ul>
       ) : (

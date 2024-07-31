@@ -4,6 +4,8 @@ import React from "react"
 import { Project } from "@prisma/client"
 import { toast } from "react-toastify"
 
+import { deleteProjectFormAction } from "@/actions/project/deleteProject"
+
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -18,56 +20,62 @@ import {
   IconButton,
   Typography,
 } from "@mui/material"
-import { deleteProjectFormAction } from "@/actions/project/deleteProject"
 import Image from "next/image"
 
 const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, description }) => {
   const deleteAction = async () => {
     const deleteResult = await deleteProjectFormAction(id, "/projects")
-    if (deleteResult.status) {
-      return toast.success(deleteResult.message)
-    }
+
+    if (deleteResult.status) return toast.success(deleteResult.message)
+
     return toast.error(deleteResult.message)
   }
+
   return (
-    <Card className="w-80 relative">
+    <Card className="size-full flex flex-col justify-between relative">
       <IconButton
         onClick={deleteAction}
         title="delete"
-        className="!absolute right-1 top-1 bg-black/30"
+        className="!bg-black/30 !absolute right-1 top-1"
         color="error"
       >
         <DeleteIcon />
       </IconButton>
-      <CardMedia>
-        <Image height={400} width={300} className="w-full" src={image} alt="project image" />
-      </CardMedia>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Link href={link}>
-          <Button variant="outlined" size="small" endIcon={<OpenInNewIcon />}>
-            link
-          </Button>
-        </Link>
-        <Link href={source}>
-          <Button variant="outlined" size="small" endIcon={<OpenInNewIcon />}>
-            source
-          </Button>
-        </Link>
 
-        <Link href={`/dashboard/projects/${id}`}>
-          <Button variant="outlined" size="small" endIcon={<EditIcon />}>
-            edit
-          </Button>
-        </Link>
-      </CardActions>
+      <CardMedia className="bg-gray-400/50 h-52 !flex !justify-center">
+        <Image height={400} width={300} className="h-full w-auto" src={image} alt="project image" />
+      </CardMedia>
+
+      <div className="py-3 px-2">
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {title}
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Link href={link}>
+            <Button variant="outlined" size="small" endIcon={<OpenInNewIcon />}>
+              link
+            </Button>
+          </Link>
+
+          <Link href={source}>
+            <Button variant="outlined" size="small" endIcon={<OpenInNewIcon />}>
+              source
+            </Button>
+          </Link>
+
+          <Link href={`/dashboard/projects/${id}`}>
+            <Button variant="outlined" size="small" endIcon={<EditIcon />}>
+              edit
+            </Button>
+          </Link>
+        </CardActions>
+      </div>
     </Card>
   )
 }
