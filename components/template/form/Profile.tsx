@@ -27,6 +27,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       formData: event,
       reValidPath: "/dashboard",
     })
+
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
     showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
