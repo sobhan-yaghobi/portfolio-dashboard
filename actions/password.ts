@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
+import { cookies } from "next/headers"
+import { decrypt } from "@/auth/session"
 
 import {
   SchemaAdminPassword,
@@ -12,12 +14,11 @@ import {
 import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types"
 
 export const changePasswordFormAction = async (
-  adminId: string,
   formData: FormData
 ): Promise<TypeReturnSererAction> => {
   const validateResult = validatePasswordFrom(formData)
 
-  if (validateResult.success) return checkPassword(adminId, validateResult.data)
+  if (validateResult.success) return checkPassword(validateResult.data)
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
@@ -29,25 +30,35 @@ const validatePasswordFrom = (formData: FormData) =>
   } as TypeAdminPasswordForm)
 
 const checkPassword = async (
-  adminId: string,
   passwordFormInfo: TypeAdminPasswordForm
 ): Promise<TypeReturnSererAction> => {
   const { currentPassword, newPassword } = passwordFormInfo
   if (currentPassword === newPassword)
     return { message: "two password is equal, change it", status: false }
 
-  const adminInfo = await fetchAdminIdAndPassword(adminId)
+  const adminTokenResult = await getAdminToken()
+  const adminInfo = await fetchAdminIdAndPassword(
+    typeof adminTokenResult?.id === "string" ? adminTokenResult?.id : undefined
+  )
 
   if (!adminInfo) return { status: false, message: "Admin not found" }
 
   const comparePasswordResult = await comparePassword(adminInfo.password, currentPassword)
 
-  if (comparePasswordResult) return changePassword(adminId, newPassword)
+  if (!comparePasswordResult) return { status: false, message: "Current password is incorrect" }
 
-  return { status: false, message: "Current password is incorrect" }
+  return changePassword(adminInfo.id, newPassword)
 }
 
-const fetchAdminIdAndPassword = async (adminId: string): Promise<TypePasswordAdminInput | null> =>
+const getAdminToken = async () => {
+  const cookie = cookies().get("session")?.value
+  const sessionResult = await decrypt(cookie)
+  return sessionResult
+}
+
+const fetchAdminIdAndPassword = async (
+  adminId: string | undefined
+): Promise<TypePasswordAdminInput | null> =>
   await prisma.admin.findUnique({
     where: { id: adminId },
     select: PasswordAdminInput,

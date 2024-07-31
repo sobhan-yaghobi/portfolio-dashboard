@@ -10,33 +10,19 @@ import { changePasswordFormAction } from "@/actions/password"
 import PasswordTextFiled from "@/components/modules/PasswordTextFiled"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
+import { showActionReturnMessage } from "@/lib/utils"
 
-type PasswordProps = {
-  id?: string
-}
-
-const Password: React.FC<PasswordProps> = ({ id }) => {
+const Password: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    if (id) {
-      const actionResult = await changePasswordFormAction(id, event)
-      if (actionResult) {
-        if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
+    const actionResult = await changePasswordFormAction(event)
 
-        showMessage(actionResult)
-        resetForm()
-      }
-    }
-  }
+    if (actionResult) {
+      if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-  const showMessage = (actionResult: TypeReturnSererAction) => {
-    const { message } = actionResult
-    if (actionResult.status) {
-      message && toast.success(message)
-    } else {
-      message && toast.error(message)
+      showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
     }
   }
 
