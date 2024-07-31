@@ -1,4 +1,4 @@
-import { Admin, Prisma, Project, Skill } from "@prisma/client"
+import { Admin, Prisma, Project, Skill, TechnicalGrowth } from "@prisma/client"
 import {
   TypeAdminProfileFrom,
   TypeAdminProfileFromWithoutImage,
@@ -203,6 +203,20 @@ export type TechnicalGrowthFormComponentProps = {
   submitFunction: (formData: FormData) => void | any
   errors: TypeError
   defaultValues?: TypeTechnicalGrowthInput | null
+}
+export type TechnicalGrowthTimeLineProps = {
+  technicalGrowthList: TechnicalGrowth[]
+}
+
+export type TypeDragAndDropTechnicalGrowth = {
+  draggedTechnicalItemFrom: number | null
+  draggedTechnicalGrowthTo: number | null
+  originalTechnicalGrowthList: TechnicalGrowth[]
+}
+export type TypeUpdateTechnicalGrowthListParam = {
+  itemDragged: TechnicalGrowth
+  draggedTo: number
+  remainingItems: TechnicalGrowth[]
 }
 
 export type TypeUploadImageParam = {
