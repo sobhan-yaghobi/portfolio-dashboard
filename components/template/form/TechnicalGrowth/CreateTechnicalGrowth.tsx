@@ -4,18 +4,18 @@ import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/definition"
-import { AddTechnicalGrowthComponentProps } from "@/lib/types"
+import { CreateTechnicalGrowthComponentProps } from "@/lib/types"
 
-import { addTechnicalGrowthFormAction } from "@/actions/technicalGrowth/createTechnicalGrowth"
+import { createTechnicalGrowthFormAction } from "@/actions/technicalGrowth/createTechnicalGrowth"
 
 import Form from "./TechnicalGrowthForm"
 
-const AddTechnicalGrowth: React.FC<AddTechnicalGrowthComponentProps> = ({ path }) => {
+const CreateTechnicalGrowth: React.FC<CreateTechnicalGrowthComponentProps> = ({ path }) => {
   const ref = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await addTechnicalGrowthFormAction(event, path)
+    const actionResult = await createTechnicalGrowthFormAction(event, path)
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
@@ -30,4 +30,4 @@ const AddTechnicalGrowth: React.FC<AddTechnicalGrowthComponentProps> = ({ path }
   return <Form errors={errors} ref={ref} submitFunction={clientAction} submitText="اضافه کن" />
 }
 
-export default AddTechnicalGrowth
+export default CreateTechnicalGrowth

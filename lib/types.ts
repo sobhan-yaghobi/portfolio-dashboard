@@ -191,8 +191,12 @@ export type TypeSetEditTechnicalGrowthParam = {
   reValidPath: string
 }
 
-export type AddTechnicalGrowthComponentProps = {
+export type CreateTechnicalGrowthComponentProps = {
   path: string
+}
+export type EditTechnicalGrowthComponentProps = {
+  id: string
+  defaultValues: TypeTechnicalGrowthInput | null
 }
 
 export type TypeUploadImageParam = {

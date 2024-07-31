@@ -5,7 +5,7 @@ import { createTechnicalGrowth, validateTechnicalGrowthForm } from "./technicalG
 
 import { TypeErrors, TypeReturnSererAction, TypeTechnicalGrowthForm } from "@/lib/definition"
 
-export const addTechnicalGrowthFormAction = async (
+export const createTechnicalGrowthFormAction = async (
   formData: FormData,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {
