@@ -37,7 +37,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
   return (
     <form action={action} className="[&>section]:mt-6 [&>section>*]:mb-3">
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           آواتار
         </Typography>
         <div className="flex items-center gap-6">
@@ -63,7 +63,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           نام
         </Typography>
         <TextError message={errors && errors.name}>
@@ -86,7 +86,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           تلفن
         </Typography>
         <TextError message={errors && errors.phone}>
@@ -110,7 +110,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           ایمیل
         </Typography>
         <TextError message={errors && errors.email}>
@@ -134,7 +134,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           موقعیت
         </Typography>
         <TextError message={errors && errors.location}>
@@ -157,7 +157,7 @@ const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
       </section>
 
       <section>
-        <Typography variant="subtitle1" component={"h5"}>
+        <Typography component={"h5"} variant="subtitle1">
           در باره ی خود
         </Typography>
         <TextError message={errors && errors.bio}>
