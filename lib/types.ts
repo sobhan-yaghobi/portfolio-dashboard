@@ -208,6 +208,5 @@ export type TypeShowActionReturnMessageParam = {
   functions?: {
     doActionIfTrue?: () => void
     doActionIfFalse?: () => void
-    doActionFinally?: () => void
   }
 }

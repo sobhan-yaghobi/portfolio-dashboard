@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { toast } from "react-toastify"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { editProjectFormAction } from "@/actions/project/editProject"
@@ -25,8 +24,6 @@ const EditProject: React.FC<EditProjectComponentProps> = ({
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    if (!id) return toast.error("Project Id not found")
-
     const actionResult = await editProjectFormAction({
       project: {
         id,
@@ -39,7 +36,6 @@ const EditProject: React.FC<EditProjectComponentProps> = ({
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
     showActionReturnMessage({ actionResult })
-    formRef.current?.reset()
   }
 
   return (

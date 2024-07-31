@@ -15,7 +15,6 @@ export const showActionReturnMessage = ({
   functions,
 }: TypeShowActionReturnMessageParam) => {
   const { message } = actionResult
-  functions?.doActionFinally && functions.doActionFinally()
   if (actionResult.status) {
     message && toast.success(message)
     functions?.doActionIfTrue && functions?.doActionIfTrue()
