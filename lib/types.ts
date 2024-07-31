@@ -169,7 +169,7 @@ export type SkillFormComponentProps = {
   errors: TypeError
 }
 
-export type TypeTechnicalGrowthInput = Prisma.TechnicalGrowthCreateInput
+export type TypeTechnicalGrowthInput = Omit<Prisma.TechnicalGrowthCreateInput, "order">
 export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
   title: true,
   subtitle: true,
@@ -197,6 +197,12 @@ export type CreateTechnicalGrowthComponentProps = {
 export type EditTechnicalGrowthComponentProps = {
   id: string
   defaultValues: TypeTechnicalGrowthInput | null
+}
+export type TechnicalGrowthFormComponentProps = {
+  submitText: string
+  submitFunction: (formData: FormData) => void | any
+  errors: TypeError
+  defaultValues?: TypeTechnicalGrowthInput | null
 }
 
 export type TypeUploadImageParam = {

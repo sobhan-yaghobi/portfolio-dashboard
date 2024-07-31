@@ -1,6 +1,6 @@
 import React from "react"
-import { TypeError } from "@/lib/definition"
-import { TypeTechnicalGrowth } from "@/lib/types"
+
+import { TechnicalGrowthFormComponentProps } from "@/lib/types"
 
 import TitleIcon from "@mui/icons-material/Title"
 import EditNoteIcon from "@mui/icons-material/EditNote"
@@ -9,28 +9,23 @@ import { InputAdornment, TextField, Typography } from "@mui/material"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 
-type TechnicalGrowthFormProps = {
-  submitText: string
-  submitFunction: (formData: FormData) => void | any
-  errors: TypeError
-  defaultValues?: TypeTechnicalGrowth | null
-}
-
-const TechnicalGrowthForm = React.forwardRef<HTMLFormElement, TechnicalGrowthFormProps>(
+const TechnicalGrowthForm = React.forwardRef<HTMLFormElement, TechnicalGrowthFormComponentProps>(
   ({ submitText, submitFunction, errors, defaultValues }, ref) => {
     return (
       <form ref={ref} action={submitFunction} className="[&>section]:mt-6 [&>section>*]:mb-3">
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Title
+            عنوان
           </Typography>
           <TextError message={errors && errors?.title}>
             <TextField
-              error={Boolean(errors && errors?.title)}
-              size="small"
               className="w-full"
+              defaultValue={defaultValues?.title}
+              error={Boolean(errors && errors?.title)}
               name="title"
-              placeholder="note a title"
+              placeholder="عنوان رشد فنی خود را بنویسید"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -38,23 +33,23 @@ const TechnicalGrowthForm = React.forwardRef<HTMLFormElement, TechnicalGrowthFor
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              defaultValue={defaultValues?.title}
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Sub Title
+            زیرعنوان
           </Typography>
           <TextError message={errors && errors?.subtitle}>
             <TextField
-              error={Boolean(errors && errors?.subtitle)}
-              size="small"
               className="w-full"
+              defaultValue={defaultValues?.subtitle}
+              error={Boolean(errors && errors?.subtitle)}
               name="subtitle"
-              placeholder="note a subtitle"
+              placeholder="زیر عنوانی برای رشد فنی خود بنویسید"
+              size="small"
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -62,27 +57,25 @@ const TechnicalGrowthForm = React.forwardRef<HTMLFormElement, TechnicalGrowthFor
                   </InputAdornment>
                 ),
               }}
-              variant="outlined"
-              defaultValue={defaultValues?.subtitle}
             />
           </TextError>
         </section>
 
         <section>
           <Typography variant="subtitle1" component={"h5"}>
-            Description
+            متن توضیح رشد فنی
           </Typography>
           <TextError message={errors && errors?.description}>
             <TextField
-              error={Boolean(errors && errors?.description)}
-              size="small"
               className="w-full"
-              name="description"
-              placeholder="note desc"
-              multiline
-              rows={4}
-              variant="outlined"
               defaultValue={defaultValues?.description}
+              error={Boolean(errors && errors?.description)}
+              name="description"
+              multiline
+              placeholder="توضیحی برای رشد فنی خود بنویسید"
+              rows={4}
+              size="small"
+              variant="outlined"
             />
           </TextError>
         </section>
