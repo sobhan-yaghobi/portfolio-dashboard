@@ -24,10 +24,10 @@ const CreateSkill: React.FC<CreateSkillComponentProps> = ({ projects, selectionP
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
     showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
-    formRef.current?.reset()
   }
 
   const resetForm = () => {
+    formRef.current?.reset()
     setErrors({} as TypeError)
     setSelectedProjects([] as Project[])
   }
