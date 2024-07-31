@@ -153,6 +153,12 @@ export type CreateSkillComponentProps = {
   projects: Project[]
   selectionProjects?: Project[]
 }
+export type EditSkillsComponentProps = {
+  id: string
+  defaultValues: TypeSkillInput | null
+  projects: Project[]
+  selectionProjects?: Project[]
+}
 export type SkillFormComponentProps = {
   projects?: Project[]
   selectedProjects: Project[]
@@ -202,5 +208,6 @@ export type TypeShowActionReturnMessageParam = {
   functions?: {
     doActionIfTrue?: () => void
     doActionIfFalse?: () => void
+    doActionFinally?: () => void
   }
 }

@@ -1,23 +1,17 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { editSkillFormAction } from "@/actions/skill/editSkill"
+
 import { TypeError } from "@/lib/definition"
 import { Project } from "@prisma/client"
-import { toast } from "react-toastify"
+import { EditSkillsComponentProps } from "@/lib/types"
 
-import { TypeSkillInput } from "@/lib/types"
+import { editSkillFormAction } from "@/actions/skill/editSkill"
 
 import Form from "./SkillForm"
+import { showActionReturnMessage } from "@/lib/utils"
 
-type EditSkillsProps = {
-  id: string
-  defaultValues: TypeSkillInput | null
-  projects: Project[]
-  selectionProjects?: Project[]
-}
-
-const EditSkill: React.FC<EditSkillsProps> = ({
+const EditSkill: React.FC<EditSkillsComponentProps> = ({
   id,
   defaultValues,
   projects,
@@ -30,37 +24,31 @@ const EditSkill: React.FC<EditSkillsProps> = ({
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    if (id) {
-      const actionResult = await editSkillFormAction({
-        skill: { id, formData: event, relatedProjects: selectedProjects },
-        reValidPath: "/dashboard/skills",
-      })
-      if (actionResult) {
-        if ("errors" in actionResult) {
-          return setErrors({ ...actionResult.errors } as TypeError)
-        }
+    const actionResult = await editSkillFormAction({
+      skill: { id, formData: event, relatedProjects: selectedProjects },
+      reValidPath: "/dashboard/skills",
+    })
 
-        const message = actionResult.message
-        if (actionResult.status) {
-          setErrors({} as TypeError)
-          setSelectedProjects([] as Project[])
-          message && toast.success(message)
-        } else {
-          message && toast.error(message)
-        }
-      }
-    }
+    if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
+
+    showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
   }
+
+  const resetForm = () => {
+    setErrors({} as TypeError)
+    setSelectedProjects([] as Project[])
+  }
+
   return (
     <Form
-      ref={formRef}
-      submitText="Edit Skill"
-      errors={errors}
-      submitFunction={clientAction}
       defaultValues={defaultValues}
+      errors={errors}
       projects={projects}
+      ref={formRef}
       selectedProjects={selectedProjects}
       setSelectedProjects={setSelectedProjects}
+      submitFunction={clientAction}
+      submitText="ویرایش"
     />
   )
 }
