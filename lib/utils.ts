@@ -1,11 +1,9 @@
-import prisma from "./prisma"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { toast } from "react-toastify"
-import { cookies } from "next/headers"
-import { decrypt } from "@/auth/session"
 
 import { TypeShowActionReturnMessageParam } from "./types"
+import { verifyToken } from "@/auth/auth"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -32,17 +30,12 @@ export const updateUrl = (url: string) => {
   return mainUrl?.concat(`?updatedAt=${Date.now()}`)
 }
 
-export const getAdminToken = async () => {
-  const cookie = cookies().get("session")?.value
-  const sessionResult = await decrypt(cookie)
-  return typeof sessionResult?.id === "string" ? sessionResult.id : undefined
-}
+// export const getAdminToken = async () => {
+//   // const cookie = cookies().get("session")?.value
+//   // const sessionResult = await decrypt(cookie)
+//   // return typeof sessionResult?.id === "string" ? sessionResult.id : undefined
+//   return ""
+// }
 
-export const getAdminId = async () => {
-  const adminId = await getAdminToken()
-  const adminResult = await prisma.admin.findUnique({
-    where: { id: adminId },
-    select: { id: true },
-  })
-  return adminResult?.id
-}
+export const getAdminId = async (token: string | undefined) =>
+  token ? await verifyToken(token) : undefined

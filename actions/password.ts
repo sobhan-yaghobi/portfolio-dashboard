@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
+import { cookies } from "next/headers"
+import { getAdminId } from "@/lib/utils"
 
 import {
   SchemaAdminPassword,
@@ -10,7 +12,6 @@ import {
   TypeReturnSererAction,
 } from "@/lib/definition"
 import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types"
-import { getAdminToken } from "@/lib/utils"
 
 export const changePasswordFormAction = async (
   formData: FormData
@@ -35,7 +36,8 @@ const checkPassword = async (
   if (currentPassword === newPassword)
     return { message: "two password is equal, change it", status: false }
 
-  const adminId = await getAdminToken()
+  const token = cookies().get("session")?.value
+  const adminId = await getAdminId(token)
   const adminInfo = await fetchAdminIdAndPassword(adminId)
 
   if (!adminInfo) return { status: false, message: "Admin not found" }

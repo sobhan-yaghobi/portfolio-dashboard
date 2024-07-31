@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma"
 import { createImage, updateImage } from "./image"
 import { isEqual } from "lodash"
 import { revalidatePath } from "next/cache"
+import { cookies } from "next/headers"
 
 import {
   SchemaAdminProfile,
@@ -52,16 +53,17 @@ const setProfile = async ({
   infoForm,
   reValidPath,
 }: TypeSetProfileParam): Promise<TypeReturnSererAction> => {
-  const adminIdResult = await getAdminId()
-  const getAdminInfo = await fetchAdminProfileInput(adminIdResult)
-  if (!getAdminInfo || !adminIdResult) return { status: false, message: "Admin not found" }
+  const token = cookies().get("session")?.value
+  const adminId = await getAdminId(token)
+  const getAdminInfo = await fetchAdminProfileInput(adminId)
+  if (!getAdminInfo || !adminId) return { status: false, message: "Admin not found" }
 
   const { image: adminInfoImage, ...adminInfoWithoutImage } = getAdminInfo
   const { image: adminImageForm, ...profileInfoFormWithoutImage } = infoForm
 
   const isImageFormExist = Boolean(adminImageForm?.size)
 
-  const adminImageResult = await setAdminProfileImage(adminIdResult, adminImageForm)
+  const adminImageResult = await setAdminProfileImage(adminId, adminImageForm)
   if (!adminImageResult.status) return { status: false, message: adminImageResult.message }
 
   const isAdminInfoEqual = await newAdminInfoIsEqual(
@@ -73,7 +75,7 @@ const setProfile = async ({
     return { message: "Please update filed first", status: false }
 
   return updateAdmin({
-    admin: { id: adminIdResult, infoFormWithoutImage: profileInfoFormWithoutImage },
+    admin: { id: adminId, infoFormWithoutImage: profileInfoFormWithoutImage },
     reValidPath,
   })
 }

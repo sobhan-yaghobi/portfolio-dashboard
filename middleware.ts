@@ -1,14 +1,12 @@
 import { verifyToken } from "@/auth/auth"
-import { decrypt } from "@/auth/session"
 import { NextRequest, NextResponse } from "next/server"
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const cookie = request.cookies.get("session")?.value
-  const sessionResult = await decrypt(cookie)
+  const token = request.cookies.get("session")?.value
 
-  if (sessionResult && "id" in sessionResult && typeof sessionResult.id === "string") {
-    const verifyTokenResult = await verifyToken(sessionResult.id)
+  if (token) {
+    const verifyTokenResult = await verifyToken(token)
     if (!verifyTokenResult) {
       if (!pathname.startsWith("/login")) {
         return NextResponse.redirect(new URL("/login", request.url))
