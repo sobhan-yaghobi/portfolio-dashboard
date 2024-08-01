@@ -8,7 +8,7 @@ export const SchemaSignIn = z.object({
     .trim()
     .min(1, "ایمیل اجباری میباشد")
     .transform(trimAndNormalize),
-  password: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
+  password: z.string().trim().min(8, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
 })
 export type TypeSignInForm = z.infer<typeof SchemaSignIn>
 

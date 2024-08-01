@@ -5,9 +5,9 @@ export const SchemaAdminPassword = z.object({
   currentPassword: z
     .string()
     .trim()
-    .min(4, "حداقل 8 کارکتر مورد نیاز است")
+    .min(8, "حداقل 8 کارکتر مورد نیاز است")
     .transform(trimAndNormalize),
-  newPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
+  newPassword: z.string().trim().min(8, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
 })
 
 export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
