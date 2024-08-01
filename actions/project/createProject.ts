@@ -3,33 +3,40 @@
 import { v4 as uuid } from "uuid"
 import { createProject, setImageProject, validateProjectForm } from "./projectUtils"
 
-import { TypeErrors, TypeReturnSererAction, TypeProjectForm } from "@/lib/definition"
-import { Skill } from "@prisma/client"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeCreateProjectFormActionParams, TypeSetProjectParams } from "@/lib/types/project.type"
 
-export const createProjectFormAction = async (
-  formData: FormData,
-  relatedSkills: Skill[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const validateResult = validateProjectForm(formData)
+export const createProjectFormAction = async ({
+  project,
+  reValidPath,
+}: TypeCreateProjectFormActionParams): Promise<TypeReturnSererAction> => {
+  const validateResult = validateProjectForm(project.formData)
 
-  if (validateResult.success) return setProject(validateResult.data, relatedSkills, reValidPath)
+  if (validateResult.success)
+    return setProject({
+      project: { infoForm: validateResult.data, relatedSkills: project.relatedSkills },
+      reValidPath,
+    })
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-const setProject = async (
-  projectInfoForm: TypeProjectForm,
-  relatedSkills: Skill[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+const setProject = async ({
+  project,
+  reValidPath,
+}: TypeSetProjectParams): Promise<TypeReturnSererAction> => {
   const projectId = uuid()
 
-  const projectImageStatus = await setImageProject(projectId, projectInfoForm.image)
+  const projectImageStatus = await setImageProject(projectId, project.infoForm.image)
   if (projectImageStatus?.status) {
     const imageUrl = projectImageStatus.data as string
     return createProject({
-      project: { id: projectId, imageUrl, infoForm: projectInfoForm, relatedSkills },
+      project: {
+        id: projectId,
+        imageUrl,
+        infoForm: project.infoForm,
+        relatedSkills: project.relatedSkills,
+      },
       reValidPath,
     })
   }

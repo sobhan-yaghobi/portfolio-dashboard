@@ -9,12 +9,12 @@ import {
 } from "./projectUtils"
 
 import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
-import { TypeEditProjectFormActionParam, TypeSetEditProjectParam } from "@/lib/types"
+import { TypeEditProjectFormActionParams, TypeSetEditProjectParams } from "@/lib/types/project.type"
 
 export const editProjectFormAction = async ({
   project,
   reValidPath,
-}: TypeEditProjectFormActionParam): Promise<TypeReturnSererAction> => {
+}: TypeEditProjectFormActionParams): Promise<TypeReturnSererAction> => {
   const validateResult = validateProjectForm(project.formData)
 
   if (validateResult.success) {
@@ -34,7 +34,7 @@ export const editProjectFormAction = async ({
 const setEditProject = async ({
   project,
   reValidPath,
-}: TypeSetEditProjectParam): Promise<TypeReturnSererAction> => {
+}: TypeSetEditProjectParams): Promise<TypeReturnSererAction> => {
   const getProjectResult = await fetchProjectCreateInput(project.id)
   if (!getProjectResult) return { status: false, message: "Project not found" }
 

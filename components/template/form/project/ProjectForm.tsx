@@ -5,7 +5,7 @@ import { find, some } from "lodash"
 import { toast } from "react-toastify"
 
 import { Skill } from "@prisma/client"
-import { ProjectFormComponentProps } from "@/lib/types"
+import { TypeProjectFormComponentProps } from "@/lib/types/project.type"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -26,7 +26,7 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 
-const ProjectForm = React.forwardRef<HTMLFormElement, ProjectFormComponentProps>(
+const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentProps>(
   (
     {
       skills,

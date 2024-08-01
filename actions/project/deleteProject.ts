@@ -5,7 +5,7 @@ import { deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
 import { deleteImage } from "../image"
 
 import { TypeReturnSererAction } from "@/lib/definition"
-import { TypeProjectIdAndImagePath } from "@/lib/types"
+import { TypeSetDeleteProjectParams } from "@/lib/types/project.type"
 
 export const deleteProjectFormAction = async (
   project: string,
@@ -13,17 +13,17 @@ export const deleteProjectFormAction = async (
 ): Promise<TypeReturnSererAction> => {
   const projectInfo = await fetchProjectIdAndImagePath(project)
 
-  if (projectInfo) return setDeleteProject(projectInfo, reValidPath)
+  if (projectInfo) return setDeleteProject({ project: projectInfo, reValidPath })
 
   return { message: "Project not found", status: false }
 }
 
-const setDeleteProject = async (
-  { id, image }: TypeProjectIdAndImagePath,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const deleteImageResult = await deleteImage(image)
-  const deleteProjectResult = await deleteProject(id)
+const setDeleteProject = async ({
+  project,
+  reValidPath,
+}: TypeSetDeleteProjectParams): Promise<TypeReturnSererAction> => {
+  const deleteImageResult = await deleteImage(project.image)
+  const deleteProjectResult = await deleteProject(project.id)
 
   if (deleteImageResult.status && deleteProjectResult) {
     revalidatePath(reValidPath)

@@ -45,70 +45,70 @@ import {
 //   id: true,
 // }
 
-export type TypeProjectInput = Prisma.ProjectCreateInput
-export const ProjectCreateInput: Prisma.ProjectSelect = {
-  image: true,
-  title: true,
-  link: true,
-  source: true,
-  description: true,
-}
-export type TypeProjectIdAndImagePath = Pick<Project, "id" | "image">
-export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: true }
-export type TypeCreateProjectParam = {
-  project: {
-    id: string
-    infoForm: TypeProjectForm
-    relatedSkills: Skill[]
-    imageUrl: string
-  }
-  reValidPath: string
-}
-export type TypeEditProjectFormActionParam = {
-  project: {
-    id: string
-    formData: FormData
-    relatedSkills: Skill[]
-  }
-  reValidPath: string
-}
-export type TypeSetEditProjectParam = {
-  project: {
-    id: string
-    infoForm: TypeProjectForm
-    relatedSkills: Skill[]
-  }
-  reValidPath: string
-}
-export type TypeSaveUpdatedProjectParam = {
-  project: {
-    id: string
-    InfoFormWithoutImage: TypeProjectFormWithoutImage
-    relatedSkills: Skill[]
-    imageUrl?: string
-  }
-  reValidPath: string
-}
-export type CreateProjectComponentProps = {
-  skills: Skill[]
-  selectionSkills?: Skill[]
-}
-export type EditProjectComponentProps = {
-  id: string
-  defaultValues: TypeProjectInput | null
-  skills: Skill[]
-  selectionSkills?: Skill[]
-}
+// export type TypeProjectInput = Prisma.ProjectCreateInput
+// export const ProjectCreateInput: Prisma.ProjectSelect = {
+//   image: true,
+//   title: true,
+//   link: true,
+//   source: true,
+//   description: true,
+// }
+// export type TypeProjectIdAndImagePath = Pick<Project, "id" | "image">
+// export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: true }
+// export type TypeCreateProjectParam = {
+//   project: {
+//     id: string
+//     infoForm: TypeProjectForm
+//     relatedSkills: Skill[]
+//     imageUrl: string
+//   }
+//   reValidPath: string
+// }
+// export type TypeEditProjectFormActionParam = {
+//   project: {
+//     id: string
+//     formData: FormData
+//     relatedSkills: Skill[]
+//   }
+//   reValidPath: string
+// }
+// export type TypeSetEditProjectParam = {
+//   project: {
+//     id: string
+//     infoForm: TypeProjectForm
+//     relatedSkills: Skill[]
+//   }
+//   reValidPath: string
+// }
+// export type TypeSaveUpdatedProjectParam = {
+//   project: {
+//     id: string
+//     InfoFormWithoutImage: TypeProjectFormWithoutImage
+//     relatedSkills: Skill[]
+//     imageUrl?: string
+//   }
+//   reValidPath: string
+// }
+// export type CreateProjectComponentProps = {
+//   skills: Skill[]
+//   selectionSkills?: Skill[]
+// }
+// export type EditProjectComponentProps = {
+//   id: string
+//   defaultValues: TypeProjectInput | null
+//   skills: Skill[]
+//   selectionSkills?: Skill[]
+// }
 
-export type ProjectFormComponentProps = {
-  skills?: Skill[]
-  selectedSkills: Skill[]
-  setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
-  defaultValues?: TypeProjectInput | null
-  submitText: string
-  errors: TypeError
-  submitFunction: (formData: FormData) => void | any
-}
+// export type ProjectFormComponentProps = {
+//   skills?: Skill[]
+//   selectedSkills: Skill[]
+//   setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
+//   defaultValues?: TypeProjectInput | null
+//   submitText: string
+//   errors: TypeError
+//   submitFunction: (formData: FormData) => void | any
+// }
 
 export type TypeSkillInput = Prisma.SkillCreateInput
 export const SkillCreateInput: Prisma.SkillSelect = {

@@ -3,15 +3,15 @@
 import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
-import { editProjectFormAction } from "@/actions/project/editProject"
-
 import { TypeError } from "@/lib/definition"
 import { Skill } from "@prisma/client"
-import { EditProjectComponentProps } from "@/lib/types"
+import { TypeEditProjectComponentProps } from "@/lib/types/project.type"
+
+import { editProjectFormAction } from "@/actions/project/editProject"
 
 import Form from "./ProjectForm"
 
-const EditProject: React.FC<EditProjectComponentProps> = ({
+const EditProject: React.FC<TypeEditProjectComponentProps> = ({
   id,
   defaultValues,
   skills,

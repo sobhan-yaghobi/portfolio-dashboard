@@ -5,13 +5,13 @@ import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/definition"
 import { Skill } from "@prisma/client"
-import { CreateProjectComponentProps } from "@/lib/types"
+import { TypeCreateProjectComponentProps } from "@/lib/types/project.type"
 
 import { createProjectFormAction } from "@/actions/project/createProject"
 
 import Form from "./ProjectForm"
 
-const CreateProject: React.FC<CreateProjectComponentProps> = ({ skills, selectionSkills }) => {
+const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({ skills, selectionSkills }) => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
     selectionSkills ? selectionSkills : ([] as Skill[])
   )
@@ -19,7 +19,10 @@ const CreateProject: React.FC<CreateProjectComponentProps> = ({ skills, selectio
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await createProjectFormAction(event, selectedSkills, "/projects")
+    const actionResult = await createProjectFormAction({
+      project: { formData: event, relatedSkills: selectedSkills },
+      reValidPath: "/dashboard/projects",
+    })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 

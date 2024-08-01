@@ -12,10 +12,10 @@ import {
 import {
   ProjectCreateInput,
   ProjectIdAndImagePath,
-  TypeCreateProjectParam,
+  TypeCreateProjectParams,
   TypeProjectIdAndImagePath,
-  TypeSaveUpdatedProjectParam,
-} from "@/lib/types"
+  TypeSaveUpdatedProjectParams,
+} from "@/lib/types/project.type"
 
 export const validateProjectForm = (formData: FormData) =>
   SchemaProject.safeParse({
@@ -45,7 +45,7 @@ export const imageIsRequired = (): TypeReturnSererAction => ({
 export const createProject = async ({
   project,
   reValidPath,
-}: TypeCreateProjectParam): Promise<TypeReturnSererAction> => {
+}: TypeCreateProjectParams): Promise<TypeReturnSererAction> => {
   const projectResult = await prisma.project.create({
     data: {
       ...project.infoForm,
@@ -85,7 +85,7 @@ export const newProjectInfoIsEqual = (
 export const saveUpdatedProject = async ({
   project,
   reValidPath,
-}: TypeSaveUpdatedProjectParam): Promise<TypeReturnSererAction> => {
+}: TypeSaveUpdatedProjectParams): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.project.update({
     where: { id: project.id },
     data: {
