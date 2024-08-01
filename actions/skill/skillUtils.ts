@@ -10,7 +10,7 @@ import {
   TypeSaveUpdatedSkillParams,
   TypeSkillIdAndImagePath,
 } from "@/lib/types/skill.type"
-import { SchemaSkill, TypeSkillForm, TypeSkillFormWithoutImage } from "@/lib/definition"
+import { SchemaSkill, TypeSkillForm, TypeSkillFormWithoutImage } from "@/lib/schema/skill.schema"
 import { TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const validateSkillForm = (formData: FormData) =>

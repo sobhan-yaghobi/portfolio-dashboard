@@ -44,24 +44,24 @@ const trimAndNormalize = (str: string) => str.trim().replace(/\s+/g, " ")
 // })
 // export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
 
-export const SchemaProject = z.object({
-  image: z.instanceof(File).optional(),
-  title: z.string().trim().min(1, "title is required").transform(trimAndNormalize),
-  link: z.string().trim().min(1, "link is required").transform(trimAndNormalize),
-  source: z.string().trim().min(1, "source is required").transform(trimAndNormalize),
-  description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
-})
-export type TypeProjectForm = z.infer<typeof SchemaProject>
-export type TypeProjectFormWithoutImage = Omit<TypeProjectForm, "image">
+// export const SchemaProject = z.object({
+//   image: z.instanceof(File).optional(),
+//   title: z.string().trim().min(1, "title is required").transform(trimAndNormalize),
+//   link: z.string().trim().min(1, "link is required").transform(trimAndNormalize),
+//   source: z.string().trim().min(1, "source is required").transform(trimAndNormalize),
+//   description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
+// })
+// export type TypeProjectForm = z.infer<typeof SchemaProject>
+// export type TypeProjectFormWithoutImage = Omit<TypeProjectForm, "image">
 
-export const SchemaSkill = z.object({
-  name: z.string().trim().min(1, "name is required").transform(trimAndNormalize),
-  image: z.instanceof(File).optional(),
-  link: z.string().trim().min(1, "link is required").transform(trimAndNormalize),
-  description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
-})
-export type TypeSkillForm = z.infer<typeof SchemaSkill>
-export type TypeSkillFormWithoutImage = Omit<TypeSkillForm, "image">
+// export const SchemaSkill = z.object({
+//   name: z.string().trim().min(1, "name is required").transform(trimAndNormalize),
+//   image: z.instanceof(File).optional(),
+//   link: z.string().trim().min(1, "link is required").transform(trimAndNormalize),
+//   description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
+// })
+// export type TypeSkillForm = z.infer<typeof SchemaSkill>
+// export type TypeSkillFormWithoutImage = Omit<TypeSkillForm, "image">
 
 export const SchemaTechnicalGrowth = z.object({
   title: z.string().trim().min(1, "title is required").transform(trimAndNormalize),

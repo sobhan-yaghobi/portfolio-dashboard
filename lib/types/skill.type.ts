@@ -1,5 +1,6 @@
 import { Prisma, Project, Skill } from "@prisma/client"
-import { TypeError, TypeSkillForm, TypeSkillFormWithoutImage } from "../definition"
+import { TypeSkillForm, TypeSkillFormWithoutImage } from "../schema/skill.schema"
+import { TypeError } from "./utils.type"
 
 // Skill Types
 export type TypeSkillInput = Prisma.SkillCreateInput
