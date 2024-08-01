@@ -3,8 +3,7 @@
 import { v4 as uuid } from "uuid"
 import { createSkill, setImageSkill, validateSkillForm } from "./skillUtils"
 
-import { TypeSkillForm, TypeErrors, TypeReturnSererAction } from "@/lib/definition"
-import { Project } from "@prisma/client"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeCreateSkillFormActionParams, TypeSetSkillParams } from "@/lib/types/skill.type"
 
 export const createSkillFormAction = async ({

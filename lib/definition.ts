@@ -1,16 +1,4 @@
-import { Project } from "@prisma/client"
 import { z } from "zod"
-
-export type TypeError = {
-  [key: string]: string[]
-}
-export type TypeErrors = {
-  errors: { [key: string]: string }
-}
-
-export type TypeReturnSererAction = {
-  message?: string
-} & ({ status: false; errors?: TypeErrors } | { status: true; data?: unknown })
 
 const trimAndNormalize = (str: string) => str.trim().replace(/\s+/g, " ")
 

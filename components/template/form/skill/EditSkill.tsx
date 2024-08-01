@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 import { Project } from "@prisma/client"
 import { TypeEditSkillsComponentProps } from "@/lib/types/skill.type"
 

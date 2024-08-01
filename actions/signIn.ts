@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/auth"
 import { createSession, deleteSession } from "@/auth/session"
 
-import { SchemaSignIn, TypeErrors, TypeReturnSererAction, TypeSignInForm } from "@/lib/definition"
+import { SchemaSignIn, TypeSignInForm } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const signInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
   const validateResult = validateSignInForm(formData)

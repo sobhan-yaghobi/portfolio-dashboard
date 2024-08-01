@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
 
-import { TypeReturnSererAction } from "@/lib/definition"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeSetDeleteSkillParams } from "@/lib/types/skill.type"
 
 import { deleteImage } from "../image"

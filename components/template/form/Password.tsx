@@ -1,9 +1,8 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { toast } from "react-toastify"
 
-import { TypeError, TypeReturnSererAction } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 
 import { changePasswordFormAction } from "@/actions/password"
 

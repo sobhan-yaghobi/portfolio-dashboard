@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { isTechnicalGrowthExist } from "./technicalGrowthUtils"
 import { deleteTechnicalGrowth } from "./technicalGrowthUtils"
 
-import { TypeReturnSererAction } from "@/lib/definition"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const deleteTechnicalGrowthFormAction = async (
   technicalGrowthId: string,

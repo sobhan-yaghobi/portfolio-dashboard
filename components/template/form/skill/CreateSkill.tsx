@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { Project } from "@prisma/client"
-import { TypeError } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 import { TypeCreateSkillComponentProps } from "@/lib/types/skill.type"
 
 import { createSkillFormAction } from "@/actions/skill/createSkill"

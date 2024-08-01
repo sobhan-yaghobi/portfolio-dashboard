@@ -6,12 +6,8 @@ import { isEqual } from "lodash"
 import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 
-import {
-  SchemaAdminProfile,
-  TypeAdminProfileFrom,
-  TypeErrors,
-  TypeReturnSererAction,
-} from "@/lib/definition"
+import { SchemaAdminProfile, TypeAdminProfileFrom } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import {
   AdminProfileInput,
   TypeAdminProfile,

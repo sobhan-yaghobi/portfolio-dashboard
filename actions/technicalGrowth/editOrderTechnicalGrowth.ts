@@ -4,7 +4,7 @@ import { setNewOrderTechnicalGrowthList, updateTechnicalGrowthOrder } from "./te
 import { TechnicalGrowth } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
-import { TypeReturnSererAction } from "@/lib/definition"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const editOrderTechnicalGrowthFormAction = async (
   updateTechnicalGrowthList: TechnicalGrowth[],

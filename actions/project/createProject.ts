@@ -3,7 +3,7 @@
 import { v4 as uuid } from "uuid"
 import { createProject, setImageProject, validateProjectForm } from "./projectUtils"
 
-import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeCreateProjectFormActionParams, TypeSetProjectParams } from "@/lib/types/project.type"
 
 export const createProjectFormAction = async ({

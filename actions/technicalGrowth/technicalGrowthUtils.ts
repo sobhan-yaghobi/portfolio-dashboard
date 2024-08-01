@@ -8,11 +8,8 @@ import {
   TypeSaveUpdatedTechnicalGrowthParams,
 } from "@/lib/types/technicalGrowth.type"
 import { TechnicalGrowth } from "@prisma/client"
-import {
-  SchemaTechnicalGrowth,
-  TypeReturnSererAction,
-  TypeTechnicalGrowthForm,
-} from "@/lib/definition"
+import { SchemaTechnicalGrowth, TypeTechnicalGrowthForm } from "@/lib/definition"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const validateTechnicalGrowthForm = (formData: FormData) =>
   SchemaTechnicalGrowth.safeParse({

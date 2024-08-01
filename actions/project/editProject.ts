@@ -8,7 +8,7 @@ import {
   validateProjectForm,
 } from "./projectUtils"
 
-import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeEditProjectFormActionParams, TypeSetEditProjectParams } from "@/lib/types/project.type"
 
 export const editProjectFormAction = async ({

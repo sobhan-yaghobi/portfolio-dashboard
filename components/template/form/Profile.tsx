@@ -5,7 +5,7 @@ import { showActionReturnMessage } from "@/lib/utils"
 
 import { editProfileFormAction } from "@/actions/profile"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 import { TypeProfileComponentProps } from "@/lib/types/profile.type"
 
 import AccountCircle from "@mui/icons-material/AccountCircle"

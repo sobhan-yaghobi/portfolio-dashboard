@@ -4,8 +4,8 @@ import supabase from "@/lib/supabase"
 import { getImagePath, updateUrl } from "@/lib/utils"
 import { env } from "process"
 
-import { TypeUploadImageParam } from "@/lib/types"
-import { TypeReturnSererAction } from "@/lib/definition"
+import { TypeUploadImageParam } from "@/lib/types/utils.type"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 
 const bucket = env.NEXT_PUBLIC_IMAGE_BUCKET
 

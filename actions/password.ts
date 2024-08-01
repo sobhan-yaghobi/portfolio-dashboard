@@ -5,12 +5,8 @@ import { comparePassword, hashPassword } from "@/auth/auth"
 import { cookies } from "next/headers"
 import { getAdminId } from "@/lib/utils"
 
-import {
-  SchemaAdminPassword,
-  TypeAdminPasswordForm,
-  TypeErrors,
-  TypeReturnSererAction,
-} from "@/lib/definition"
+import { SchemaAdminPassword, TypeAdminPasswordForm } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types/profile.type"
 
 export const changePasswordFormAction = async (

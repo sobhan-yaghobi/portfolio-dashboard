@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 import { TypeEditTechnicalGrowthComponentProps } from "@/lib/types/technicalGrowth.type"
 
 import { editTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editInfoTechnicalGrowth"

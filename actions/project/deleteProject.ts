@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { deleteProject, fetchProjectIdAndImagePath } from "./projectUtils"
 import { deleteImage } from "../image"
 
-import { TypeReturnSererAction } from "@/lib/definition"
+import { TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeSetDeleteProjectParams } from "@/lib/types/project.type"
 
 export const deleteProjectFormAction = async (

@@ -8,7 +8,7 @@ import {
   validateSkillForm,
 } from "./skillUtils"
 
-import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import { TypeEditSkillFormActionParams, TypeSetEditSkillParams } from "@/lib/types/skill.type"
 
 export const editSkillFormAction = async ({

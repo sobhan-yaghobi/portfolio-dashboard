@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { toast } from "react-toastify"
 
-import { TypeShowActionReturnMessageParam } from "./types"
+import { TypeShowActionReturnMessageParam } from "./types/utils.type"
 import { verifyToken } from "@/auth/auth"
 
 export function cn(...inputs: ClassValue[]) {

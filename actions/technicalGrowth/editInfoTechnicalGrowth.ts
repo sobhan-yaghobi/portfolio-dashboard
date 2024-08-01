@@ -7,7 +7,7 @@ import {
   validateTechnicalGrowthForm,
 } from "./technicalGrowthUtils"
 
-import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
+import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 import {
   TypeEditTechnicalGrowthFormActionParams,
   TypeSetEditTechnicalGrowthParams,

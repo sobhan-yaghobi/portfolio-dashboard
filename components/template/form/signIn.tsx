@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
-import { TypeError } from "@/lib/definition"
+import { TypeError } from "@/lib/types/utils.type"
 
 import { signInFormAction } from "@/actions/signIn"
 
