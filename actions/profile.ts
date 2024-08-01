@@ -52,7 +52,7 @@ const setProfile = async ({
   const token = cookies().get("session")?.value
   const adminId = await getAdminId(token)
   const getAdminInfo = await fetchAdminProfileInput(adminId)
-  if (!getAdminInfo || !adminId) return { status: false, message: "Admin not found" }
+  if (!getAdminInfo || !adminId) return { status: false, message: "ادمین یافت نشد" }
 
   const { image: adminInfoImage, ...adminInfoWithoutImage } = getAdminInfo
   const { image: adminImageForm, ...profileInfoFormWithoutImage } = infoForm
@@ -68,7 +68,7 @@ const setProfile = async ({
   )
 
   if (!isImageFormExist && isAdminInfoEqual)
-    return { message: "Please update filed first", status: false }
+    return { message: "لطفا فرم را بروزرسانی کنید", status: false }
 
   return updateAdmin({
     admin: { id: adminId, infoFormWithoutImage: profileInfoFormWithoutImage },
@@ -111,7 +111,7 @@ const hasAdminImageInDatabase = async (adminId: string) => {
   return Boolean(isAdminHasImage?.image)
 }
 
-const imageIsRequired = () => ({ message: "Image is required", status: false })
+const imageIsRequired = () => ({ message: "عکس اجباری میباشد", status: false })
 
 const updateAdminImage = async (adminId: string, profileImageFile: File) =>
   await updateImage(adminId, profileImageFile)
@@ -121,10 +121,10 @@ const createAdminImage = async (
   profileImageFile: File
 ): Promise<TypeReturnSererAction> => {
   const createResult = await createImage(adminId, profileImageFile)
-  if (createResult.status) {
-    return { message: "Image created successfully", status: true, data: createResult.data }
-  }
-  return { message: "Image creation failed", status: false }
+  if (createResult.status)
+    return { message: createResult.message, status: true, data: createResult.data }
+
+  return { message: createResult.message, status: false }
 }
 
 const newAdminInfoIsEqual = async (
@@ -143,8 +143,8 @@ const updateAdmin = async ({
 
   if (updateResult) {
     revalidatePath(reValidPath)
-    return { message: "Profile updated successfully", status: true }
+    return { message: "پروفایل با موفقیت بروزرسانی شد", status: true }
   }
 
-  return { message: "Profile update failed", status: false }
+  return { message: "بروزرسانی پروفایل با مشکل مواجه شد", status: false }
 }
