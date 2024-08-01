@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma"
 import { createTechnicalGrowth, validateTechnicalGrowthForm } from "./technicalGrowthUtils"
 
-import { TypeTechnicalGrowthForm } from "@/lib/definition"
+import { TypeTechnicalGrowthForm } from "@/lib/schema/technicalGrwoth.schema"
 import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 
 export const createTechnicalGrowthFormAction = async (

@@ -1,5 +1,6 @@
 import { Prisma, TechnicalGrowth } from "@prisma/client"
-import { TypeError, TypeTechnicalGrowthForm } from "../definition"
+import { TypeTechnicalGrowthForm } from "../schema/technicalGrwoth.schema"
+import { TypeError } from "./utils.type"
 
 // Technical Growth Types
 export type TypeTechnicalGrowthInput = Omit<Prisma.TechnicalGrowthCreateInput, "order">

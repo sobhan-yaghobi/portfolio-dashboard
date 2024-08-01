@@ -63,9 +63,9 @@ const trimAndNormalize = (str: string) => str.trim().replace(/\s+/g, " ")
 // export type TypeSkillForm = z.infer<typeof SchemaSkill>
 // export type TypeSkillFormWithoutImage = Omit<TypeSkillForm, "image">
 
-export const SchemaTechnicalGrowth = z.object({
-  title: z.string().trim().min(1, "title is required").transform(trimAndNormalize),
-  subtitle: z.string().trim().min(1, "subtitle is required").transform(trimAndNormalize),
-  description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
-})
-export type TypeTechnicalGrowthForm = z.infer<typeof SchemaTechnicalGrowth>
+// export const SchemaTechnicalGrowth = z.object({
+//   title: z.string().trim().min(1, "title is required").transform(trimAndNormalize),
+//   subtitle: z.string().trim().min(1, "subtitle is required").transform(trimAndNormalize),
+//   description: z.string().trim().min(1, "description is required").transform(trimAndNormalize),
+// })
+// export type TypeTechnicalGrowthForm = z.infer<typeof SchemaTechnicalGrowth>
