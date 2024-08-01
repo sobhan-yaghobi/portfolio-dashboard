@@ -4,14 +4,14 @@ import React, { useRef, useState } from "react"
 
 import { TypeError } from "@/lib/definition"
 import { Project } from "@prisma/client"
-import { EditSkillsComponentProps } from "@/lib/types"
+import { TypeEditSkillsComponentProps } from "@/lib/types/skill.type"
 
 import { editSkillFormAction } from "@/actions/skill/editSkill"
 
 import Form from "./SkillForm"
 import { showActionReturnMessage } from "@/lib/utils"
 
-const EditSkill: React.FC<EditSkillsComponentProps> = ({
+const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
   id,
   defaultValues,
   projects,

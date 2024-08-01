@@ -6,10 +6,10 @@ import { createImage, updateImage } from "@/actions/image"
 import {
   SkillCreateInput,
   SkillIdAndImagePath,
-  TypeCreateSkillParam,
-  TypeSaveUpdatedSkillParam,
+  TypeCreateSkillParams,
+  TypeSaveUpdatedSkillParams,
   TypeSkillIdAndImagePath,
-} from "@/lib/types"
+} from "@/lib/types/skill.type"
 import {
   SchemaSkill,
   TypeReturnSererAction,
@@ -41,7 +41,7 @@ export const imageIsRequired = (): TypeReturnSererAction => ({
 export const createSkill = async ({
   skill,
   reValidPath,
-}: TypeCreateSkillParam): Promise<TypeReturnSererAction> => {
+}: TypeCreateSkillParams): Promise<TypeReturnSererAction> => {
   const skillResult = await prisma.skill.create({
     data: {
       ...skill.infoForm,
@@ -80,7 +80,7 @@ export const newSkillInfoIsEqual = (
 export const saveUpdatedSkill = async ({
   skill,
   reValidPath,
-}: TypeSaveUpdatedSkillParam): Promise<TypeReturnSererAction> => {
+}: TypeSaveUpdatedSkillParams): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.skill.update({
     where: { id: skill.id },
     data: { ...skill.InfoFormWithoutImage, projects: { connect: skill.relatedProjects } },

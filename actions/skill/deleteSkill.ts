@@ -2,10 +2,11 @@
 
 import { revalidatePath } from "next/cache"
 import { deleteSkill, fetchSkillIdAndImagePath } from "./skillUtils"
-import { deleteImage } from "../image"
 
 import { TypeReturnSererAction } from "@/lib/definition"
-import { TypeSkillIdAndImagePath } from "@/lib/types"
+import { TypeSetDeleteSkillParams } from "@/lib/types/skill.type"
+
+import { deleteImage } from "../image"
 
 export const deleteSkillFormAction = async (
   skillId: string,
@@ -13,17 +14,17 @@ export const deleteSkillFormAction = async (
 ): Promise<TypeReturnSererAction> => {
   const skillInfo = await fetchSkillIdAndImagePath(skillId)
 
-  if (skillInfo) return setDeleteSkill(skillInfo, reValidPath)
+  if (skillInfo) return setDeleteSkill({ skill: skillInfo, reValidPath })
 
   return { message: "Skill remove got failure", status: false }
 }
 
-const setDeleteSkill = async (
-  { id, image }: TypeSkillIdAndImagePath,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const deleteImageResult = await deleteImage(image)
-  const deleteSkillResult = await deleteSkill(id)
+const setDeleteSkill = async ({
+  skill,
+  reValidPath,
+}: TypeSetDeleteSkillParams): Promise<TypeReturnSererAction> => {
+  const deleteImageResult = await deleteImage(skill.image)
+  const deleteSkillResult = await deleteSkill(skill.id)
 
   if (deleteImageResult.status && deleteSkillResult) {
     revalidatePath(reValidPath)

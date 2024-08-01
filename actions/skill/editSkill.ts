@@ -9,12 +9,12 @@ import {
 } from "./skillUtils"
 
 import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
-import { TypeEditSkillFormActionParma, TypeSetEditSkillParam } from "@/lib/types"
+import { TypeEditSkillFormActionParams, TypeSetEditSkillParams } from "@/lib/types/skill.type"
 
 export const editSkillFormAction = async ({
   skill,
   reValidPath,
-}: TypeEditSkillFormActionParma): Promise<TypeReturnSererAction> => {
+}: TypeEditSkillFormActionParams): Promise<TypeReturnSererAction> => {
   const validateResult = validateSkillForm(skill.formData)
 
   if (validateResult.success)
@@ -33,7 +33,7 @@ export const editSkillFormAction = async ({
 const setEditSkill = async ({
   skill,
   reValidPath,
-}: TypeSetEditSkillParam): Promise<TypeReturnSererAction> => {
+}: TypeSetEditSkillParams): Promise<TypeReturnSererAction> => {
   const getSkillResult = await fetchSkillCreateInput(skill.id)
   if (!getSkillResult) return { status: false, message: "Skill not found" }
 

@@ -5,7 +5,7 @@ import { find, some } from "lodash"
 import { toast } from "react-toastify"
 
 import { Project } from "@prisma/client"
-import { SkillFormComponentProps } from "@/lib/types"
+import { TypeSkillFormComponentProps } from "@/lib/types/skill.type"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -23,7 +23,7 @@ import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 import Image from "next/image"
 
-const SkillForm = React.forwardRef<HTMLFormElement, SkillFormComponentProps>(
+const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>(
   (
     {
       projects,

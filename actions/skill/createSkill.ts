@@ -5,32 +5,43 @@ import { createSkill, setImageSkill, validateSkillForm } from "./skillUtils"
 
 import { TypeSkillForm, TypeErrors, TypeReturnSererAction } from "@/lib/definition"
 import { Project } from "@prisma/client"
+import { TypeCreateSkillFormActionParams, TypeSetSkillParams } from "@/lib/types/skill.type"
 
-export const createSkillFormAction = async (
-  formData: FormData,
-  relatedProjects: Project[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
-  const validateResult = validateSkillForm(formData)
+export const createSkillFormAction = async ({
+  skill,
+  reValidPath,
+}: TypeCreateSkillFormActionParams): Promise<TypeReturnSererAction> => {
+  const validateResult = validateSkillForm(skill.formData)
 
-  if (validateResult.success) return setSkill(validateResult.data, relatedProjects, reValidPath)
+  if (validateResult.success)
+    return setSkill({
+      skill: {
+        infoForm: validateResult.data,
+        relatedProjects: skill.relatedProjects,
+      },
+      reValidPath,
+    })
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
 
-const setSkill = async (
-  skillInfoForm: TypeSkillForm,
-  relatedProjects: Project[],
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+const setSkill = async ({
+  skill,
+  reValidPath,
+}: TypeSetSkillParams): Promise<TypeReturnSererAction> => {
   const skillId = uuid()
 
-  const skillImageResult = await setImageSkill(skillId, skillInfoForm.image)
+  const skillImageResult = await setImageSkill(skillId, skill.infoForm.image)
 
   if (skillImageResult?.status) {
     const imageUrl = skillImageResult.data as string
     return createSkill({
-      skill: { id: skillId, imageUrl, infoForm: skillInfoForm, relatedProjects },
+      skill: {
+        id: skillId,
+        imageUrl,
+        infoForm: skill.infoForm,
+        relatedProjects: skill.relatedProjects,
+      },
       reValidPath,
     })
   }

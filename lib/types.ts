@@ -110,64 +110,64 @@ import {
 //   submitFunction: (formData: FormData) => void | any
 // }
 
-export type TypeSkillInput = Prisma.SkillCreateInput
-export const SkillCreateInput: Prisma.SkillSelect = {
-  name: true,
-  image: true,
-  link: true,
-  description: true,
-}
-export type TypeSkillIdAndImagePath = Pick<Skill, "id" | "image">
-export const SkillIdAndImagePath: Prisma.SkillSelect = { id: true, image: true }
+// export type TypeSkillInput = Prisma.SkillCreateInput
+// export const SkillCreateInput: Prisma.SkillSelect = {
+//   name: true,
+//   image: true,
+//   link: true,
+//   description: true,
+// }
+// export type TypeSkillIdAndImagePath = Pick<Skill, "id" | "image">
+// export const SkillIdAndImagePath: Prisma.SkillSelect = { id: true, image: true }
 
-export type TypeCreateSkillParam = {
-  skill: {
-    id: string
-    infoForm: TypeSkillForm
-    relatedProjects: Project[]
-    imageUrl: string
-  }
-  reValidPath: string
-}
-export type TypeEditSkillFormActionParma = {
-  skill: {
-    id: string
-    formData: FormData
-    relatedProjects: Project[]
-  }
-  reValidPath: string
-}
-export type TypeSaveUpdatedSkillParam = {
-  skill: {
-    id: string
-    InfoFormWithoutImage: TypeSkillFormWithoutImage
-    relatedProjects: Project[]
-  }
-  reValidPath: string
-}
-export type TypeSetEditSkillParam = {
-  skill: { id: string; infoForm: TypeSkillForm; relatedProjects: Project[] }
-  reValidPath: string
-}
-export type CreateSkillComponentProps = {
-  projects: Project[]
-  selectionProjects?: Project[]
-}
-export type EditSkillsComponentProps = {
-  id: string
-  defaultValues: TypeSkillInput | null
-  projects: Project[]
-  selectionProjects?: Project[]
-}
-export type SkillFormComponentProps = {
-  projects?: Project[]
-  selectedProjects: Project[]
-  setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
-  defaultValues?: TypeSkillInput | null
-  submitText: string
-  submitFunction: (formData: FormData) => void | any
-  errors: TypeError
-}
+// export type TypeCreateSkillParam = {
+//   skill: {
+//     id: string
+//     infoForm: TypeSkillForm
+//     relatedProjects: Project[]
+//     imageUrl: string
+//   }
+//   reValidPath: string
+// }
+// export type TypeEditSkillFormActionParma = {
+//   skill: {
+//     id: string
+//     formData: FormData
+//     relatedProjects: Project[]
+//   }
+//   reValidPath: string
+// }
+// export type TypeSaveUpdatedSkillParam = {
+//   skill: {
+//     id: string
+//     InfoFormWithoutImage: TypeSkillFormWithoutImage
+//     relatedProjects: Project[]
+//   }
+//   reValidPath: string
+// }
+// export type TypeSetEditSkillParam = {
+//   skill: { id: string; infoForm: TypeSkillForm; relatedProjects: Project[] }
+//   reValidPath: string
+// }
+// export type CreateSkillComponentProps = {
+//   projects: Project[]
+//   selectionProjects?: Project[]
+// }
+// export type EditSkillsComponentProps = {
+//   id: string
+//   defaultValues: TypeSkillInput | null
+//   projects: Project[]
+//   selectionProjects?: Project[]
+// }
+// export type SkillFormComponentProps = {
+//   projects?: Project[]
+//   selectedProjects: Project[]
+//   setSelectedProjects: React.Dispatch<React.SetStateAction<Project[]>>
+//   defaultValues?: TypeSkillInput | null
+//   submitText: string
+//   submitFunction: (formData: FormData) => void | any
+//   errors: TypeError
+// }
 
 export type TypeTechnicalGrowthInput = Omit<Prisma.TechnicalGrowthCreateInput, "order">
 export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
