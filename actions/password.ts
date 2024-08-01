@@ -30,17 +30,17 @@ const checkPassword = async (
 ): Promise<TypeReturnSererAction> => {
   const { currentPassword, newPassword } = passwordFormInfo
   if (currentPassword === newPassword)
-    return { message: "two password is equal, change it", status: false }
+    return { message: "مقادیر نمیتوانند باهم برابر باشند", status: false }
 
   const token = cookies().get("session")?.value
   const adminId = await getAdminId(token)
   const adminInfo = await fetchAdminIdAndPassword(adminId)
 
-  if (!adminInfo) return { status: false, message: "Admin not found" }
+  if (!adminInfo) return { status: false, message: "ادمین یافت نشد" }
 
   const comparePasswordResult = await comparePassword(adminInfo.password, currentPassword)
 
-  if (!comparePasswordResult) return { status: false, message: "Current password is incorrect" }
+  if (!comparePasswordResult) return { status: false, message: "گذرواژه درست نیست" }
 
   return changePassword(adminInfo.id, newPassword)
 }
@@ -60,7 +60,7 @@ const changePassword = async (adminId: string, newPassword: string) => {
     data: { password: newHashedPassword },
   })
 
-  if (changePasswordResult) return { message: "password change successfully", status: true }
+  if (changePasswordResult) return { message: "گذرواژه با موفقیت تغییر یافت", status: true }
 
-  return { message: "password change failure", status: false }
+  return { message: "تغییر گذرواژه با مشکل مواجه شد", status: false }
 }
