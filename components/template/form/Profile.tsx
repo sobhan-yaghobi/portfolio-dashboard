@@ -12,12 +12,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
 import EmailIcon from "@mui/icons-material/Email"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
+import Person2TwoToneIcon from "@mui/icons-material/Person2TwoTone"
 
 import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
+import Image from "next/image"
 
 const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
@@ -42,7 +44,19 @@ const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
           آواتار
         </Typography>
         <div className="flex items-center gap-6">
-          <div className="bg-white/50 size-44 rounded-full" />
+          {defaultValues?.image ? (
+            <Image
+              className="size-44 rounded-full"
+              height={300}
+              width={300}
+              src={defaultValues.image}
+              alt="profile image"
+            />
+          ) : (
+            <div className="bg-white/50 size-44 p-3 flex items-center justify-center rounded-full">
+              <Person2TwoToneIcon className="!size-full" />
+            </div>
+          )}
           <div className="max-w-72 flex flex-col items-start gap-6">
             <TextError message={errors && errors.image}>
               <input accept="image/*" className="hidden" id="image" name="image" type="file" />
