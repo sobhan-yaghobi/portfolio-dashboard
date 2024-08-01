@@ -15,7 +15,7 @@ export const deleteProjectFormAction = async (
 
   if (projectInfo) return setDeleteProject({ project: projectInfo, reValidPath })
 
-  return { message: "Project not found", status: false }
+  return { message: "پروژه یافت نشد", status: false }
 }
 
 const setDeleteProject = async ({
@@ -27,8 +27,8 @@ const setDeleteProject = async ({
 
   if (deleteImageResult.status && deleteProjectResult) {
     revalidatePath(reValidPath)
-    return { status: true, message: "Project remove successfully" }
+    return { status: true, message: "پروژه با موفقیت حذف شد" }
   }
 
-  return { message: "Remove project got failure", status: false }
+  return { message: "مشکلی در حذف پروژه به وجود آمد", status: false }
 }

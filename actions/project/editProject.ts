@@ -36,7 +36,7 @@ const setEditProject = async ({
   reValidPath,
 }: TypeSetEditProjectParams): Promise<TypeReturnSererAction> => {
   const getProjectResult = await fetchProjectCreateInput(project.id)
-  if (!getProjectResult) return { status: false, message: "Project not found" }
+  if (!getProjectResult) return { status: false, message: "پروزه یافت نشد" }
 
   const { image: projectInfoImagePath, ...projectInfo } = getProjectResult
   const { image: projectImageForm, ...projectInfoFormWithoutImage } = project.infoForm
@@ -44,12 +44,13 @@ const setEditProject = async ({
   const isImageFormExist = Boolean(project.infoForm.image?.size)
 
   const updatedImageResult = await updateProjectImage(project.infoForm.image, projectInfoImagePath)
-  if (!updatedImageResult.status) return { status: false, message: "Update image got failure" }
+  if (!updatedImageResult.status)
+    return { status: false, message: "بروزرسانی عکس با مشکل مواجه شد" }
 
   const isProjectInfoEqual = newProjectInfoIsEqual(projectInfo, projectInfoFormWithoutImage)
 
   if (!isImageFormExist && isProjectInfoEqual)
-    return { status: false, message: "Please update filed first" }
+    return { status: false, message: "لطفا فرم را تغییر دهید" }
 
   return saveUpdatedProject({
     project: {

@@ -38,7 +38,7 @@ export const setImageProject = async (
 }
 
 export const imageIsRequired = (): TypeReturnSererAction => ({
-  message: "Image is required",
+  message: "عکس اجباری میباشد",
   status: false,
 })
 
@@ -57,10 +57,10 @@ export const createProject = async ({
 
   if (projectResult) {
     revalidatePath(reValidPath)
-    return { message: "Project create, successfully", status: true }
+    return { message: "پروزه با موفقیت ساخته شد", status: true }
   }
 
-  return { message: "Project create failure", status: false }
+  return { message: "ساخت پروژه با مشکل مواجه شد", status: false }
 }
 
 export const fetchProjectCreateInput = async (projectId: string) =>
@@ -97,10 +97,10 @@ export const saveUpdatedProject = async ({
 
   if (updateResult) {
     revalidatePath(reValidPath)
-    return { message: "Project updated successfully", status: true }
+    return { message: "پروژه با موفقیت بروزرسانی شد", status: true }
   }
 
-  return { message: "Project update failed", status: false }
+  return { message: "بروزرسانی پروژه با مشکل مواجه شد", status: false }
 }
 
 export const fetchProjectIdAndImagePath = async (
