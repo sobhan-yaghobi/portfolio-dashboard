@@ -36,7 +36,7 @@ const setEditProject = async ({
   reValidPath,
 }: TypeSetEditProjectParams): Promise<TypeReturnSererAction> => {
   const getProjectResult = await fetchProjectCreateInput(project.id)
-  if (!getProjectResult) return { status: false, message: "پروزه یافت نشد" }
+  if (!getProjectResult) return { status: false, message: "پروژه یافت نشد" }
 
   const { image: projectInfoImagePath, ...projectInfo } = getProjectResult
   const { image: projectImageForm, ...projectInfoFormWithoutImage } = project.infoForm
