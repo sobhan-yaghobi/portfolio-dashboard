@@ -3,14 +3,14 @@
 import React, { useRef, useState } from "react"
 
 import { TypeError } from "@/lib/definition"
-import { EditTechnicalGrowthComponentProps } from "@/lib/types"
+import { TypeEditTechnicalGrowthComponentProps } from "@/lib/types/technicalGrowth.type"
 
 import { editTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editInfoTechnicalGrowth"
 
 import Form from "./TechnicalGrowthForm"
 import { showActionReturnMessage } from "@/lib/utils"
 
-const EditTechnicalGrowth: React.FC<EditTechnicalGrowthComponentProps> = ({
+const EditTechnicalGrowth: React.FC<TypeEditTechnicalGrowthComponentProps> = ({
   id,
   defaultValues,
 }) => {

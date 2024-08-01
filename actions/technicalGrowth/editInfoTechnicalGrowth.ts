@@ -9,19 +9,19 @@ import {
 
 import { TypeErrors, TypeReturnSererAction } from "@/lib/definition"
 import {
-  TypeEditTechnicalGrowthFormActionParam,
-  TypeSetEditTechnicalGrowthParam,
-} from "@/lib/types"
+  TypeEditTechnicalGrowthFormActionParams,
+  TypeSetEditTechnicalGrowthParams,
+} from "@/lib/types/technicalGrowth.type"
 
 export const editTechnicalGrowthFormAction = async ({
   technicalGrowth,
   reValidPath,
-}: TypeEditTechnicalGrowthFormActionParam): Promise<TypeReturnSererAction> => {
+}: TypeEditTechnicalGrowthFormActionParams): Promise<TypeReturnSererAction> => {
   const validateResult = validateTechnicalGrowthForm(technicalGrowth.formData)
 
   if (validateResult.success)
     return setEditTechnicalGrowth({
-      technicalGrowth: { id: technicalGrowth.id, InfoForm: validateResult.data },
+      technicalGrowth: { id: technicalGrowth.id, infoForm: validateResult.data },
       reValidPath,
     })
 
@@ -31,16 +31,19 @@ export const editTechnicalGrowthFormAction = async ({
 const setEditTechnicalGrowth = async ({
   technicalGrowth,
   reValidPath,
-}: TypeSetEditTechnicalGrowthParam): Promise<TypeReturnSererAction> => {
+}: TypeSetEditTechnicalGrowthParams): Promise<TypeReturnSererAction> => {
   const getTechnicalGrowthResult = await fetchTechnicalCreateInput(technicalGrowth.id)
   if (!getTechnicalGrowthResult) return { status: false, message: "Technical Growth not found" }
 
   const isSkillInfoEqual = newTechnicalGrowthInfoIsEqual(
     getTechnicalGrowthResult,
-    technicalGrowth.InfoForm
+    technicalGrowth.infoForm
   )
 
   if (isSkillInfoEqual) return { status: false, message: "Please update filed first" }
 
-  return saveUpdatedTechnicalGrowth(technicalGrowth.id, technicalGrowth.InfoForm, reValidPath)
+  return saveUpdatedTechnicalGrowth({
+    technicalGrowth: { id: technicalGrowth.id, infoForm: technicalGrowth.infoForm },
+    reValidPath,
+  })
 }

@@ -5,7 +5,10 @@ import useChangeOrderTechnicalGrowth from "@/hooks/useChangeOrderTechnicalGrowth
 import { toast } from "react-toastify"
 import { cn } from "@/lib/utils"
 
-import { TechnicalGrowthTimeLineProps, TypeDragAndDropTechnicalGrowth } from "@/lib/types"
+import {
+  TypeTechnicalGrowthTimeLineProps,
+  TypeDragAndDropTechnicalGrowth,
+} from "@/lib/types/technicalGrowth.type"
 
 import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editOrderTechnicalGrowth"
 import { deleteTechnicalGrowthFormAction } from "@/actions/technicalGrowth/deleteTechnicalGrowth"
@@ -25,7 +28,7 @@ import { Button, IconButton, Typography } from "@mui/material"
 import EmptyBox from "../modules/EmptyBox"
 import Link from "next/link"
 
-const TechGrTimeLine: React.FC<TechnicalGrowthTimeLineProps> = ({ technicalGrowthList }) => {
+const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalGrowthList }) => {
   const [technicalGrowthListState, setTechnicalGrowthListState] = useState([...technicalGrowthList])
   const [isListUpdated, setIsListUpdated] = useState(false)
   const DragAndDropTechnicalGrowthRef = useRef<TypeDragAndDropTechnicalGrowth>({

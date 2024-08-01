@@ -22,11 +22,13 @@ const setTechnicalGrowth = async (
 ): Promise<TypeReturnSererAction> => {
   const technicalGrowthListCount = await prisma.technicalGrowth.count()
 
-  const createTechnicalGrowthResult = await createTechnicalGrowth(
-    technicalGrowthInfoForm,
-    technicalGrowthListCount,
-    reValidPath
-  )
+  const createTechnicalGrowthResult = await createTechnicalGrowth({
+    technicalGrowth: {
+      infoForm: technicalGrowthInfoForm,
+      listCount: technicalGrowthListCount,
+    },
+    reValidPath,
+  })
 
   if (createTechnicalGrowthResult.status) return createTechnicalGrowthResult
 

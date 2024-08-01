@@ -169,55 +169,55 @@ import {
 //   errors: TypeError
 // }
 
-export type TypeTechnicalGrowthInput = Omit<Prisma.TechnicalGrowthCreateInput, "order">
-export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
-  title: true,
-  subtitle: true,
-  description: true,
-}
+// export type TypeTechnicalGrowthInput = Omit<Prisma.TechnicalGrowthCreateInput, "order">
+// export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
+//   title: true,
+//   subtitle: true,
+//   description: true,
+// }
 
-export type TypeEditTechnicalGrowthFormActionParam = {
-  technicalGrowth: {
-    id: string
-    formData: FormData
-  }
-  reValidPath: string
-}
-export type TypeSetEditTechnicalGrowthParam = {
-  technicalGrowth: {
-    id: string
-    InfoForm: TypeTechnicalGrowthForm
-  }
-  reValidPath: string
-}
+// export type TypeEditTechnicalGrowthFormActionParam = {
+//   technicalGrowth: {
+//     id: string
+//     formData: FormData
+//   }
+//   reValidPath: string
+// }
+// export type TypeSetEditTechnicalGrowthParam = {
+//   technicalGrowth: {
+//     id: string
+//     InfoForm: TypeTechnicalGrowthForm
+//   }
+//   reValidPath: string
+// }
 
-export type CreateTechnicalGrowthComponentProps = {
-  path: string
-}
-export type EditTechnicalGrowthComponentProps = {
-  id: string
-  defaultValues: TypeTechnicalGrowthInput | null
-}
-export type TechnicalGrowthFormComponentProps = {
-  submitText: string
-  submitFunction: (formData: FormData) => void | any
-  errors: TypeError
-  defaultValues?: TypeTechnicalGrowthInput | null
-}
-export type TechnicalGrowthTimeLineProps = {
-  technicalGrowthList: TechnicalGrowth[]
-}
+// export type CreateTechnicalGrowthComponentProps = {
+//   path: string
+// }
+// export type EditTechnicalGrowthComponentProps = {
+//   id: string
+//   defaultValues: TypeTechnicalGrowthInput | null
+// }
+// export type TechnicalGrowthFormComponentProps = {
+//   submitText: string
+//   submitFunction: (formData: FormData) => void | any
+//   errors: TypeError
+//   defaultValues?: TypeTechnicalGrowthInput | null
+// }
+// export type TechnicalGrowthTimeLineProps = {
+//   technicalGrowthList: TechnicalGrowth[]
+// }
 
-export type TypeDragAndDropTechnicalGrowth = {
-  draggedTechnicalItemFrom: number | null
-  draggedTechnicalGrowthTo: number | null
-  originalTechnicalGrowthList: TechnicalGrowth[]
-}
-export type TypeUpdateTechnicalGrowthListParam = {
-  itemDragged: TechnicalGrowth
-  draggedTo: number
-  remainingItems: TechnicalGrowth[]
-}
+// export type TypeDragAndDropTechnicalGrowth = {
+//   draggedTechnicalItemFrom: number | null
+//   draggedTechnicalGrowthTo: number | null
+//   originalTechnicalGrowthList: TechnicalGrowth[]
+// }
+// export type TypeUpdateTechnicalGrowthListParam = {
+//   itemDragged: TechnicalGrowth
+//   draggedTo: number
+//   remainingItems: TechnicalGrowth[]
+// }
 
 export type TypeUploadImageParam = {
   image: {

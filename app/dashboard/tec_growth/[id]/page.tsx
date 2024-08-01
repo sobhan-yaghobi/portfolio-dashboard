@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 
 import Typography from "@mui/material/Typography"
 import EditTechnicalGrowth from "@/components/template/form/TechnicalGrowth/EditTechnicalGrowth"
-import { TechnicalGrowthInput } from "@/lib/types"
+import { TechnicalGrowthInput } from "@/lib/types/technicalGrowth.type"
 
 const Page: React.FC<{
   params: { [slug: string]: string }
@@ -22,7 +22,7 @@ const Page: React.FC<{
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        Edit Technical Growth
+        ویرایش رشد فنی
       </Typography>
       <EditTechnicalGrowth id={id} defaultValues={mainTechnicalGrowth} />
     </>

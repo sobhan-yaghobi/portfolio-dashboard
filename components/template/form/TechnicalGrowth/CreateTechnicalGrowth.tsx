@@ -4,13 +4,13 @@ import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/definition"
-import { CreateTechnicalGrowthComponentProps } from "@/lib/types"
+import { TypeCreateTechnicalGrowthComponentProps } from "@/lib/types/technicalGrowth.type"
 
 import { createTechnicalGrowthFormAction } from "@/actions/technicalGrowth/createTechnicalGrowth"
 
 import Form from "./TechnicalGrowthForm"
 
-const CreateTechnicalGrowth: React.FC<CreateTechnicalGrowthComponentProps> = ({ path }) => {
+const CreateTechnicalGrowth: React.FC<TypeCreateTechnicalGrowthComponentProps> = ({ path }) => {
   const ref = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 

@@ -2,7 +2,11 @@ import prisma from "@/lib/prisma"
 import { isEqual } from "lodash"
 import { revalidatePath } from "next/cache"
 
-import { TechnicalGrowthInput } from "@/lib/types"
+import {
+  TechnicalGrowthInput,
+  TypeCreateTechnicalGrowthParams,
+  TypeSaveUpdatedTechnicalGrowthParams,
+} from "@/lib/types/technicalGrowth.type"
 import { TechnicalGrowth } from "@prisma/client"
 import {
   SchemaTechnicalGrowth,
@@ -17,13 +21,12 @@ export const validateTechnicalGrowthForm = (formData: FormData) =>
     description: formData.get("description"),
   } as TypeTechnicalGrowthForm)
 
-export const createTechnicalGrowth = async (
-  technicalGrowthInfoForm: TypeTechnicalGrowthForm,
-  technicalGrowthListCount: number,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+export const createTechnicalGrowth = async ({
+  technicalGrowth,
+  reValidPath,
+}: TypeCreateTechnicalGrowthParams): Promise<TypeReturnSererAction> => {
   const technicalGrowthResult = await prisma.technicalGrowth.create({
-    data: { ...technicalGrowthInfoForm, order: technicalGrowthListCount },
+    data: { ...technicalGrowth.infoForm, order: technicalGrowth.listCount },
   })
 
   if (technicalGrowthResult) {
@@ -45,14 +48,13 @@ export const newTechnicalGrowthInfoIsEqual = (
   newTechnicalGrowthInfo: TypeTechnicalGrowthForm
 ) => isEqual(currentTechnicalGrowthInfo, newTechnicalGrowthInfo)
 
-export const saveUpdatedTechnicalGrowth = async (
-  technicalGrowthId: string,
-  technicalGrowthInfoForm: TypeTechnicalGrowthForm,
-  reValidPath: string
-): Promise<TypeReturnSererAction> => {
+export const saveUpdatedTechnicalGrowth = async ({
+  technicalGrowth,
+  reValidPath,
+}: TypeSaveUpdatedTechnicalGrowthParams): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.technicalGrowth.update({
-    where: { id: technicalGrowthId },
-    data: { ...technicalGrowthInfoForm },
+    where: { id: technicalGrowth.id },
+    data: { ...technicalGrowth.infoForm },
   })
 
   if (updateResult) {

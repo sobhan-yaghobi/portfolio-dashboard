@@ -1,7 +1,10 @@
 import { isEqual, map, reject, slice } from "lodash"
 
 import { TechnicalGrowth } from "@prisma/client"
-import { TypeDragAndDropTechnicalGrowth, TypeUpdateTechnicalGrowthListParam } from "@/lib/types"
+import {
+  TypeDragAndDropTechnicalGrowth,
+  TypeUpdateTechnicalGrowthListParams,
+} from "@/lib/types/technicalGrowth.type"
 
 type useChangeOrderTechnicalGrowthProps = {
   DragAndDropTechnicalGrowthRef: React.MutableRefObject<TypeDragAndDropTechnicalGrowth>
@@ -84,7 +87,7 @@ const useChangeOrderTechnicalGrowth = ({
     itemDragged,
     draggedTo,
     remainingItems,
-  }: TypeUpdateTechnicalGrowthListParam) => {
+  }: TypeUpdateTechnicalGrowthListParams) => {
     const newTechnicalGrowthList = [
       ...slice(remainingItems, 0, draggedTo),
       itemDragged,
