@@ -1,7 +1,7 @@
 import "server-only"
 
 import { SignJWT, jwtVerify } from "jose"
-import { TypeSessionPayload } from "../lib/definition"
+import { TypeSessionPayload } from "@/lib/schema/signIn.schema"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
@@ -13,6 +13,7 @@ export const encrypt = async (payload: TypeSessionPayload) =>
     .setIssuedAt()
     .setExpirationTime("2day")
     .sign(key)
+
 export const decrypt = async (session: string | undefined = "") => {
   try {
     const { payload } = await jwtVerify(session, key, {
