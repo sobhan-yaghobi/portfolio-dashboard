@@ -1,5 +1,8 @@
 import { Admin, Prisma } from "@prisma/client"
-import { TypeAdminProfileFrom, TypeAdminProfileFromWithoutImage } from "../definition"
+import {
+  TypeAdminProfileFrom,
+  TypeAdminProfileFromWithoutImage,
+} from "../schema/adminProfile.schema"
 
 // Profile Types
 export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
