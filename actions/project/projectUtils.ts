@@ -3,7 +3,11 @@ import { revalidatePath } from "next/cache"
 import { isEqual } from "lodash"
 import { createImage, updateImage } from "../image"
 
-import { SchemaProject, TypeProjectForm, TypeProjectFormWithoutImage } from "@/lib/definition"
+import {
+  SchemaProject,
+  TypeProjectForm,
+  TypeProjectFormWithoutImage,
+} from "@/lib/schema/project.schema"
 import { TypeReturnSererAction } from "@/lib/types/utils.type"
 import {
   ProjectCreateInput,

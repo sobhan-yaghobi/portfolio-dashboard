@@ -1,5 +1,6 @@
 import { Prisma, Project, Skill } from "@prisma/client"
-import { TypeError, TypeProjectForm, TypeProjectFormWithoutImage } from "../definition"
+import { TypeProjectForm, TypeProjectFormWithoutImage } from "../schema/project.schema"
+import { TypeError } from "./utils.type"
 
 // Project Types
 export type TypeProjectInput = Prisma.ProjectCreateInput
