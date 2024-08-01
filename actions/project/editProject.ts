@@ -50,7 +50,7 @@ const setEditProject = async ({
   const isProjectInfoEqual = newProjectInfoIsEqual(projectInfo, projectInfoFormWithoutImage)
 
   if (!isImageFormExist && isProjectInfoEqual)
-    return { status: false, message: "لطفا فرم را تغییر دهید" }
+    return { status: false, message: "لطفا فرم را بروزرسانی کنید" }
 
   return saveUpdatedProject({
     project: {

@@ -49,10 +49,10 @@ export const createSkill = async ({
 
   if (skillResult) {
     revalidatePath(reValidPath)
-    return { message: "Skill create, successfully", status: true }
+    return { message: "مهارت با موفقیت ساخته شد", status: true }
   }
 
-  return { message: "Skill create failure", status: false }
+  return { message: "ساخت مهارت با مشکل مواجه شد", status: false }
 }
 
 export const fetchSkillCreateInput = async (skillId: string) =>
@@ -84,10 +84,10 @@ export const saveUpdatedSkill = async ({
 
   if (updateResult) {
     revalidatePath(reValidPath)
-    return { message: "Skill updated successfully", status: true }
+    return { message: "مهارت با موفقیت بروزرسانی شد", status: true }
   }
 
-  return { message: "Skill update failed", status: false }
+  return { message: "بروزرسانی مهارت با مشکل مواجه شد", status: false }
 }
 
 export const fetchSkillIdAndImagePath = async (

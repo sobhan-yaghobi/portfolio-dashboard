@@ -35,7 +35,7 @@ const setEditSkill = async ({
   reValidPath,
 }: TypeSetEditSkillParams): Promise<TypeReturnSererAction> => {
   const getSkillResult = await fetchSkillCreateInput(skill.id)
-  if (!getSkillResult) return { status: false, message: "Skill not found" }
+  if (!getSkillResult) return { status: false, message: "مهارت یافت نشد" }
 
   const { image: skillInfoImagePath, ...skillInfo } = getSkillResult
   const { image: skillImageForm, ...skillInfoFormWithoutImage } = skill.infoForm
@@ -43,12 +43,13 @@ const setEditSkill = async ({
   const isImageFormExist = Boolean(skill.infoForm.image?.size)
 
   const updatedImageResult = await updateSkillImage(skill.infoForm.image, skillInfoImagePath)
-  if (!updatedImageResult.status) return { status: false, message: "Update image got failure" }
+  if (!updatedImageResult.status)
+    return { status: false, message: "بروزرسانی عکس با مشکل مواجه شد" }
 
   const isSkillInfoEqual = newSkillInfoIsEqual(skillInfo, skillInfoFormWithoutImage)
 
   if (!isImageFormExist && isSkillInfoEqual)
-    return { status: false, message: "Please update filed first" }
+    return { status: false, message: "لطفا فرم را بروزرسانی کنید" }
 
   return saveUpdatedSkill({
     skill: {

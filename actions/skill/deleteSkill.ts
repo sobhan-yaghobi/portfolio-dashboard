@@ -16,7 +16,7 @@ export const deleteSkillFormAction = async (
 
   if (skillInfo) return setDeleteSkill({ skill: skillInfo, reValidPath })
 
-  return { message: "Skill remove got failure", status: false }
+  return { message: "حذف مهارت با مشکل مواجه شد", status: false }
 }
 
 const setDeleteSkill = async ({
@@ -28,8 +28,8 @@ const setDeleteSkill = async ({
 
   if (deleteImageResult.status && deleteSkillResult) {
     revalidatePath(reValidPath)
-    return { status: true, message: "Skill remove successfully" }
+    return { status: true, message: "مهارت با موفقیت حذف شد" }
   }
 
-  return { message: "Remove skill got failure", status: false }
+  return { message: "حذف مهارت با مشکل مواجه شد", status: false }
 }
