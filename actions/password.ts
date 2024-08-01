@@ -11,7 +11,7 @@ import {
   TypeErrors,
   TypeReturnSererAction,
 } from "@/lib/definition"
-import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types"
+import { PasswordAdminInput, TypePasswordAdminInput } from "@/lib/types/profile.type"
 
 export const changePasswordFormAction = async (
   formData: FormData

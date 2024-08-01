@@ -11,39 +11,39 @@ import {
   TypeTechnicalGrowthForm,
 } from "./definition"
 
-export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
-export const AdminProfileInput: Prisma.AdminSelect = {
-  name: true,
-  phone: true,
-  email: true,
-  location: true,
-  bio: true,
-  image: true,
-}
-export type TypeEditProfileFormActionParam = {
-  formData: FormData
-  reValidPath: string
-}
-export type ProfileComponentProps = {
-  defaultValues?: TypeAdminProfile | null
-}
-export type TypeSetProfileParam = {
-  infoForm: TypeAdminProfileFrom
-  reValidPath: string
-}
-export type TypeUpdateAdminParam = {
-  admin: {
-    id: string
-    infoFormWithoutImage: TypeAdminProfileFromWithoutImage
-  }
-  reValidPath: string
-}
+// export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
+// export const AdminProfileInput: Prisma.AdminSelect = {
+//   name: true,
+//   phone: true,
+//   email: true,
+//   location: true,
+//   bio: true,
+//   image: true,
+// }
+// export type TypeEditProfileFormActionParam = {
+//   formData: FormData
+//   reValidPath: string
+// }
+// export type ProfileComponentProps = {
+//   defaultValues?: TypeAdminProfile | null
+// }
+// export type TypeSetProfileParam = {
+//   infoForm: TypeAdminProfileFrom
+//   reValidPath: string
+// }
+// export type TypeUpdateAdminParam = {
+//   admin: {
+//     id: string
+//     infoFormWithoutImage: TypeAdminProfileFromWithoutImage
+//   }
+//   reValidPath: string
+// }
 
-export type TypePasswordAdminInput = Pick<Admin, "password" | "id">
-export const PasswordAdminInput: Prisma.AdminSelect = {
-  password: true,
-  id: true,
-}
+// export type TypePasswordAdminInput = Pick<Admin, "password" | "id">
+// export const PasswordAdminInput: Prisma.AdminSelect = {
+//   password: true,
+//   id: true,
+// }
 
 export type TypeProjectInput = Prisma.ProjectCreateInput
 export const ProjectCreateInput: Prisma.ProjectSelect = {

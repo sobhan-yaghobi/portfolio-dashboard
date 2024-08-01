@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 import { getAdminId } from "@/lib/utils"
 
-import { AdminProfileInput } from "@/lib/types"
+import { AdminProfileInput } from "@/lib/types/profile.type"
 
 import Typography from "@mui/material/Typography"
 import ProfileForm from "@/components/template/form/Profile"

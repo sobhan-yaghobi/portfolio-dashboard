@@ -6,7 +6,7 @@ import { showActionReturnMessage } from "@/lib/utils"
 import { editProfileFormAction } from "@/actions/profile"
 
 import { TypeError } from "@/lib/definition"
-import { ProfileComponentProps } from "@/lib/types"
+import { TypeProfileComponentProps } from "@/lib/types/profile.type"
 
 import AccountCircle from "@mui/icons-material/AccountCircle"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
@@ -19,7 +19,7 @@ import InputAdornment from "@mui/material/InputAdornment"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 
-const Profile: React.FC<ProfileComponentProps> = ({ defaultValues }) => {
+const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const action = async (event: FormData) => {

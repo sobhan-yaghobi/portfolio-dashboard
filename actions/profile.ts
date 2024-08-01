@@ -16,9 +16,9 @@ import {
   AdminProfileInput,
   TypeAdminProfile,
   TypeEditProfileFormActionParam,
-  TypeSetProfileParam,
+  TypeSetProfileParams,
   TypeUpdateAdminParam,
-} from "@/lib/types"
+} from "@/lib/types/profile.type"
 import { getAdminId } from "@/lib/utils"
 
 export const editProfileFormAction = async ({
@@ -52,7 +52,7 @@ const validateProfileForm = (formData: FormData) =>
 const setProfile = async ({
   infoForm,
   reValidPath,
-}: TypeSetProfileParam): Promise<TypeReturnSererAction> => {
+}: TypeSetProfileParams): Promise<TypeReturnSererAction> => {
   const token = cookies().get("session")?.value
   const adminId = await getAdminId(token)
   const getAdminInfo = await fetchAdminProfileInput(adminId)
