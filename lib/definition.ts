@@ -2,21 +2,21 @@ import { z } from "zod"
 
 const trimAndNormalize = (str: string) => str.trim().replace(/\s+/g, " ")
 
-export const SchemaSignIn = z.object({
-  email: z
-    .string()
-    .email("ایمیل معتبر نمیباشد")
-    .trim()
-    .min(1, "ایمیل اجباری میباشد")
-    .transform(trimAndNormalize),
-  password: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
-})
-export type TypeSignInForm = z.infer<typeof SchemaSignIn>
+// export const SchemaSignIn = z.object({
+//   email: z
+//     .string()
+//     .email("ایمیل معتبر نمیباشد")
+//     .trim()
+//     .min(1, "ایمیل اجباری میباشد")
+//     .transform(trimAndNormalize),
+//   password: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
+// })
+// export type TypeSignInForm = z.infer<typeof SchemaSignIn>
 
-export type TypeSessionPayload = {
-  id: string
-  expiresAt: Date
-}
+// export type TypeSessionPayload = {
+//   id: string
+//   expiresAt: Date
+// }
 
 export const SchemaAdminProfile = z.object({
   image: z.instanceof(File).optional(),
