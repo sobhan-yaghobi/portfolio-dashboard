@@ -28,10 +28,10 @@ export const createTechnicalGrowth = async ({
 
   if (technicalGrowthResult) {
     revalidatePath(reValidPath)
-    return { message: "Technical Growth create successfully", status: true }
+    return { message: "رشد فنی با موفقیت ساخته شد", status: true }
   }
 
-  return { message: "Technical Growth create got failure", status: false }
+  return { message: "ساخت رشد فنی با مشکل مواجه شد", status: false }
 }
 
 export const fetchTechnicalCreateInput = async (technicalGrowthId: string) =>
@@ -56,10 +56,10 @@ export const saveUpdatedTechnicalGrowth = async ({
 
   if (updateResult) {
     revalidatePath(reValidPath)
-    return { message: "Technical Growth updated successfully", status: true }
+    return { message: "رشد فنی با موفقیت بروزرسانی شد", status: true }
   }
 
-  return { message: "Technical Growth update failed", status: false }
+  return { message: "بروزرسانی رشد فنی با مشکل مواجه شد", status: false }
 }
 
 export const setNewOrderTechnicalGrowthList = (technicalGrowths: TechnicalGrowth[]) =>

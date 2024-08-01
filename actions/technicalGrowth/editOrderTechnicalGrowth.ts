@@ -24,8 +24,8 @@ const setTechnicalGrowthList = async (
       await updateTechnicalGrowthOrder(technicalGrowth)
     }
     revalidatePath(reValidPath)
-    return { message: "Update orders successfully", status: true }
+    return { message: "بروزرسانی ترتیب فهرست رشد فنی با موفقیت انجام شد", status: true }
   } catch (_) {
-    return { message: "Update orders failure", status: false }
+    return { message: "بروزرسانی ترتیب فهرست رشد فنی با مشکل مواجه شد", status: false }
   }
 }

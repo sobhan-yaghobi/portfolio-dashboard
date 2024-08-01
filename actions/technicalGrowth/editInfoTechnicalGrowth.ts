@@ -33,14 +33,14 @@ const setEditTechnicalGrowth = async ({
   reValidPath,
 }: TypeSetEditTechnicalGrowthParams): Promise<TypeReturnSererAction> => {
   const getTechnicalGrowthResult = await fetchTechnicalCreateInput(technicalGrowth.id)
-  if (!getTechnicalGrowthResult) return { status: false, message: "Technical Growth not found" }
+  if (!getTechnicalGrowthResult) return { status: false, message: "رشد فنی یافت نشد" }
 
   const isSkillInfoEqual = newTechnicalGrowthInfoIsEqual(
     getTechnicalGrowthResult,
     technicalGrowth.infoForm
   )
 
-  if (isSkillInfoEqual) return { status: false, message: "Please update filed first" }
+  if (isSkillInfoEqual) return { status: false, message: "لطفا فرم را بروزرسانی کنید" }
 
   return saveUpdatedTechnicalGrowth({
     technicalGrowth: { id: technicalGrowth.id, infoForm: technicalGrowth.infoForm },

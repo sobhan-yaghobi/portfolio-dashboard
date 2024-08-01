@@ -14,7 +14,7 @@ export const deleteTechnicalGrowthFormAction = async (
 
   if (isTechnicalGrowthResult) return setDeleteSkill(technicalGrowthId, reValidPath)
 
-  return { message: "Technical Growth not found", status: false }
+  return { message: "رشد فنی یافت نشد", status: false }
 }
 
 const setDeleteSkill = async (
@@ -25,8 +25,8 @@ const setDeleteSkill = async (
 
   if (deleteTechnicalGrowthResult) {
     revalidatePath(reValidPath)
-    return { status: true, message: "Technical Growth remove successfully" }
+    return { status: true, message: "رشد فنی با موفقیت حذف شد" }
   }
 
-  return { message: "Remove Technical Growth got failure", status: false }
+  return { message: "حذف رشد فنی با مشکل مواجه شد", status: false }
 }

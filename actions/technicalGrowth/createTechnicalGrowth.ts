@@ -33,5 +33,5 @@ const setTechnicalGrowth = async (
 
   if (createTechnicalGrowthResult.status) return createTechnicalGrowthResult
 
-  return { message: "Technical Growth creation failure", status: false }
+  return { message: "ساخت رشد فنی با مشکل مواجه شد", status: false }
 }
