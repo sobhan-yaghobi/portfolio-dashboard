@@ -34,15 +34,15 @@ const trimAndNormalize = (str: string) => str.trim().replace(/\s+/g, " ")
 // export type TypeAdminProfileFrom = z.infer<typeof SchemaAdminProfile>
 // export type TypeAdminProfileFromWithoutImage = Omit<TypeAdminProfileFrom, "image">
 
-export const SchemaAdminPassword = z.object({
-  currentPassword: z
-    .string()
-    .trim()
-    .min(4, "حداقل 8 کارکتر مورد نیاز است")
-    .transform(trimAndNormalize),
-  newPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
-})
-export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
+// export const SchemaAdminPassword = z.object({
+//   currentPassword: z
+//     .string()
+//     .trim()
+//     .min(4, "حداقل 8 کارکتر مورد نیاز است")
+//     .transform(trimAndNormalize),
+//   newPassword: z.string().trim().min(4, "حداقل 8 کارکتر مورد نیاز است").transform(trimAndNormalize),
+// })
+// export type TypeAdminPasswordForm = z.infer<typeof SchemaAdminPassword>
 
 export const SchemaProject = z.object({
   image: z.instanceof(File).optional(),
