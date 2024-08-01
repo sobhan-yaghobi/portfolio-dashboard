@@ -62,20 +62,20 @@ export type TypeSetEditProjectParams = {
   reValidPath: string
 }
 
-export type TypeSetDeleteProjectParams = {
-  project: {
-    id: string
-    image: string
-  }
-  reValidPath: string
-}
-
 export type TypeSaveUpdatedProjectParams = {
   project: {
     id: string
     InfoFormWithoutImage: TypeProjectFormWithoutImage
     relatedSkills: Skill[]
     imageUrl?: string
+  }
+  reValidPath: string
+}
+
+export type TypeSetDeleteProjectParams = {
+  project: {
+    id: string
+    image: string
   }
   reValidPath: string
 }
