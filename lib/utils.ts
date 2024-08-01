@@ -30,12 +30,5 @@ export const updateUrl = (url: string) => {
   return mainUrl?.concat(`?updatedAt=${Date.now()}`)
 }
 
-// export const getAdminToken = async () => {
-//   // const cookie = cookies().get("session")?.value
-//   // const sessionResult = await decrypt(cookie)
-//   // return typeof sessionResult?.id === "string" ? sessionResult.id : undefined
-//   return ""
-// }
-
 export const getAdminId = async (token: string | undefined) =>
   token ? await verifyToken(token) : undefined
