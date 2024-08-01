@@ -37,9 +37,9 @@ const createAdmin = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSer
 
   if (adminCreationResult) {
     await createSession(adminCreationResult.id)
-    return { message: "Admin created successfully", status: true }
+    return { message: "ادمین با موفقیت اضافه شد", status: true }
   }
-  return { message: "Admin creation failed", status: false }
+  return { message: "اضافه کردن ادمین با مشکل مواجه شد", status: false }
 }
 
 const checkAdminForLogin = async (
@@ -47,13 +47,13 @@ const checkAdminForLogin = async (
 ): Promise<TypeReturnSererAction> => {
   const { email, password } = adminInfoForm
   const adminInfoResult = await prisma.admin.findUnique({ where: { email } })
-  if (!adminInfoResult) return { message: "Admin not found", status: false }
+  if (!adminInfoResult) return { message: "ادمین یافت نشد", status: false }
 
   const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
-  if (!comparePasswordResult) return { message: "Wrong Info", status: false }
+  if (!comparePasswordResult) return { message: "اطلاعات وارد شده اشتباه هستند!", status: false }
 
   await createSession(adminInfoResult.id)
-  return { message: "Admin login successfully", status: true }
+  return { message: "به پنل خود خوش آمدید", status: true }
 }
 
 export const logout = () => deleteSession()
