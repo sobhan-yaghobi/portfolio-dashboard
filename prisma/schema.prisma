@@ -12,6 +12,7 @@ model Admin {
   password String
   image    String?
   name     String?
+  family   String?
   phone    String?
   email    String  @unique
   location String?

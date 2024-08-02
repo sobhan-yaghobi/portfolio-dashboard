@@ -4,6 +4,7 @@ import { trimAndNormalize } from "./utils"
 export const SchemaAdminProfile = z.object({
   image: z.instanceof(File).optional(),
   name: z.string().trim().min(1, "نام اجباری میباشد").transform(trimAndNormalize),
+  family: z.string().trim().min(1, "نام خانوادگی اجباری میباشد").transform(trimAndNormalize),
   phone: z.string().trim().min(1, "تلفن اجباری میباشد").transform(trimAndNormalize),
   email: z
     .string()

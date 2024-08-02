@@ -32,3 +32,17 @@ export const updateUrl = (url: string) => {
 
 export const getAdminId = async (token: string | undefined) =>
   token ? await verifyToken(token) : undefined
+
+export const formatPhoneNumber = (phoneNumber: string) => {
+  let filteredPhoneNumber
+  filteredPhoneNumber = phoneNumber.replace(/\D/g, "")
+
+  if (filteredPhoneNumber.length > 10) return false
+
+  if (filteredPhoneNumber.length > 3 && filteredPhoneNumber.length <= 6) {
+    filteredPhoneNumber = filteredPhoneNumber.replace(/(\d{3})(\d+)/, "$1 $2")
+  } else if (filteredPhoneNumber.length > 6) {
+    filteredPhoneNumber = filteredPhoneNumber.replace(/(\d{3})(\d{3})(\d+)/, "$1 $2 $3")
+  }
+  return filteredPhoneNumber
+}

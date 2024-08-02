@@ -77,27 +77,45 @@ const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
         </div>
       </section>
 
-      <section>
-        <Typography component={"h5"} variant="subtitle1">
-          نام
-        </Typography>
-        <TextError message={errors && errors.name}>
-          <TextField
-            className="w-full"
-            defaultValue={defaultValues?.name}
-            name="name"
-            placeholder="نام خود را وارد کنید"
-            size="small"
-            variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </TextError>
+      <section className="grid grid-cols-2 gap-3">
+        <section>
+          <Typography component={"h5"} variant="subtitle1">
+            نام
+          </Typography>
+          <TextError message={errors && errors.name}>
+            <TextField
+              className="w-full"
+              defaultValue={defaultValues?.name}
+              name="name"
+              placeholder="نام خود را وارد کنید"
+              size="small"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </TextError>
+        </section>
+
+        <section>
+          <Typography component={"h5"} variant="subtitle1">
+            نام خانوادگی
+          </Typography>
+          <TextError message={errors && errors.family}>
+            <TextField
+              className="w-full"
+              defaultValue={defaultValues?.family}
+              name="family"
+              placeholder="نام خانوادگی خود را وارد کنید"
+              size="small"
+              variant="outlined"
+            />
+          </TextError>
+        </section>
       </section>
 
       <section>

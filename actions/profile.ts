@@ -39,6 +39,7 @@ const validateProfileForm = (formData: FormData) =>
   SchemaAdminProfile.safeParse({
     image: formData.get("image"),
     name: formData.get("name"),
+    family: formData.get("family"),
     phone: formData.get("phone"),
     email: formData.get("email"),
     location: formData.get("location"),

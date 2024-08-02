@@ -9,6 +9,7 @@ export type TypeAdminProfile = Omit<Prisma.AdminCreateInput, "password">
 
 export const AdminProfileInput: Prisma.AdminSelect = {
   name: true,
+  family: true,
   phone: true,
   email: true,
   location: true,
