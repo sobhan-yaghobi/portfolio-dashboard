@@ -71,7 +71,11 @@ const setProfile = async ({
     return { message: "لطفا فرم را بروزرسانی کنید", status: false }
 
   return updateAdmin({
-    admin: { id: adminId, infoFormWithoutImage: profileInfoFormWithoutImage },
+    admin: {
+      id: adminId,
+      infoFormWithoutImage: profileInfoFormWithoutImage,
+      imageUrl: adminImageResult.data as string,
+    },
     reValidPath,
   })
 }
@@ -85,30 +89,30 @@ const setAdminProfileImage = async (
   adminId: string,
   profileImageFile: TypeAdminProfileFrom["image"]
 ): Promise<TypeReturnSererAction> => {
-  const databaseHasAdminImage = await hasAdminImageInDatabase(adminId)
+  const adminImageInDatabaseResult = await getAdminImageInDatabase(adminId)
   const profileFormHasImage = profileImageFile && profileImageFile.size
 
-  if (!databaseHasAdminImage && !profileFormHasImage) {
+  if (!adminImageInDatabaseResult && !profileFormHasImage) {
     return imageIsRequired()
   }
 
-  if (databaseHasAdminImage && profileFormHasImage) {
-    return await updateAdminImage(adminId, profileImageFile)
+  if (adminImageInDatabaseResult && profileFormHasImage) {
+    return await updateAdminImage(adminImageInDatabaseResult, profileImageFile)
   }
 
-  if (!databaseHasAdminImage && profileFormHasImage) {
+  if (!adminImageInDatabaseResult && profileFormHasImage) {
     return await createAdminImage(adminId, profileImageFile)
   }
 
   return { status: true }
 }
 
-const hasAdminImageInDatabase = async (adminId: string) => {
+const getAdminImageInDatabase = async (adminId: string) => {
   const isAdminHasImage = await prisma.admin.findUnique({
     where: { id: adminId },
     select: { image: true },
   })
-  return Boolean(isAdminHasImage?.image)
+  return isAdminHasImage?.image
 }
 
 const imageIsRequired = () => ({ message: "عکس اجباری میباشد", status: false })
@@ -138,7 +142,7 @@ const updateAdmin = async ({
 }: TypeUpdateAdminParam): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.admin.update({
     where: { id: admin.id },
-    data: { ...admin.infoFormWithoutImage },
+    data: { ...admin.infoFormWithoutImage, image: admin.imageUrl },
   })
 
   if (updateResult) {

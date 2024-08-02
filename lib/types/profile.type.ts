@@ -37,6 +37,7 @@ export type TypeUpdateAdminParam = {
   admin: {
     id: string
     infoFormWithoutImage: TypeAdminProfileFromWithoutImage
+    imageUrl?: string
   }
   reValidPath: string
 }
