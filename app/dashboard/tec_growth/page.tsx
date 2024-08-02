@@ -13,7 +13,7 @@ const page: React.FC = async () => {
 
   return (
     <div>
-      <section className="min-h-screen flex flex-col">
+      <section className="flex flex-col">
         <Typography variant="h4" component="h2" className="flex justify-between">
           <span>لیست رشد فنی</span>
 

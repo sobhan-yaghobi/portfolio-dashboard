@@ -14,7 +14,7 @@ export const TechnicalGrowthInput: Prisma.TechnicalGrowthSelect = {
 export type TypeDragAndDropTechnicalGrowth = {
   draggedTechnicalItemFrom: number | null
   draggedTechnicalGrowthTo: number | null
-  originalTechnicalGrowthList: TechnicalGrowth[]
+  currentTechnicalGrowthList: TechnicalGrowth[]
 }
 
 // Form Action
@@ -52,9 +52,19 @@ export type TypeSaveUpdatedTechnicalGrowthParams = {
 }
 
 export type TypeUpdateTechnicalGrowthListParams = {
+  currentTechnicalGrowthList: TechnicalGrowth[]
   itemDragged: TechnicalGrowth
   draggedTo: number
   remainingItems: TechnicalGrowth[]
+  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type TypeSetUpdateTechnicalListOrderParams = {
+  technicalGrowthListState: TechnicalGrowth[]
+  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  dargAndDropRef: React.MutableRefObject<TypeDragAndDropTechnicalGrowth>
+  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // Component Props
@@ -89,5 +99,14 @@ export type TypeUpdateTechnicalGrowthListButtonProps = {
   newTechnicalGrowthList: TechnicalGrowth[]
   currentTechnicalGrowthList: TechnicalGrowth[]
   setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type TypeTechnicalGrowthItemProps = {
+  technicalGrowthPositionNumber: number
+  technicalGrowthInfo: TechnicalGrowth
+  technicalGrowthListState: TechnicalGrowth[]
+  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  dargAndDropRef: React.MutableRefObject<TypeDragAndDropTechnicalGrowth>
   setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }
