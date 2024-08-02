@@ -67,7 +67,10 @@ const useChangeOrderTechnicalGrowth = ({
     const { draggedTechnicalItemFrom, draggedTechnicalGrowthTo } =
       DragAndDropTechnicalGrowthRef.current
 
-    if (draggedTechnicalItemFrom && draggedTechnicalGrowthTo) {
+    if (
+      typeof draggedTechnicalItemFrom === "number" &&
+      typeof draggedTechnicalGrowthTo === "number"
+    ) {
       const technicalGrowthItemDragged = technicalGrowthListState[draggedTechnicalItemFrom]
 
       const remainingTechnicalGrowthItems = reject(
