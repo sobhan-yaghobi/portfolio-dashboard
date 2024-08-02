@@ -12,7 +12,6 @@ import {
 } from "@/lib/types/technicalGrowth.type"
 import { TechnicalGrowth } from "@prisma/client"
 
-import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editOrderTechnicalGrowth"
 import { deleteTechnicalGrowthFormAction } from "@/actions/technicalGrowth/deleteTechnicalGrowth"
 
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -29,6 +28,8 @@ import {
 import { Button, IconButton, Typography } from "@mui/material"
 import EmptyBox from "../modules/EmptyBox"
 import Link from "next/link"
+import ResetTechnicalGrowthListButton from "../modules/ResetTechnicalGrowthListButton"
+import UpdateTechnicalGrowthListButton from "../modules/UpdateTechnicalGrowthListButton"
 
 const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalGrowthList }) => {
   const [technicalGrowthListState, setTechnicalGrowthListState] = useState([...technicalGrowthList])
@@ -127,27 +128,6 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
       map(dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList, "id")
     )
 
-  const updateAction = async () => {
-    const updateResult = await editOrderTechnicalGrowthFormAction(
-      technicalGrowthList,
-      "/dashboard/tec_growth"
-    )
-
-    if (updateResult.status) {
-      setIsListUpdated(false)
-      dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList = technicalGrowthList
-      return toast.success(updateResult.message)
-    }
-
-    setTechnicalGrowthListState(technicalGrowthList)
-    return toast.error(updateResult.message)
-  }
-
-  const resetTechnicalGrowthList = () => {
-    setIsListUpdated(false)
-    setTechnicalGrowthListState(dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList)
-  }
-
   const deleteTechnicalGrowth = async (id: string) => {
     const deleteResult = await deleteTechnicalGrowthFormAction(id, "/dashboard/tec_growth")
 
@@ -221,12 +201,23 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
       <div className="h-10 mt-6">
         {isListUpdated && (
           <>
-            <Button className="py-3 mr-3" onClick={updateAction}>
-              بروزرسانی لیست
-            </Button>
-            <Button className="py-3" color="error" onClick={resetTechnicalGrowthList}>
-              بازگردانی لیست
-            </Button>
+            <UpdateTechnicalGrowthListButton
+              reValidPath="/dashboard/tec_growth"
+              currentTechnicalGrowthList={
+                dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList
+              }
+              newTechnicalGrowthList={technicalGrowthListState}
+              setIsListUpdated={setIsListUpdated}
+              setTechnicalGrowthListState={setTechnicalGrowthListState}
+            />
+
+            <ResetTechnicalGrowthListButton
+              currentTechnicalGrowthList={
+                dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList
+              }
+              setIsListUpdated={setIsListUpdated}
+              setTechnicalGrowthListState={setTechnicalGrowthListState}
+            />
           </>
         )}
       </div>

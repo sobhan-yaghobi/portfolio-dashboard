@@ -77,3 +77,17 @@ export type TypeTechnicalGrowthFormComponentProps = {
 export type TypeTechnicalGrowthTimeLineProps = {
   technicalGrowthList: TechnicalGrowth[]
 }
+
+export type TypeResetTechnicalGrowthListButtonProps = {
+  currentTechnicalGrowthList: TechnicalGrowth[]
+  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type TypeUpdateTechnicalGrowthListButtonProps = {
+  reValidPath: string
+  newTechnicalGrowthList: TechnicalGrowth[]
+  currentTechnicalGrowthList: TechnicalGrowth[]
+  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+}
