@@ -1,14 +1,16 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import useChangeOrderTechnicalGrowth from "@/hooks/useChangeOrderTechnicalGrowth"
+import { isEqual, map, reject, slice } from "lodash"
 import { toast } from "react-toastify"
 import { cn } from "@/lib/utils"
 
 import {
   TypeTechnicalGrowthTimeLineProps,
   TypeDragAndDropTechnicalGrowth,
+  TypeUpdateTechnicalGrowthListParams,
 } from "@/lib/types/technicalGrowth.type"
+import { TechnicalGrowth } from "@prisma/client"
 
 import { editOrderTechnicalGrowthFormAction } from "@/actions/technicalGrowth/editOrderTechnicalGrowth"
 import { deleteTechnicalGrowthFormAction } from "@/actions/technicalGrowth/deleteTechnicalGrowth"
@@ -31,18 +33,99 @@ import Link from "next/link"
 const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalGrowthList }) => {
   const [technicalGrowthListState, setTechnicalGrowthListState] = useState([...technicalGrowthList])
   const [isListUpdated, setIsListUpdated] = useState(false)
-  const DragAndDropTechnicalGrowthRef = useRef<TypeDragAndDropTechnicalGrowth>({
+  const dragAndDropTechnicalGrowthRef = useRef<TypeDragAndDropTechnicalGrowth>({
     draggedTechnicalItemFrom: null,
     draggedTechnicalGrowthTo: null,
     originalTechnicalGrowthList: technicalGrowthList,
   })
-  const { onDragEnter, onDragLeave, onDragOver, onDragStart, onDrop } =
-    useChangeOrderTechnicalGrowth({
-      DragAndDropTechnicalGrowthRef,
-      technicalGrowthListState,
-      setTechnicalGrowthListState,
-      setIsListUpdated,
+
+  const getPositionTechnicalGrowthItem = (event: React.DragEvent<HTMLDivElement>) => {
+    const stringPosition = event.currentTarget.dataset.position
+    if (stringPosition !== undefined && !isNaN(Number(stringPosition)))
+      return Number(stringPosition)
+
+    return null
+  }
+
+  const dragStart = (e: React.DragEvent<HTMLDivElement>) =>
+    (dragAndDropTechnicalGrowthRef.current = {
+      ...dragAndDropTechnicalGrowthRef.current,
+      draggedTechnicalItemFrom: getPositionTechnicalGrowthItem(e),
     })
+
+  const dragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    const position = getPositionTechnicalGrowthItem(e)
+
+    if (position !== dragAndDropTechnicalGrowthRef.current.draggedTechnicalItemFrom) {
+      dragAndDropTechnicalGrowthRef.current = {
+        ...dragAndDropTechnicalGrowthRef.current,
+        draggedTechnicalGrowthTo: position,
+      }
+
+      e.currentTarget.classList.add("dropArea")
+    }
+  }
+
+  const dragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
+
+  const dragLeave = (e: React.DragEvent<HTMLDivElement>) =>
+    e.currentTarget.classList.remove("dropArea")
+
+  const drop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    setUpdateTechnicalListOrder()
+
+    dragAndDropTechnicalGrowthRef.current = {
+      ...dragAndDropTechnicalGrowthRef.current,
+      draggedTechnicalItemFrom: null,
+      draggedTechnicalGrowthTo: null,
+    }
+    e.currentTarget.classList.remove("dropArea")
+  }
+
+  const setUpdateTechnicalListOrder = () => {
+    const { draggedTechnicalItemFrom, draggedTechnicalGrowthTo } =
+      dragAndDropTechnicalGrowthRef.current
+
+    if (
+      typeof draggedTechnicalItemFrom === "number" &&
+      typeof draggedTechnicalGrowthTo === "number"
+    ) {
+      const technicalGrowthItemDragged = technicalGrowthListState[draggedTechnicalItemFrom]
+
+      const remainingTechnicalGrowthItems = reject(
+        technicalGrowthListState,
+        (_, index) => index === draggedTechnicalItemFrom
+      )
+
+      updateTechnicalGrowthList({
+        itemDragged: technicalGrowthItemDragged,
+        draggedTo: draggedTechnicalGrowthTo,
+        remainingItems: remainingTechnicalGrowthItems,
+      })
+    }
+  }
+
+  const updateTechnicalGrowthList = ({
+    itemDragged,
+    draggedTo,
+    remainingItems,
+  }: TypeUpdateTechnicalGrowthListParams) => {
+    const newTechnicalGrowthList = [
+      ...slice(remainingItems, 0, draggedTo),
+      itemDragged,
+      ...slice(remainingItems, draggedTo),
+    ]
+
+    setIsListUpdated(isTechEqual(newTechnicalGrowthList))
+    setTechnicalGrowthListState(newTechnicalGrowthList)
+  }
+
+  const isTechEqual = (newTechnicalGrowthList: TechnicalGrowth[]) =>
+    !isEqual(
+      map(newTechnicalGrowthList, "id"),
+      map(dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList, "id")
+    )
 
   const updateAction = async () => {
     const updateResult = await editOrderTechnicalGrowthFormAction(
@@ -52,7 +135,7 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
 
     if (updateResult.status) {
       setIsListUpdated(false)
-      DragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList = technicalGrowthList
+      dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList = technicalGrowthList
       return toast.success(updateResult.message)
     }
 
@@ -62,7 +145,7 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
 
   const resetTechnicalGrowthList = () => {
     setIsListUpdated(false)
-    setTechnicalGrowthListState(DragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList)
+    setTechnicalGrowthListState(dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList)
   }
 
   const deleteTechnicalGrowth = async (id: string) => {
@@ -76,7 +159,7 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
   useEffect(() => {
     setTechnicalGrowthListState(technicalGrowthList)
     setIsListUpdated(false)
-    DragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList = technicalGrowthList
+    dragAndDropTechnicalGrowthRef.current.originalTechnicalGrowthList = technicalGrowthList
   }, [technicalGrowthList])
 
   return (
@@ -89,11 +172,11 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
               data-position={index}
               draggable
               key={index}
-              onDragStart={onDragStart}
-              onDragOver={onDragOver}
-              onDragEnter={onDragEnter}
-              onDragLeave={onDragLeave}
-              onDrop={onDrop}
+              onDragStart={dragStart}
+              onDragOver={dragOver}
+              onDragEnter={dragEnter}
+              onDragLeave={dragLeave}
+              onDrop={drop}
             >
               <TimelineSeparator>
                 <TimelineDot />
