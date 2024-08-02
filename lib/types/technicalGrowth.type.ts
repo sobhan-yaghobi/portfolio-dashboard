@@ -52,19 +52,27 @@ export type TypeSaveUpdatedTechnicalGrowthParams = {
 }
 
 export type TypeUpdateTechnicalGrowthListParams = {
-  currentTechnicalGrowthList: TechnicalGrowth[]
-  itemDragged: TechnicalGrowth
-  draggedTo: number
-  remainingItems: TechnicalGrowth[]
-  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
-  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  technicalGrowth: {
+    itemDragged: TechnicalGrowth
+    draggedTo: number
+  }
+  technicalGrowthLists: {
+    remainingItemsList: TechnicalGrowth[]
+    currentList: TechnicalGrowth[]
+  }
+  setStateActions: {
+    technicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+    isListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 export type TypeSetUpdateTechnicalListOrderParams = {
   technicalGrowthListState: TechnicalGrowth[]
-  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
   dargAndDropRef: React.MutableRefObject<TypeDragAndDropTechnicalGrowth>
-  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  setStateActions: {
+    isListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+    technicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  }
 }
 
 // Component Props
@@ -90,23 +98,33 @@ export type TypeTechnicalGrowthTimeLineProps = {
 
 export type TypeResetTechnicalGrowthListButtonProps = {
   currentTechnicalGrowthList: TechnicalGrowth[]
-  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
-  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  setStateActions: {
+    technicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+    isListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 export type TypeUpdateTechnicalGrowthListButtonProps = {
   reValidPath: string
-  newTechnicalGrowthList: TechnicalGrowth[]
-  currentTechnicalGrowthList: TechnicalGrowth[]
-  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
-  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  technicalGrowthLists: {
+    newList: TechnicalGrowth[]
+    currentList: TechnicalGrowth[]
+  }
+  setStateActions: {
+    technicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+    isListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 export type TypeTechnicalGrowthItemProps = {
-  technicalGrowthPositionNumber: number
-  technicalGrowthInfo: TechnicalGrowth
+  technicalGrowth: {
+    positionNumber: number
+    info: TechnicalGrowth
+  }
+  setStateActions: {
+    isListUpdated: React.Dispatch<React.SetStateAction<boolean>>
+    technicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
+  }
   technicalGrowthListState: TechnicalGrowth[]
-  setTechnicalGrowthListState: React.Dispatch<React.SetStateAction<TechnicalGrowth[]>>
   dargAndDropRef: React.MutableRefObject<TypeDragAndDropTechnicalGrowth>
-  setIsListUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }

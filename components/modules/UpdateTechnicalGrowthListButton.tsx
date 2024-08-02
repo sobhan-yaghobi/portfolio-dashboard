@@ -11,24 +11,22 @@ import { Button } from "@mui/material"
 
 const UpdateTechnicalGrowthListButton: React.FC<TypeUpdateTechnicalGrowthListButtonProps> = ({
   reValidPath,
-  newTechnicalGrowthList,
-  currentTechnicalGrowthList,
-  setTechnicalGrowthListState,
-  setIsListUpdated,
+  technicalGrowthLists,
+  setStateActions,
 }) => {
   const updateTechnicalGrowthList = async () => {
     const updateResult = await editOrderTechnicalGrowthFormAction(
-      newTechnicalGrowthList,
+      technicalGrowthLists.newList,
       reValidPath
     )
 
     if (updateResult.status) {
-      setIsListUpdated(false)
-      currentTechnicalGrowthList = newTechnicalGrowthList
+      setStateActions.isListUpdated(false)
+      technicalGrowthLists.currentList = technicalGrowthLists.newList
       return toast.success(updateResult.message)
     }
 
-    setTechnicalGrowthListState(currentTechnicalGrowthList)
+    setStateActions.technicalGrowthListState(technicalGrowthLists.currentList)
     return toast.error(updateResult.message)
   }
 

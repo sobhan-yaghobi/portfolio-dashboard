@@ -27,27 +27,25 @@ import {
 import { IconButton, Link, Typography } from "@mui/material"
 
 const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
-  technicalGrowthPositionNumber,
-  technicalGrowthInfo,
-  technicalGrowthListState,
-  setTechnicalGrowthListState,
+  technicalGrowth,
+  setStateActions,
   dargAndDropRef,
-  setIsListUpdated,
+  technicalGrowthListState,
 }) => {
   const TechnicalGrowthElementRef = useRef<HTMLDivElement>(null)
 
   const dragStart = () => {
     dargAndDropRef.current = {
       ...dargAndDropRef.current,
-      draggedTechnicalItemFrom: technicalGrowthPositionNumber,
+      draggedTechnicalItemFrom: technicalGrowth.positionNumber,
     }
   }
 
   const dragEnter = () => {
-    if (technicalGrowthPositionNumber !== dargAndDropRef.current.draggedTechnicalItemFrom) {
+    if (technicalGrowth.positionNumber !== dargAndDropRef.current.draggedTechnicalItemFrom) {
       dargAndDropRef.current = {
         ...dargAndDropRef.current,
-        draggedTechnicalGrowthTo: technicalGrowthPositionNumber,
+        draggedTechnicalGrowthTo: technicalGrowth.positionNumber,
       }
 
       TechnicalGrowthElementRef.current?.classList.add("dropArea")
@@ -61,8 +59,7 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
   const drop = () => {
     setUpdateTechnicalListOrder({
       dargAndDropRef,
-      setIsListUpdated,
-      setTechnicalGrowthListState,
+      setStateActions,
       technicalGrowthListState,
     })
 
@@ -76,7 +73,7 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
 
   const deleteTechnicalGrowth = async () => {
     const deleteResult = await deleteTechnicalGrowthFormAction(
-      technicalGrowthInfo.id,
+      technicalGrowth.info.id,
       "/dashboard/tec_growth"
     )
 
@@ -110,18 +107,18 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
           >
             <DeleteIcon />
           </IconButton>
-          <Link href={`/dashboard/tec_growth/${technicalGrowthInfo.id}`}>
+          <Link href={`/dashboard/tec_growth/${technicalGrowth.info.id}`}>
             <IconButton className="!bg-black/50" color="primary" title="edit">
               <EditNoteIcon />
             </IconButton>
           </Link>
         </div>
         <TimelineContent>
-          <Typography variant="h5">{technicalGrowthInfo.title}</Typography>
+          <Typography variant="h5">{technicalGrowth.info.title}</Typography>
           <Typography fontSize={16} variant="h6">
-            {technicalGrowthInfo.subtitle}
+            {technicalGrowth.info.subtitle}
           </Typography>
-          <p>{technicalGrowthInfo.description}</p>
+          <p>{technicalGrowth.info.description}</p>
         </TimelineContent>
       </div>
     </TimelineItem>
@@ -129,10 +126,9 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
 }
 
 const setUpdateTechnicalListOrder = ({
-  technicalGrowthListState,
-  setTechnicalGrowthListState,
   dargAndDropRef,
-  setIsListUpdated,
+  setStateActions,
+  technicalGrowthListState,
 }: TypeSetUpdateTechnicalListOrderParams) => {
   const { draggedTechnicalItemFrom, draggedTechnicalGrowthTo } = dargAndDropRef.current
 
@@ -148,32 +144,34 @@ const setUpdateTechnicalListOrder = ({
     )
 
     updateTechnicalGrowthList({
-      currentTechnicalGrowthList: dargAndDropRef.current.currentTechnicalGrowthList,
-      itemDragged: technicalGrowthItemDragged,
-      draggedTo: draggedTechnicalGrowthTo,
-      remainingItems: remainingTechnicalGrowthItems,
-      setIsListUpdated,
-      setTechnicalGrowthListState,
+      setStateActions,
+      technicalGrowth: {
+        itemDragged: technicalGrowthItemDragged,
+        draggedTo: draggedTechnicalGrowthTo,
+      },
+      technicalGrowthLists: {
+        currentList: dargAndDropRef.current.currentTechnicalGrowthList,
+        remainingItemsList: remainingTechnicalGrowthItems,
+      },
     })
   }
 }
 
 const updateTechnicalGrowthList = ({
-  currentTechnicalGrowthList,
-  itemDragged,
-  draggedTo,
-  remainingItems,
-  setIsListUpdated,
-  setTechnicalGrowthListState,
+  setStateActions,
+  technicalGrowth,
+  technicalGrowthLists,
 }: TypeUpdateTechnicalGrowthListParams) => {
   const newTechnicalGrowthList = [
-    ...slice(remainingItems, 0, draggedTo),
-    itemDragged,
-    ...slice(remainingItems, draggedTo),
+    ...slice(technicalGrowthLists.remainingItemsList, 0, technicalGrowth.draggedTo),
+    technicalGrowth.itemDragged,
+    ...slice(technicalGrowthLists.remainingItemsList, technicalGrowth.draggedTo),
   ]
 
-  setIsListUpdated(isTechEqual(currentTechnicalGrowthList, newTechnicalGrowthList))
-  setTechnicalGrowthListState(newTechnicalGrowthList)
+  setStateActions.isListUpdated(
+    isTechEqual(technicalGrowthLists.currentList, newTechnicalGrowthList)
+  )
+  setStateActions.technicalGrowthListState(newTechnicalGrowthList)
 }
 
 const isTechEqual = (

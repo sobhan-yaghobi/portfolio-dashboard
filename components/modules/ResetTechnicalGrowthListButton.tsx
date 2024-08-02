@@ -8,12 +8,11 @@ import { Button } from "@mui/material"
 
 const ResetTechnicalGrowthListButton: React.FC<TypeResetTechnicalGrowthListButtonProps> = ({
   currentTechnicalGrowthList,
-  setTechnicalGrowthListState,
-  setIsListUpdated,
+  setStateActions,
 }) => {
   const resetTechnicalGrowthList = () => {
-    setIsListUpdated(false)
-    setTechnicalGrowthListState(currentTechnicalGrowthList)
+    setStateActions.isListUpdated(false)
+    setStateActions.technicalGrowthListState(currentTechnicalGrowthList)
   }
 
   return (

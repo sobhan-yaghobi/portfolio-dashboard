@@ -37,11 +37,15 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
           {technicalGrowthListState.map((item, index) => (
             <TechnicalGrowthItem
               key={item.id}
-              technicalGrowthPositionNumber={index}
-              technicalGrowthInfo={item}
+              technicalGrowth={{
+                info: item,
+                positionNumber: index,
+              }}
+              setStateActions={{
+                isListUpdated: setIsListUpdated,
+                technicalGrowthListState: setTechnicalGrowthListState,
+              }}
               dargAndDropRef={dragAndDropTechnicalGrowthRef}
-              setIsListUpdated={setIsListUpdated}
-              setTechnicalGrowthListState={setTechnicalGrowthListState}
               technicalGrowthListState={technicalGrowthListState}
             />
           ))}
@@ -60,20 +64,24 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
           <>
             <UpdateTechnicalGrowthListButton
               reValidPath="/dashboard/tec_growth"
-              currentTechnicalGrowthList={
-                dragAndDropTechnicalGrowthRef.current.currentTechnicalGrowthList
-              }
-              newTechnicalGrowthList={technicalGrowthListState}
-              setIsListUpdated={setIsListUpdated}
-              setTechnicalGrowthListState={setTechnicalGrowthListState}
+              technicalGrowthLists={{
+                currentList: dragAndDropTechnicalGrowthRef.current.currentTechnicalGrowthList,
+                newList: technicalGrowthListState,
+              }}
+              setStateActions={{
+                isListUpdated: setIsListUpdated,
+                technicalGrowthListState: setTechnicalGrowthListState,
+              }}
             />
 
             <ResetTechnicalGrowthListButton
               currentTechnicalGrowthList={
                 dragAndDropTechnicalGrowthRef.current.currentTechnicalGrowthList
               }
-              setIsListUpdated={setIsListUpdated}
-              setTechnicalGrowthListState={setTechnicalGrowthListState}
+              setStateActions={{
+                isListUpdated: setIsListUpdated,
+                technicalGrowthListState: setTechnicalGrowthListState,
+              }}
             />
           </>
         )}
