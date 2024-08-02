@@ -46,7 +46,7 @@ const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
         <div className="flex items-center gap-6">
           {defaultValues?.image ? (
             <Image
-              className="size-44 rounded-full"
+              className="size-44 rounded-full object-cover"
               height={300}
               width={300}
               src={defaultValues.image}
