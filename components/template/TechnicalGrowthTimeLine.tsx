@@ -63,7 +63,7 @@ const TechGrTimeLine: React.FC<TypeTechnicalGrowthTimeLineProps> = ({ technicalG
         {isListUpdated && (
           <>
             <UpdateTechnicalGrowthListButton
-              reValidPath="/dashboard/tec_growth"
+              reValidPath="/dashboard/technicalgrowth"
               technicalGrowthLists={{
                 currentList: dragAndDropTechnicalGrowthRef.current.currentTechnicalGrowthList,
                 newList: technicalGrowthListState,

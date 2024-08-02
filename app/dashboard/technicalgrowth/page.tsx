@@ -33,7 +33,7 @@ const page: React.FC = async () => {
         <Typography component="h2" variant="h4">
           اضافه کردن رشد فنی جدید
         </Typography>
-        <CreateTechnicalGrowthForm path="/tec_growth" />
+        <CreateTechnicalGrowthForm path="/technicalGrowth" />
       </section>
     </div>
   )

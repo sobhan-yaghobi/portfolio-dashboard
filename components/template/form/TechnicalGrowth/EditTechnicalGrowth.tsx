@@ -20,7 +20,7 @@ const EditTechnicalGrowth: React.FC<TypeEditTechnicalGrowthComponentProps> = ({
   const clientAction = async (event: FormData) => {
     const actionResult = await editTechnicalGrowthFormAction({
       technicalGrowth: { id, formData: event },
-      reValidPath: "/dashboard/tec_growth",
+      reValidPath: "/dashboard/technicalgrowth",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)

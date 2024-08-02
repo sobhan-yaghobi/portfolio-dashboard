@@ -16,7 +16,7 @@ const Page: React.FC<{
   })
 
   if (!mainTechnicalGrowth) {
-    redirect("/tec_growth")
+    redirect("/technicalGrowth")
   }
 
   return (

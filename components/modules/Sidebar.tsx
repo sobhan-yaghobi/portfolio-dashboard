@@ -61,7 +61,7 @@ const items: TypeSidebarItem[] = [
       { id: 52, href: "/dashboard/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
-  { id: 7, href: "/dashboard/tec_growth", title: "رشد فنی", icon: <TimelineIcon /> },
+  { id: 7, href: "/dashboard/technicalgrowth", title: "رشد فنی", icon: <TimelineIcon /> },
 ]
 
 type ItemLinkProps = Omit<TypeSidebarItem, "children"> & {

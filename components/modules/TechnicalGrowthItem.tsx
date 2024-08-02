@@ -74,7 +74,7 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
   const deleteTechnicalGrowth = async () => {
     const deleteResult = await deleteTechnicalGrowthFormAction(
       technicalGrowth.info.id,
-      "/dashboard/tec_growth"
+      "/dashboard/technicalgrowth"
     )
 
     if (deleteResult.status) return toast.success(deleteResult.message)
@@ -107,7 +107,7 @@ const TechnicalGrowthItem: React.FC<TypeTechnicalGrowthItemProps> = ({
           >
             <DeleteIcon />
           </IconButton>
-          <Link href={`/dashboard/tec_growth/${technicalGrowth.info.id}`}>
+          <Link href={`/dashboard/technicalgrowth/${technicalGrowth.info.id}`}>
             <IconButton className="!bg-black/50" color="primary" title="edit">
               <EditNoteIcon />
             </IconButton>
