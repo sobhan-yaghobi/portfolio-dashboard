@@ -15,23 +15,22 @@ import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import TextError from "@/components/modules/TextError"
 import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
+import { redirect } from "next/navigation"
 
 const SignIn: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await signInFormAction(event, "/dashboard")
+    const actionResult = await signInFormAction(event)
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 
-    showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
-    resetForm()
+    showActionReturnMessage({ actionResult, functions: { doActionIfTrue: redirectAdmin } })
   }
 
-  const resetForm = () => {
-    formRef.current?.reset()
-    setErrors({} as TypeError)
+  const redirectAdmin = () => {
+    redirect("/dashboard")
   }
 
   return (

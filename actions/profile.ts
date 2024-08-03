@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 import { createImage, updateImage } from "./image"
 import { isEqual } from "lodash"
 import { revalidatePath } from "next/cache"
-import { cookies } from "next/headers"
+import { getToken } from "@/auth/serverFunctions"
 
 import { SchemaAdminProfile, TypeAdminProfileFrom } from "@/lib/schema/adminProfile.schema"
 import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
@@ -50,7 +50,7 @@ const setProfile = async ({
   infoForm,
   reValidPath,
 }: TypeSetProfileParams): Promise<TypeReturnSererAction> => {
-  const token = cookies().get("session")?.value
+  const token = getToken()?.value
   const adminId = await getAdminId(token)
   const getAdminInfo = await fetchAdminProfileInput(adminId)
   if (!getAdminInfo || !adminId) return { status: false, message: "ادمین یافت نشد" }

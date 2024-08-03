@@ -1,10 +1,10 @@
 import { verifyToken } from "@/auth/clientFunctions"
 import { NextRequest, NextResponse } from "next/server"
-import { encrypt } from "./auth/serverFunctions"
+import { createToken } from "./auth/serverFunctions"
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const token = request.cookies.get("session")?.value
+  const token = request.cookies.get("token")?.value
   const isTokenRefreshed = request.cookies.get("isTokenRefreshed")?.value
 
   if (token) {
@@ -18,20 +18,7 @@ export default async function middleware(request: NextRequest) {
     if (isTokenRefreshed) {
       return NextResponse.next()
     } else {
-      const expiresAt = new Date(Date.now() + 60 * 60 * 1000)
-      const session = await encrypt({ id: verifyTokenResult, expiresAt })
-      const response = NextResponse.next()
-
-      response.cookies.set("session", session, {
-        httpOnly: true,
-        secure: true,
-        expires: expiresAt,
-        sameSite: "lax",
-        path: "/",
-      })
-      response.cookies.set("isTokenRefreshed", JSON.stringify(true), { httpOnly: true })
-
-      return response
+      return setRefreshToken(verifyTokenResult)
     }
   } else {
     if (!pathname.startsWith("/login")) return redirectToLogin(request)
@@ -50,6 +37,22 @@ const redirectWhenTokenResultFailure = (pathname: string, request: NextRequest) 
   if (!pathname.startsWith("/login")) return redirectToLogin(request)
 
   return null
+}
+
+const setRefreshToken = async (adminId: string) => {
+  const response = NextResponse.next()
+  const { token, expiresAt } = await createToken(adminId)
+
+  response.cookies.set("token", token, {
+    httpOnly: true,
+    secure: true,
+    expires: expiresAt,
+    sameSite: "lax",
+    path: "/",
+  })
+  response.cookies.set("isTokenRefreshed", JSON.stringify(true), { httpOnly: true })
+
+  return response
 }
 
 export const config = {

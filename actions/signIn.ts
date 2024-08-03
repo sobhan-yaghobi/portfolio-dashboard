@@ -9,13 +9,10 @@ import { setToken, deleteToken } from "@/auth/serverFunctions"
 import { SchemaSignIn, TypeSignInForm } from "@/lib/schema/signIn.schema"
 import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
 
-export const signInFormAction = async (
-  formData: FormData,
-  redirectPath: string
-): Promise<TypeReturnSererAction> => {
+export const signInFormAction = async (formData: FormData): Promise<TypeReturnSererAction> => {
   const validateResult = validateSignInForm(formData)
 
-  if (validateResult.success) return handleSignIn(validateResult.data, redirectPath)
+  if (validateResult.success) return handleSignIn(validateResult.data)
 
   return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
 }
@@ -26,21 +23,15 @@ const validateSignInForm = (formData: FormData) =>
     password: formData.get("password"),
   } as TypeSignInForm)
 
-const handleSignIn = async (
-  AdminInfoForm: TypeSignInForm,
-  redirectPath: string
-): Promise<TypeReturnSererAction> => {
+const handleSignIn = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
   const isAdminEmpty = !Boolean(await prisma.admin.count())
 
-  if (isAdminEmpty) return createAdmin(AdminInfoForm, redirectPath)
+  if (isAdminEmpty) return createAdmin(AdminInfoForm)
 
-  return checkAdminForLogin(AdminInfoForm, redirectPath)
+  return checkAdminForLogin(AdminInfoForm)
 }
 
-const createAdmin = async (
-  AdminInfoForm: TypeSignInForm,
-  redirectPath: string
-): Promise<TypeReturnSererAction> => {
+const createAdmin = async (AdminInfoForm: TypeSignInForm): Promise<TypeReturnSererAction> => {
   const hashedPassword = await hashPassword(AdminInfoForm.password)
   const adminCreationResult = await prisma.admin.create({
     data: { ...AdminInfoForm, password: hashedPassword },
@@ -49,12 +40,11 @@ const createAdmin = async (
   if (!adminCreationResult) return { message: "اضافه کردن ادمین با مشکل مواجه شد", status: false }
 
   await setToken(adminCreationResult.id)
-  redirect(redirectPath)
+  return { message: "ادمین با موفقیت اضافه شد", status: true }
 }
 
 const checkAdminForLogin = async (
-  adminInfoForm: TypeSignInForm,
-  redirectPath: string
+  adminInfoForm: TypeSignInForm
 ): Promise<TypeReturnSererAction> => {
   const { email, password } = adminInfoForm
   const adminInfoResult = await prisma.admin.findUnique({ where: { email } })
@@ -63,7 +53,8 @@ const checkAdminForLogin = async (
   const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
   if (!comparePasswordResult) return { message: "اطلاعات وارد شده اشتباه هستند!", status: false }
 
-  redirect(redirectPath)
+  await setToken(adminInfoResult.id)
+  return { message: "به پنل خود خوش آمدید", status: true }
 }
 
 export const logout = () => deleteToken()

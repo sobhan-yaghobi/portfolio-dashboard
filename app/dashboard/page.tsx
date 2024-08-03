@@ -1,14 +1,15 @@
 import prisma from "@/lib/prisma"
-import { cookies } from "next/headers"
 import { getAdminId } from "@/lib/utils"
+import { getToken } from "@/auth/serverFunctions"
+import dynamic from "next/dynamic"
 
 import { AdminProfileInput } from "@/lib/types/profile.type"
 
 import Typography from "@mui/material/Typography"
-import ProfileForm from "@/components/template/form/Profile"
+const ProfileForm = dynamic(() => import("@/components/template/form/Profile"), { ssr: false })
 
 export default async function Home() {
-  const token = cookies().get("session")?.value
+  const token = getToken()?.value
   const adminId = await getAdminId(token)
   const admin = await prisma.admin.findUnique({
     where: { id: adminId },

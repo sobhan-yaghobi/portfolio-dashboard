@@ -12,7 +12,7 @@ export const SchemaSignIn = z.object({
 })
 export type TypeSignInForm = z.infer<typeof SchemaSignIn>
 
-export type TypeSessionPayload = {
+export type TypeEncryptParams = {
   id: string
   expiresAt: Date
 }

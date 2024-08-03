@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { comparePassword, hashPassword } from "@/auth/clientFunctions"
-import { cookies } from "next/headers"
+import { getToken } from "@/auth/serverFunctions"
 import { getAdminId } from "@/lib/utils"
 
 import { SchemaAdminPassword, TypeAdminPasswordForm } from "@/lib/schema/adminPassword.schema"
@@ -32,7 +32,7 @@ const checkPassword = async (
   if (currentPassword === newPassword)
     return { message: "مقادیر نمیتوانند باهم برابر باشند", status: false }
 
-  const token = cookies().get("session")?.value
+  const token = getToken()?.value
   const adminId = await getAdminId(token)
   const adminInfo = await fetchAdminIdAndPassword(adminId)
 
