@@ -19,13 +19,14 @@ const page: React.FC = async () => {
         <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
           {projects.map((item) => (
             <div
+              key={item.id}
               className={`${
                 item.title.length >= 70 || item.description.length >= 300
                   ? "col-span-3"
                   : "col-span-1"
               } w-full`}
             >
-              <ProjectBox key={item.id} {...item} />
+              <ProjectBox {...item} />
             </div>
           ))}
         </ul>
