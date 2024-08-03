@@ -4,13 +4,13 @@ import CreateSkillForm from "@/components/template/form/skill/CreateSkill"
 import prisma from "@/lib/prisma"
 
 const page: React.FC = async () => {
-  const projects = await prisma.project.findMany()
+  const projectList = await prisma.project.findMany()
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
         اضافه کردن مهارت
       </Typography>
-      <CreateSkillForm projects={projects} />
+      <CreateSkillForm projectList={projectList} />
     </>
   )
 }

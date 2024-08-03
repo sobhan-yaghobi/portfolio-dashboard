@@ -49,16 +49,16 @@ const items: TypeSidebarItem[] = [
   {
     id: 5,
     title: "پروژه ها",
-    href: "/dashboard/projects",
+    href: "/dashboard/projectList",
     icon: <FolderOpenIcon />,
     children: [
       {
         id: 51,
-        href: "/dashboard/projects/add",
+        href: "/dashboard/projectList/add",
         title: "اضافه کردن پروژه",
         icon: <CreateNewFolderIcon />,
       },
-      { id: 52, href: "/dashboard/projects", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
+      { id: 52, href: "/dashboard/projectList", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
   { id: 7, href: "/dashboard/technicalgrowth", title: "رشد فنی", icon: <TimelineIcon /> },

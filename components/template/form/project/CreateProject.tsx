@@ -24,7 +24,7 @@ const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({
   const clientAction = async (event: FormData) => {
     const actionResult = await createProjectFormAction({
       project: { formData: event, relatedSkillList: selectedSkills },
-      reValidPath: "/dashboard/projects",
+      reValidPath: "/dashboard/projectList",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)

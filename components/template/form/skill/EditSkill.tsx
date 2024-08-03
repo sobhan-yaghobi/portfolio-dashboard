@@ -14,10 +14,10 @@ import { showActionReturnMessage } from "@/lib/utils"
 const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
   id,
   defaultValues,
-  projects,
+  projectList,
   selectionProjectList,
 }) => {
-  const [selectedProjects, setSelectedProjects] = useState<Project[]>(
+  const [selectedProjectList, setSelectedProjectList] = useState<Project[]>(
     selectionProjectList ? selectionProjectList : ([] as Project[])
   )
   const formRef = useRef<HTMLFormElement>(null)
@@ -25,7 +25,7 @@ const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
 
   const clientAction = async (event: FormData) => {
     const actionResult = await editSkillFormAction({
-      skill: { id, formData: event, relatedProjectList: selectedProjects },
+      skill: { id, formData: event, relatedProjectList: selectedProjectList },
       reValidPath: "/dashboard/skills",
     })
 
@@ -36,17 +36,17 @@ const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
 
   const resetForm = () => {
     setErrors({} as TypeError)
-    setSelectedProjects([] as Project[])
+    setSelectedProjectList([] as Project[])
   }
 
   return (
     <Form
       defaultValues={defaultValues}
       errors={errors}
-      projects={projects}
+      projectList={projectList}
       ref={formRef}
-      selectedProjects={selectedProjects}
-      setSelectedProjects={setSelectedProjects}
+      selectedProjectList={selectedProjectList}
+      setSelectedProjectList={setSelectedProjectList}
       submitFunction={clientAction}
       submitText="ویرایش"
     />

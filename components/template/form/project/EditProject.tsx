@@ -30,7 +30,7 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
         formData: event,
         relatedSkillList: selectedSkills,
       },
-      reValidPath: "/dashboard/projects",
+      reValidPath: "/dashboard/projectList",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)

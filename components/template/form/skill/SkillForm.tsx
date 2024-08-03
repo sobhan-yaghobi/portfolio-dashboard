@@ -26,9 +26,9 @@ import Image from "next/image"
 const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>(
   (
     {
-      projects,
-      selectedProjects,
-      setSelectedProjects,
+      projectList,
+      selectedProjectList,
+      setSelectedProjectList,
       defaultValues,
       submitText,
       submitFunction,
@@ -39,7 +39,7 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
     const [mainProject, setMainProject] = useState<Project | null>(null)
 
     const onChangeProject = (e: SelectChangeEvent<string>) => {
-      const mainProject = find(projects, function (item) {
+      const mainProject = find(projectList, function (item) {
         return item.id === e.target.value
       })
       setMainProject(mainProject ? mainProject : ({} as Project))
@@ -48,20 +48,20 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
     const createProject = () => {
       if (!mainProject || !("id" in mainProject)) return false
 
-      const isProjectExistInSelectedProjectList = isProjectSelected(mainProject.id)
+      const isProjectExistInSelectedProjectList = isProjectListSelected(mainProject.id)
 
       if (isProjectExistInSelectedProjectList)
         return toast.error("Project is already in selected project list")
 
-      setSelectedProjects((prev) => [...prev, mainProject])
+      setSelectedProjectList((prev) => [...prev, mainProject])
       setMainProject({} as Project)
     }
 
     const removeProject = (projectId: string) =>
-      setSelectedProjects((prev) => prev.filter((item) => item.id !== projectId))
+      setSelectedProjectList((prev) => prev.filter((item) => item.id !== projectId))
 
-    const isProjectSelected = (projectId: string) =>
-      some(selectedProjects, function (selectedProject) {
+    const isProjectListSelected = (projectId: string) =>
+      some(selectedProjectList, function (selectedProject) {
         return selectedProject.id === projectId
       })
 
@@ -130,9 +130,13 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
                 onChange={onChangeProject}
                 value={mainProject?.id || ""}
               >
-                {projects &&
-                  projects?.map((item) => (
-                    <MenuItem disabled={isProjectSelected(item.id)} key={item.id} value={item.id}>
+                {projectList &&
+                  projectList?.map((item) => (
+                    <MenuItem
+                      disabled={isProjectListSelected(item.id)}
+                      key={item.id}
+                      value={item.id}
+                    >
                       {item.title}
                     </MenuItem>
                   ))}
@@ -140,7 +144,7 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
             </FormControl>
           </div>
           <ul className="min-h-14 w-full flex flex-wrap gap-3">
-            {selectedProjects.map((item) => (
+            {selectedProjectList.map((item) => (
               <li
                 className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer"
                 key={item.id}

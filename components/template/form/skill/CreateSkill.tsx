@@ -12,10 +12,10 @@ import { createSkillFormAction } from "@/actions/skill/createSkill"
 import Form from "./SkillForm"
 
 const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({
-  projects,
+  projectList,
   selectionProjectList,
 }) => {
-  const [selectedProjects, setSelectedProjects] = useState<Project[]>(
+  const [selectedProjectList, setSelectedProjectList] = useState<Project[]>(
     selectionProjectList ? selectionProjectList : ([] as Project[])
   )
   const formRef = useRef<HTMLFormElement>(null)
@@ -23,7 +23,7 @@ const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({
 
   const clientAction = async (event: FormData) => {
     const actionResult = await createSkillFormAction({
-      skill: { formData: event, relatedProjectList: selectedProjects },
+      skill: { formData: event, relatedProjectList: selectedProjectList },
       reValidPath: "/dashboard/skills",
     })
 
@@ -35,16 +35,16 @@ const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({
   const resetForm = () => {
     formRef.current?.reset()
     setErrors({} as TypeError)
-    setSelectedProjects([] as Project[])
+    setSelectedProjectList([] as Project[])
   }
 
   return (
     <Form
       errors={errors}
-      projects={projects}
+      projectList={projectList}
       ref={formRef}
-      selectedProjects={selectedProjects}
-      setSelectedProjects={setSelectedProjects}
+      selectedProjectList={selectedProjectList}
+      setSelectedProjectList={setSelectedProjectList}
       submitFunction={clientAction}
       submitText="اضافه کن"
     />

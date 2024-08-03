@@ -8,16 +8,16 @@ import { Typography } from "@mui/material"
 export const dynamic = "force-dynamic"
 
 const page: React.FC = async () => {
-  const projects = await prisma.project.findMany()
+  const projectList = await prisma.project.findMany()
 
   return (
     <div className="h-full flex flex-col">
       <Typography variant="h4" component="h2" className="mb-8">
         پروژه ها
       </Typography>
-      {projects.length ? (
+      {projectList.length ? (
         <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
-          {projects.map((item) => (
+          {projectList.map((item) => (
             <div
               key={item.id}
               className={`${

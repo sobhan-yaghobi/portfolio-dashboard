@@ -24,7 +24,7 @@ import Image from "next/image"
 
 const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, description }) => {
   const deleteAction = async () => {
-    const deleteResult = await deleteProjectFormAction(id, "/projects")
+    const deleteResult = await deleteProjectFormAction(id, "/projectList")
 
     if (deleteResult.status) return toast.success(deleteResult.message)
 
@@ -69,7 +69,7 @@ const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, descrip
             </Button>
           </Link>
 
-          <Link href={`/dashboard/projects/${id}`}>
+          <Link href={`/dashboard/projectList/${id}`}>
             <Button variant="outlined" size="small" endIcon={<EditIcon />}>
               edit
             </Button>
