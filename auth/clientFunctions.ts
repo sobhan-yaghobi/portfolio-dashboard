@@ -20,20 +20,3 @@ export const verifyToken = async (token: string) => {
     return false
   }
 }
-
-export const refreshTokenHandler = async (isTokenRefreshed: any) => {
-  try {
-    const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/auth`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(isTokenRefreshed),
-    })
-    const result = await res.json()
-
-    return result
-  } catch (error) {
-    return false
-  }
-}

@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { toast } from "react-toastify"
 
 import { TypeShowActionReturnMessageParam } from "./types/utils.type"
-import { verifyToken } from "@/auth/auth"
+import { verifyToken } from "@/auth/clientFunctions"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

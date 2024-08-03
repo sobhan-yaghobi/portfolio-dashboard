@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { decrypt } from "@/auth/session"
+import { decrypt } from "@/auth/serverFunctions"
 import { NextRequest, NextResponse } from "next/server"
 
 export const dynamic = "force-dynamic"

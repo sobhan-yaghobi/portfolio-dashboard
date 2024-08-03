@@ -1,7 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { comparePassword, hashPassword } from "@/auth/auth"
+import { comparePassword, hashPassword } from "@/auth/clientFunctions"
 import { cookies } from "next/headers"
 import { getAdminId } from "@/lib/utils"
 

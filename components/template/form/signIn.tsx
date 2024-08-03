@@ -21,7 +21,7 @@ const SignIn: React.FC = () => {
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await signInFormAction(event)
+    const actionResult = await signInFormAction(event, "/dashboard")
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
 

@@ -1,6 +1,6 @@
-import { refreshTokenHandler, verifyToken } from "@/auth/auth"
+import { verifyToken } from "@/auth/clientFunctions"
 import { NextRequest, NextResponse } from "next/server"
-import { encrypt } from "./auth/session"
+import { encrypt } from "./auth/serverFunctions"
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
