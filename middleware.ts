@@ -1,9 +1,11 @@
-import { verifyToken } from "@/auth/auth"
+import { refreshTokenHandler, verifyToken } from "@/auth/auth"
 import { NextRequest, NextResponse } from "next/server"
+import { encrypt } from "./auth/session"
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get("session")?.value
+  const isTokenRefreshed = request.cookies.get("isTokenRefreshed")?.value
 
   if (token) {
     const verifyTokenResult = await verifyToken(token)
@@ -13,7 +15,24 @@ export default async function middleware(request: NextRequest) {
 
     if (pathname.startsWith("/login")) return redirectToDashboard(request)
 
-    return NextResponse.next()
+    if (isTokenRefreshed) {
+      return NextResponse.next()
+    } else {
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000)
+      const session = await encrypt({ id: verifyTokenResult, expiresAt })
+      const response = NextResponse.next()
+
+      response.cookies.set("session", session, {
+        httpOnly: true,
+        secure: true,
+        expires: expiresAt,
+        sameSite: "lax",
+        path: "/",
+      })
+      response.cookies.set("isTokenRefreshed", JSON.stringify(true), { httpOnly: true })
+
+      return response
+    }
   } else {
     if (!pathname.startsWith("/login")) return redirectToLogin(request)
 
