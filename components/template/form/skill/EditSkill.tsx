@@ -15,17 +15,17 @@ const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
   id,
   defaultValues,
   projects,
-  selectionProjects,
+  selectionProjectList,
 }) => {
   const [selectedProjects, setSelectedProjects] = useState<Project[]>(
-    selectionProjects ? selectionProjects : ([] as Project[])
+    selectionProjectList ? selectionProjectList : ([] as Project[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
     const actionResult = await editSkillFormAction({
-      skill: { id, formData: event, relatedProjects: selectedProjects },
+      skill: { id, formData: event, relatedProjectList: selectedProjects },
       reValidPath: "/dashboard/skills",
     })
 

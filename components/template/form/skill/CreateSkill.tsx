@@ -11,16 +11,19 @@ import { createSkillFormAction } from "@/actions/skill/createSkill"
 
 import Form from "./SkillForm"
 
-const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({ projects, selectionProjects }) => {
+const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({
+  projects,
+  selectionProjectList,
+}) => {
   const [selectedProjects, setSelectedProjects] = useState<Project[]>(
-    selectionProjects ? selectionProjects : ([] as Project[])
+    selectionProjectList ? selectionProjectList : ([] as Project[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
     const actionResult = await createSkillFormAction({
-      skill: { formData: event, relatedProjects: selectedProjects },
+      skill: { formData: event, relatedProjectList: selectedProjects },
       reValidPath: "/dashboard/skills",
     })
 

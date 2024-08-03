@@ -22,7 +22,7 @@ export const editSkillFormAction = async ({
       skill: {
         id: skill.id,
         infoForm: validateResult.data,
-        relatedProjects: skill.relatedProjects,
+        relatedProjectList: skill.relatedProjectList,
       },
       reValidPath,
     })
@@ -55,7 +55,7 @@ const setEditSkill = async ({
     skill: {
       id: skill.id,
       InfoFormWithoutImage: skillInfoFormWithoutImage,
-      relatedProjects: skill.relatedProjects,
+      relatedProjectList: skill.relatedProjectList,
     },
     reValidPath,
   })

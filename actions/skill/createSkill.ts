@@ -16,7 +16,7 @@ export const createSkillFormAction = async ({
     return setSkill({
       skill: {
         infoForm: validateResult.data,
-        relatedProjects: skill.relatedProjects,
+        relatedProjectList: skill.relatedProjectList,
       },
       reValidPath,
     })
@@ -39,7 +39,7 @@ const setSkill = async ({
         id: skillId,
         imageUrl,
         infoForm: skill.infoForm,
-        relatedProjects: skill.relatedProjects,
+        relatedProjectList: skill.relatedProjectList,
       },
       reValidPath,
     })

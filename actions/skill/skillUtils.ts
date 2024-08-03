@@ -43,7 +43,7 @@ export const createSkill = async ({
       ...skill.infoForm,
       id: skill.id,
       image: skill.imageUrl,
-      projects: { connect: skill.relatedProjects || [] },
+      projects: { connect: skill.relatedProjectList || [] },
     },
   })
 
@@ -79,7 +79,7 @@ export const saveUpdatedSkill = async ({
 }: TypeSaveUpdatedSkillParams): Promise<TypeReturnSererAction> => {
   const updateResult = await prisma.skill.update({
     where: { id: skill.id },
-    data: { ...skill.InfoFormWithoutImage, projects: { connect: skill.relatedProjects } },
+    data: { ...skill.InfoFormWithoutImage, projects: { connect: skill.relatedProjectList } },
   })
 
   if (updateResult) {
