@@ -21,7 +21,7 @@ export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: tr
 export type TypeCreateProjectFormActionParams = {
   project: {
     formData: FormData
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
   }
   reValidPath: string
 }
@@ -30,7 +30,7 @@ export type TypeEditProjectFormActionParams = {
   project: {
     id: string
     formData: FormData
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
   }
   reValidPath: string
 }
@@ -39,7 +39,7 @@ export type TypeEditProjectFormActionParams = {
 export type TypeSetProjectParams = {
   project: {
     infoForm: TypeProjectForm
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
   }
   reValidPath: string
 }
@@ -48,7 +48,7 @@ export type TypeCreateProjectParams = {
   project: {
     id: string
     infoForm: TypeProjectForm
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
     imageUrl: string
   }
   reValidPath: string
@@ -58,7 +58,7 @@ export type TypeSetEditProjectParams = {
   project: {
     id: string
     infoForm: TypeProjectForm
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
   }
   reValidPath: string
 }
@@ -67,7 +67,7 @@ export type TypeSaveUpdatedProjectParams = {
   project: {
     id: string
     InfoFormWithoutImage: TypeProjectFormWithoutImage
-    relatedSkills: Skill[]
+    relatedSkillList: Skill[]
     imageUrl?: string
   }
   reValidPath: string
@@ -84,14 +84,14 @@ export type TypeSetDeleteProjectParams = {
 // Component Props
 export type TypeCreateProjectComponentProps = {
   skills: Skill[]
-  selectionSkills?: Skill[]
+  selectionSkillList?: Skill[]
 }
 
 export type TypeEditProjectComponentProps = {
   id: string
   defaultValues: TypeProjectInput | null
   skills: Skill[]
-  selectionSkills?: Skill[]
+  selectionSkillList?: Skill[]
 }
 
 export type TypeProjectFormComponentProps = {

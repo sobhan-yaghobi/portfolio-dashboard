@@ -15,10 +15,10 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
   id,
   defaultValues,
   skills,
-  selectionSkills,
+  selectionSkillList,
 }) => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
-    selectionSkills ? selectionSkills : ([] as Skill[])
+    selectionSkillList ? selectionSkillList : ([] as Skill[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
@@ -28,7 +28,7 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
       project: {
         id,
         formData: event,
-        relatedSkills: selectedSkills,
+        relatedSkillList: selectedSkills,
       },
       reValidPath: "/dashboard/projects",
     })

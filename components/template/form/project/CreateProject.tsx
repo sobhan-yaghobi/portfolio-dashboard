@@ -11,16 +11,19 @@ import { createProjectFormAction } from "@/actions/project/createProject"
 
 import Form from "./ProjectForm"
 
-const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({ skills, selectionSkills }) => {
+const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({
+  skills,
+  selectionSkillList,
+}) => {
   const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
-    selectionSkills ? selectionSkills : ([] as Skill[])
+    selectionSkillList ? selectionSkillList : ([] as Skill[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
     const actionResult = await createProjectFormAction({
-      project: { formData: event, relatedSkills: selectedSkills },
+      project: { formData: event, relatedSkillList: selectedSkills },
       reValidPath: "/dashboard/projects",
     })
 

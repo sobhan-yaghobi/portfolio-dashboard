@@ -22,7 +22,7 @@ export const editProjectFormAction = async ({
       project: {
         id: project.id,
         infoForm: validateResult.data,
-        relatedSkills: project.relatedSkills,
+        relatedSkillList: project.relatedSkillList,
       },
       reValidPath,
     })
@@ -56,7 +56,7 @@ const setEditProject = async ({
     project: {
       id: project.id,
       InfoFormWithoutImage: projectInfoFormWithoutImage,
-      relatedSkills: project.relatedSkills,
+      relatedSkillList: project.relatedSkillList,
       imageUrl: typeof updatedImageResult.data === "string" ? updatedImageResult.data : undefined,
     },
     reValidPath,
