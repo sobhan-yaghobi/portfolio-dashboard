@@ -24,7 +24,7 @@ import Image from "next/image"
 
 const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
   const deleteSkill = async () => {
-    const deleteResult = await deleteSkillFormAction(id, "/skills")
+    const deleteResult = await deleteSkillFormAction(id, "/skillList")
 
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
@@ -66,7 +66,7 @@ const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
           </Button>
         </Link>
 
-        <Link href={`/dashboard/skills/${id}`}>
+        <Link href={`/dashboard/skillList/${id}`}>
           <Button variant="outlined" size="small" endIcon={<EditIcon />}>
             edit
           </Button>

@@ -14,10 +14,10 @@ import Form from "./ProjectForm"
 const EditProject: React.FC<TypeEditProjectComponentProps> = ({
   id,
   defaultValues,
-  skills,
+  skillList,
   selectionSkillList,
 }) => {
-  const [selectedSkills, setSelectedSkills] = useState<Skill[]>(
+  const [selectedSkillList, setSelectedSkillList] = useState<Skill[]>(
     selectionSkillList ? selectionSkillList : ([] as Skill[])
   )
   const formRef = useRef<HTMLFormElement>(null)
@@ -28,7 +28,7 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
       project: {
         id,
         formData: event,
-        relatedSkillList: selectedSkills,
+        relatedSkillList: selectedSkillList,
       },
       reValidPath: "/dashboard/projectList",
     })
@@ -43,9 +43,9 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
       defaultValues={defaultValues}
       errors={errors}
       ref={formRef}
-      skills={skills}
-      selectedSkills={selectedSkills}
-      setSelectedSkills={setSelectedSkills}
+      skillList={skillList}
+      selectedSkillList={selectedSkillList}
+      setSelectedSkillList={setSelectedSkillList}
       submitFunction={clientAction}
       submitText="ویرایش"
     />

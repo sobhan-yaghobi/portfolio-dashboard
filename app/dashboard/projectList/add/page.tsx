@@ -4,13 +4,13 @@ import AddProject from "@/components/template/form/project/CreateProject"
 import prisma from "@/lib/prisma"
 
 const page: React.FC = async () => {
-  const skills = await prisma.skill.findMany()
+  const skillList = await prisma.skill.findMany()
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
         Add Project
       </Typography>
-      <AddProject skills={skills} />
+      <AddProject skillList={skillList} />
     </>
   )
 }

@@ -15,14 +15,14 @@ const Page: React.FC<{
     redirect("/projectList")
   }
 
-  const skills = await prisma.skill.findMany()
+  const skillList = await prisma.skill.findMany()
 
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
         ویرایش پروژه
       </Typography>
-      <EditProject id={id} defaultValues={mainProject} skills={skills} />
+      <EditProject id={id} defaultValues={mainProject} skillList={skillList} />
     </>
   )
 }

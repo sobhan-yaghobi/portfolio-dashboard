@@ -81,7 +81,7 @@ export type TypeCreateSkillComponentProps = {
   selectionProjectList?: Project[]
 }
 
-export type TypeEditSkillsComponentProps = {
+export type TypeEditSkillListComponentProps = {
   id: string
   defaultValues: TypeSkillInput | null
   projectList: Project[]

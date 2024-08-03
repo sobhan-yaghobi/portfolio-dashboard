@@ -24,7 +24,7 @@ const CreateSkill: React.FC<TypeCreateSkillComponentProps> = ({
   const clientAction = async (event: FormData) => {
     const actionResult = await createSkillFormAction({
       skill: { formData: event, relatedProjectList: selectedProjectList },
-      reValidPath: "/dashboard/skills",
+      reValidPath: "/dashboard/skillList",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)

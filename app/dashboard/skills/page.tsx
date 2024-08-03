@@ -8,20 +8,20 @@ import EmptyBox from "@/components/modules/EmptyBox"
 export const dynamic = "force-dynamic"
 
 const page: React.FC = async () => {
-  const skills = await prisma.skill.findMany()
+  const skillList = await prisma.skill.findMany()
   return (
     <div className="h-full flex flex-col">
       <Typography variant="h4" component="h2" className="mb-8">
-        Skills
+        SkillList
       </Typography>
-      {skills.length ? (
+      {skillList.length ? (
         <ul className="grid grid-cols-4 gap-3 gap-y-12 place-items-center">
-          {skills.map((item) => (
+          {skillList.map((item) => (
             <SkillBox key={item.id} {...item} />
           ))}
         </ul>
       ) : (
-        <EmptyBox message="Skills Is Empty" />
+        <EmptyBox message="SkillList Is Empty" />
       )}
     </div>
   )

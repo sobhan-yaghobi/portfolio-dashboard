@@ -12,7 +12,7 @@ const Page: React.FC<{
   const mainSkill = await prisma.skill.findUnique({ where: { id } })
 
   if (!mainSkill) {
-    redirect("/skills")
+    redirect("/skillList")
   }
 
   const projectList = await prisma.project.findMany()

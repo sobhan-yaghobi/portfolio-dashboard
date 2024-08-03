@@ -4,14 +4,14 @@ import React, { useRef, useState } from "react"
 
 import { TypeError } from "@/lib/types/utils.type"
 import { Project } from "@prisma/client"
-import { TypeEditSkillsComponentProps } from "@/lib/types/skill.type"
+import { TypeEditSkillListComponentProps } from "@/lib/types/skill.type"
 
 import { editSkillFormAction } from "@/actions/skill/editSkill"
 
 import Form from "./SkillForm"
 import { showActionReturnMessage } from "@/lib/utils"
 
-const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
+const EditSkill: React.FC<TypeEditSkillListComponentProps> = ({
   id,
   defaultValues,
   projectList,
@@ -26,7 +26,7 @@ const EditSkill: React.FC<TypeEditSkillsComponentProps> = ({
   const clientAction = async (event: FormData) => {
     const actionResult = await editSkillFormAction({
       skill: { id, formData: event, relatedProjectList: selectedProjectList },
-      reValidPath: "/dashboard/skills",
+      reValidPath: "/dashboard/skillList",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)

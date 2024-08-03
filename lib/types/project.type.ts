@@ -83,21 +83,21 @@ export type TypeSetDeleteProjectParams = {
 
 // Component Props
 export type TypeCreateProjectComponentProps = {
-  skills: Skill[]
+  skillList: Skill[]
   selectionSkillList?: Skill[]
 }
 
 export type TypeEditProjectComponentProps = {
   id: string
   defaultValues: TypeProjectInput | null
-  skills: Skill[]
+  skillList: Skill[]
   selectionSkillList?: Skill[]
 }
 
 export type TypeProjectFormComponentProps = {
-  skills?: Skill[]
-  selectedSkills: Skill[]
-  setSelectedSkills: React.Dispatch<React.SetStateAction<Skill[]>>
+  skillList?: Skill[]
+  selectedSkillList: Skill[]
+  setSelectedSkillList: React.Dispatch<React.SetStateAction<Skill[]>>
   defaultValues?: TypeProjectInput | null
   submitText: string
   errors: TypeError

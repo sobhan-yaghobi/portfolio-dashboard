@@ -26,7 +26,7 @@ model Project {
   link        String
   source      String
   description String
-  skills      Skill[]
+  skillList   Skill[]
 }
 
 model Skill {

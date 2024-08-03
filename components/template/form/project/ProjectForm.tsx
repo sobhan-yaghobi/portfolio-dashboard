@@ -29,9 +29,9 @@ import Image from "next/image"
 const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentProps>(
   (
     {
-      skills,
-      selectedSkills,
-      setSelectedSkills,
+      skillList,
+      selectedSkillList,
+      setSelectedSkillList,
       defaultValues,
       submitText,
       submitFunction,
@@ -42,7 +42,7 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
     const [mainSkill, setMainSkill] = useState<Skill | null>(null)
 
     const onChangeSkill = (e: SelectChangeEvent<string>) => {
-      const mainSkill = find(skills, function (item) {
+      const mainSkill = find(skillList, function (item) {
         return item.id === e.target.value
       })
       setMainSkill(mainSkill ? mainSkill : ({} as Skill))
@@ -53,18 +53,19 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
 
       const isSkillExistInSelectedSkillList = isSkillSelected(mainSkill.id)
 
-      if (isSkillExistInSelectedSkillList) return toast.error("Skill is already in selected skills")
+      if (isSkillExistInSelectedSkillList)
+        return toast.error("Skill is already in selected skillList")
 
-      setSelectedSkills((prev) => [...prev, mainSkill])
+      setSelectedSkillList((prev) => [...prev, mainSkill])
       setMainSkill({} as Skill)
     }
 
     const removeSkill = (id: string) =>
-      setSelectedSkills((prev) => prev.filter((item) => item.id !== id))
+      setSelectedSkillList((prev) => prev.filter((item) => item.id !== id))
 
     const isSkillSelected = (id: string) =>
-      some(selectedSkills, function (selectedSkills) {
-        return selectedSkills.id === id
+      some(selectedSkillList, function (selectedSkillList) {
+        return selectedSkillList.id === id
       })
 
     return (
@@ -182,8 +183,8 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
                 onChange={onChangeSkill}
                 value={mainSkill?.id || ""}
               >
-                {skills &&
-                  skills?.map((item) => (
+                {skillList &&
+                  skillList?.map((item) => (
                     <MenuItem disabled={isSkillSelected(item.id)} key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
@@ -192,7 +193,7 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
             </FormControl>
           </div>
           <ul className="min-h-14 w-full flex flex-wrap gap-3">
-            {selectedSkills.map((item) => (
+            {selectedSkillList.map((item) => (
               <li
                 className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer"
                 key={item.id}
