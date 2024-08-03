@@ -25,7 +25,7 @@ export const decrypt = async (session: string | undefined = "") => {
   }
 }
 
-export const createSession = async (id: string) => {
+export const createSession = async (id: string, redirectPath?: string) => {
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000)
   const session = await encrypt({ id, expiresAt })
   cookies().set("session", session, {
@@ -35,7 +35,7 @@ export const createSession = async (id: string) => {
     sameSite: "lax",
     path: "/",
   })
-  redirect("/dashboard")
+  redirectPath && redirect(redirectPath)
 }
 
 export const deleteSession = () => {

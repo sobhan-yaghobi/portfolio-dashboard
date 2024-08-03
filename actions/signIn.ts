@@ -52,7 +52,7 @@ const checkAdminForLogin = async (
   const comparePasswordResult = await comparePassword(adminInfoResult.password, password)
   if (!comparePasswordResult) return { message: "اطلاعات وارد شده اشتباه هستند!", status: false }
 
-  await createSession(adminInfoResult.id)
+  await createSession(adminInfoResult.id, "/dashboard")
   return { message: "به پنل خود خوش آمدید", status: true }
 }
 
