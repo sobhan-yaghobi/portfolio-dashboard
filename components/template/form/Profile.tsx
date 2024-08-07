@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { editProfileFormAction } from "@/actions/profile"
@@ -22,6 +22,7 @@ import TextError from "@/components/modules/TextError"
 import Image from "next/image"
 
 const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const action = async (event: FormData) => {
@@ -35,7 +36,10 @@ const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
     showActionReturnMessage({ actionResult, functions: { doActionIfTrue: resetForm } })
   }
 
-  const resetForm = () => setErrors({} as TypeError)
+  const resetForm = () => {
+    if (fileInputRef.current) fileInputRef.current.value = ""
+    setErrors({} as TypeError)
+  }
 
   return (
     <form action={action} className="[&>section]:mt-6 [&>section>*]:mb-3">
@@ -59,7 +63,14 @@ const Profile: React.FC<TypeProfileComponentProps> = ({ defaultValues }) => {
           )}
           <div className="max-w-72 flex flex-col items-start gap-6">
             <TextError message={errors && errors.image}>
-              <input accept="image/*" className="hidden" id="image" name="image" type="file" />
+              <input
+                ref={fileInputRef}
+                accept="image/*"
+                className="hidden"
+                id="image"
+                name="image"
+                type="file"
+              />
               <label
                 className={`h-10 w-full p-4 flex items-center justify-center rounded-md border border-solid ${
                   errors && errors?.image ? "border-red-500" : "border-white"
