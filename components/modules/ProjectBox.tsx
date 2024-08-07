@@ -48,7 +48,12 @@ const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, descrip
 
       <div className="py-3 px-2">
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            className="min-h-24 overflow-hidden"
+          >
             {title}
           </Typography>
 
