@@ -9,7 +9,7 @@ export default async function middleware(request: NextRequest) {
 
   if (token) {
     const verifyTokenResult = await verifyToken(token)
-    if (!verifyTokenResult) redirectWhenTokenResultFailure(pathname, request)
+    if (!verifyTokenResult) return redirectWhenTokenResultFailure(pathname, request)
 
     if (pathname === "/") return redirectToDashboard(request)
 
