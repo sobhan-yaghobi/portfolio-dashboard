@@ -74,7 +74,7 @@ const ProjectBox: React.FC<Project> = ({ id, image, title, link, source, descrip
             </Button>
           </Link>
 
-          <Link href={`/dashboard/projectList/${id}`}>
+          <Link href={`/dashboard/project/${id}`}>
             <Button variant="outlined" size="small" endIcon={<EditIcon />}>
               edit
             </Button>

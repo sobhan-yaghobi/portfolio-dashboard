@@ -40,18 +40,18 @@ const items: TypeSidebarItem[] = [
   {
     id: 4,
     title: "مهارت فنی",
-    href: "technicalSkillList",
+    href: "technicalskill",
     icon: <AssignmentIndIcon />,
     children: [
       {
         id: 41,
-        href: "/dashboard/technicalSkillList/add",
+        href: "/dashboard/technicalskill/add",
         title: "اضافه کردن مهارت فنی",
         icon: <PostAddIcon />,
       },
       {
         id: 42,
-        href: "/dashboard/technicalSkillList",
+        href: "/dashboard/technicalskill",
         title: "لیست مهارت های فنی",
         icon: <RecentActorsIcon />,
       },
@@ -65,13 +65,13 @@ const items: TypeSidebarItem[] = [
     children: [
       {
         id: 51,
-        href: "/dashboard/softskilllist/add",
+        href: "/dashboard/softskill/add",
         title: "اضافه کردن مهارت نرم",
         icon: <PostAddIcon />,
       },
       {
         id: 52,
-        href: "/dashboard/softskilllist",
+        href: "/dashboard/softskill",
         title: "لیست مهارت های نرم",
         icon: <RecentActorsIcon />,
       },
@@ -80,16 +80,16 @@ const items: TypeSidebarItem[] = [
   {
     id: 6,
     title: "پروژه ها",
-    href: "/dashboard/projectList",
+    href: "/dashboard/project",
     icon: <FolderOpenIcon />,
     children: [
       {
         id: 61,
-        href: "/dashboard/projectList/add",
+        href: "/dashboard/project/add",
         title: "اضافه کردن پروژه",
         icon: <CreateNewFolderIcon />,
       },
-      { id: 62, href: "/dashboard/projectList", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
+      { id: 62, href: "/dashboard/project", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
   { id: 7, href: "/dashboard/technicalgrowth", title: "رشد فنی", icon: <TimelineIcon /> },

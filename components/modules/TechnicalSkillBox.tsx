@@ -24,7 +24,7 @@ import Image from "next/image"
 
 const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, description }) => {
   const deleteTechnicalSkill = async () => {
-    const deleteResult = await deleteTechnicalSkillFormAction(id, "/technicalSkillList")
+    const deleteResult = await deleteTechnicalSkillFormAction(id, "/technicalskill")
 
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
@@ -66,7 +66,7 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
           </Button>
         </Link>
 
-        <Link href={`/dashboard/technicalSkillList/${id}`}>
+        <Link href={`/dashboard/technicalskill/${id}`}>
           <Button variant="outlined" size="small" endIcon={<EditIcon />}>
             edit
           </Button>
