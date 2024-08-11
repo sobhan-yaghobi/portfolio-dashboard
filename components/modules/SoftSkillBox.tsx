@@ -47,7 +47,7 @@ const SoftSkillBox: React.FC<SoftSkill> = ({ id, name, score }) => {
         <Rating name="half-rating-read" defaultValue={score} readOnly />
       </CardContent>
       <CardActions>
-        <Link href={`/dashboard/technicalSkillList/${id}`}>
+        <Link href={`/dashboard/softskilllist/${id}`}>
           <Button variant="outlined" size="small" endIcon={<EditIcon />}>
             edit
           </Button>

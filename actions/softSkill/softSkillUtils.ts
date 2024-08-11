@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { SchemaSoftSkill, TypeSoftSkillForm } from "@/lib/schema/softSkill.schema"
 import { TypeReturnSererAction } from "@/lib/types/utils.type"
 import {
+  SoftSkillCreateInput,
   TypeSaveUpdatedSoftSkillParams,
   TypeSetSoftSkillParams,
   TypeSoftSkillInput,
@@ -37,7 +38,7 @@ export const deleteSoftSkill = async (softSkillId: string) =>
   await prisma.softSkill.delete({ where: { id: softSkillId } })
 
 export const fetchSoftSkill = async (softSkillId: string) =>
-  await prisma.softSkill.findUnique({ where: { id: softSkillId } })
+  await prisma.softSkill.findUnique({ where: { id: softSkillId }, select: SoftSkillCreateInput })
 
 export const newSoftSkillInfoIsEqual = (
   currentSoftSkillInfo: TypeSoftSkillInput,

@@ -53,3 +53,8 @@ export type TypeSoftSkillFormComponentProps = {
   submitFunction: (formData: FormData) => void | any
   errors: TypeError
 }
+
+export type TypeEditSoftSkillListComponentProps = {
+  id: string
+  defaultValues: TypeSoftSkillInput | null
+}
