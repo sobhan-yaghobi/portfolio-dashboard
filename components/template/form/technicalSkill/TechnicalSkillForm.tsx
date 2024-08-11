@@ -128,6 +128,7 @@ const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillF
               <FormControl className="w-full">
                 <InputLabel id="demo-simple-select-label">سطح تجربه</InputLabel>
                 <Select
+                  error={Boolean(errors && errors?.experienceYearTime)}
                   defaultValue={defaultValues?.experienceYearTime}
                   id="demo-simple-select"
                   labelId="demo-simple-select-label"

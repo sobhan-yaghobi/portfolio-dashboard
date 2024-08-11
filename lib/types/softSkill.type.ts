@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client"
 import { TypeSoftSkillForm } from "../schema/softSkill.schema"
+import { TypeError } from "./utils.type"
 
 export type TypeSoftSkillInput = Prisma.SoftSkillCreateInput
 
@@ -44,4 +45,11 @@ export type TypeSaveUpdatedSoftSkillParams = {
     infoForm: TypeSoftSkillForm
   }
   reValidPath: string
+}
+
+export type TypeSoftSkillFormComponentProps = {
+  defaultValues?: TypeSoftSkillInput | null
+  submitText: string
+  submitFunction: (formData: FormData) => void | any
+  errors: TypeError
 }

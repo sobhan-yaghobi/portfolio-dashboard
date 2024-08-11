@@ -25,6 +25,7 @@ import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
 import Collapse from "@mui/material/Collapse"
 import Link from "next/link"
+import { Assessment } from "@mui/icons-material"
 
 type TypeSidebarItem = {
   id: number
@@ -38,37 +39,57 @@ const items: TypeSidebarItem[] = [
   { id: 2, href: "/dashboard/password", title: "گذرواژه", icon: <KeyIcon /> },
   {
     id: 4,
-    title: "تجربه ها",
+    title: "مهارت فنی",
     href: "technicalSkillList",
     icon: <AssignmentIndIcon />,
     children: [
       {
         id: 41,
         href: "/dashboard/technicalSkillList/add",
-        title: "اضافه کردن تجربه",
+        title: "اضافه کردن مهارت فنی",
         icon: <PostAddIcon />,
       },
       {
         id: 42,
         href: "/dashboard/technicalSkillList",
-        title: "لیست تجربه ها",
+        title: "لیست مهارت های فنی",
         icon: <RecentActorsIcon />,
       },
     ],
   },
   {
     id: 5,
+    title: "مهارت نرم",
+    href: "softSkillList",
+    icon: <Assessment />,
+    children: [
+      {
+        id: 51,
+        href: "/dashboard/softskilllist/add",
+        title: "اضافه کردن مهارت نرم",
+        icon: <PostAddIcon />,
+      },
+      {
+        id: 52,
+        href: "/dashboard/softskilllist",
+        title: "لیست مهارت های نرم",
+        icon: <RecentActorsIcon />,
+      },
+    ],
+  },
+  {
+    id: 6,
     title: "پروژه ها",
     href: "/dashboard/projectList",
     icon: <FolderOpenIcon />,
     children: [
       {
-        id: 51,
+        id: 61,
         href: "/dashboard/projectList/add",
         title: "اضافه کردن پروژه",
         icon: <CreateNewFolderIcon />,
       },
-      { id: 52, href: "/dashboard/projectList", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
+      { id: 62, href: "/dashboard/projectList", title: "لیست پروژه ها", icon: <FolderCopyIcon /> },
     ],
   },
   { id: 7, href: "/dashboard/technicalgrowth", title: "رشد فنی", icon: <TimelineIcon /> },

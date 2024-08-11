@@ -1,3 +1,5 @@
+"use server"
+
 import { createSoftSkill, validateSoftSkillForm } from "./softSkillUtils"
 
 import { TypeErrors, TypeReturnSererAction } from "@/lib/types/utils.type"
@@ -17,5 +19,5 @@ export const createSoftSkillFormAction = async ({
       reValidPath,
     })
 
-  return { errors: validateResult.error.flatten().fieldErrors as TypeErrors, status: false }
+  return { errors: validateResult?.error.flatten().fieldErrors as TypeErrors, status: false }
 }
