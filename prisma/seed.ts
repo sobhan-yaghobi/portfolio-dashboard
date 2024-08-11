@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 const main = async () => {
   await prisma.admin.deleteMany()
   await prisma.project.deleteMany()
-  await prisma.skill.deleteMany()
+  await prisma.technicalSkill.deleteMany()
   await prisma.technicalGrowth.deleteMany()
 }
 main()

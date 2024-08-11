@@ -39,16 +39,21 @@ const items: TypeSidebarItem[] = [
   {
     id: 4,
     title: "تجربه ها",
-    href: "skillList",
+    href: "technicalSkillList",
     icon: <AssignmentIndIcon />,
     children: [
       {
         id: 41,
-        href: "/dashboard/skillList/add",
+        href: "/dashboard/technicalSkillList/add",
         title: "اضافه کردن تجربه",
         icon: <PostAddIcon />,
       },
-      { id: 42, href: "/dashboard/skillList", title: "لیست تجربه ها", icon: <RecentActorsIcon /> },
+      {
+        id: 42,
+        href: "/dashboard/technicalSkillList",
+        title: "لیست تجربه ها",
+        icon: <RecentActorsIcon />,
+      },
     ],
   },
   {

@@ -51,7 +51,7 @@ export const createProject = async ({
       ...project.infoForm,
       id: project.id,
       image: project.imageUrl,
-      skillList: { connect: project.relatedSkillList || [] },
+      technicalSkillList: { connect: project.relatedTechnicalSkillList || [] },
     },
   })
 
@@ -91,7 +91,7 @@ export const saveUpdatedProject = async ({
     data: {
       ...project.InfoFormWithoutImage,
       ...(project.imageUrl && { image: project.imageUrl }),
-      skillList: { connect: project.relatedSkillList },
+      technicalSkillList: { connect: project.relatedTechnicalSkillList },
     },
   })
 

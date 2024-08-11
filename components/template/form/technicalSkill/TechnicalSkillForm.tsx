@@ -3,10 +3,10 @@
 import React, { useState } from "react"
 import { find, some } from "lodash"
 import { toast } from "react-toastify"
-import { experienceYearTimeTitles } from "@/actions/skill/skillUtils"
+import { experienceYearTimeTitles } from "@/actions/technicalSkill/technicalSkillUtils"
 
 import { Project } from "@prisma/client"
-import { TypeSkillFormComponentProps } from "@/lib/types/skill.type"
+import { TypeTechnicalSkillFormComponentProps } from "@/lib/types/technicalSkill.type"
 
 import TitleIcon from "@mui/icons-material/Title"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
@@ -24,7 +24,7 @@ import SubmitLoadingButton from "@/components/modules/SubmitLoadingButton"
 import TextError from "@/components/modules/TextError"
 import Image from "next/image"
 
-const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>(
+const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillFormComponentProps>(
   (
     {
       projectList,
@@ -75,7 +75,7 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
           {defaultValues?.image && (
             <div className="bg-gray-500/40 w-fit h-72 p-3 rounded-xl overflow-hidden">
               <Image
-                alt="skill image"
+                alt="technicalSkill image"
                 className="h-full w-auto rounded-2xl"
                 height={500}
                 src={defaultValues.image}
@@ -239,6 +239,6 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
     )
   }
 )
-SkillForm.displayName = "SkillForm"
+TechnicalSkillForm.displayName = "TechnicalSkillForm"
 
-export default SkillForm
+export default TechnicalSkillForm

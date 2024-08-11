@@ -14,7 +14,10 @@ export const createProjectFormAction = async ({
 
   if (validateResult.success)
     return setProject({
-      project: { infoForm: validateResult.data, relatedSkillList: project.relatedSkillList },
+      project: {
+        infoForm: validateResult.data,
+        relatedTechnicalSkillList: project.relatedTechnicalSkillList,
+      },
       reValidPath,
     })
 
@@ -35,7 +38,7 @@ const setProject = async ({
         id: projectId,
         imageUrl,
         infoForm: project.infoForm,
-        relatedSkillList: project.relatedSkillList,
+        relatedTechnicalSkillList: project.relatedTechnicalSkillList,
       },
       reValidPath,
     })

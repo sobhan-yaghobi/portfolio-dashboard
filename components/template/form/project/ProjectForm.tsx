@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { find, some } from "lodash"
 import { toast } from "react-toastify"
 
-import { Skill } from "@prisma/client"
+import { TechnicalSkill } from "@prisma/client"
 import { TypeProjectFormComponentProps } from "@/lib/types/project.type"
 
 import TitleIcon from "@mui/icons-material/Title"
@@ -29,9 +29,9 @@ import Image from "next/image"
 const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentProps>(
   (
     {
-      skillList,
-      selectedSkillList,
-      setSelectedSkillList,
+      technicalSkillList,
+      selectedTechnicalSkillList,
+      setSelectedTechnicalSkillList,
       defaultValues,
       submitText,
       submitFunction,
@@ -39,33 +39,35 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
     },
     ref
   ) => {
-    const [mainSkill, setMainSkill] = useState<Skill | null>(null)
+    const [mainTechnicalSkill, setMainTechnicalSkill] = useState<TechnicalSkill | null>(null)
 
-    const onChangeSkill = (e: SelectChangeEvent<string>) => {
-      const mainSkill = find(skillList, function (item) {
+    const onChangeTechnicalSkill = (e: SelectChangeEvent<string>) => {
+      const mainTechnicalSkill = find(technicalSkillList, function (item) {
         return item.id === e.target.value
       })
-      setMainSkill(mainSkill ? mainSkill : ({} as Skill))
+      setMainTechnicalSkill(mainTechnicalSkill ? mainTechnicalSkill : ({} as TechnicalSkill))
     }
 
-    const addSkill = () => {
-      if (!mainSkill || !("id" in mainSkill)) return false
+    const addTechnicalSkill = () => {
+      if (!mainTechnicalSkill || !("id" in mainTechnicalSkill)) return false
 
-      const isSkillExistInSelectedSkillList = isSkillSelected(mainSkill.id)
+      const isTechnicalSkillExistInSelectedTechnicalSkillList = isTechnicalSkillSelected(
+        mainTechnicalSkill.id
+      )
 
-      if (isSkillExistInSelectedSkillList)
-        return toast.error("Skill is already in selected skillList")
+      if (isTechnicalSkillExistInSelectedTechnicalSkillList)
+        return toast.error("TechnicalSkill is already in selected technicalSkillList")
 
-      setSelectedSkillList((prev) => [...prev, mainSkill])
-      setMainSkill({} as Skill)
+      setSelectedTechnicalSkillList((prev) => [...prev, mainTechnicalSkill])
+      setMainTechnicalSkill({} as TechnicalSkill)
     }
 
-    const removeSkill = (id: string) =>
-      setSelectedSkillList((prev) => prev.filter((item) => item.id !== id))
+    const removeTechnicalSkill = (id: string) =>
+      setSelectedTechnicalSkillList((prev) => prev.filter((item) => item.id !== id))
 
-    const isSkillSelected = (id: string) =>
-      some(selectedSkillList, function (selectedSkillList) {
-        return selectedSkillList.id === id
+    const isTechnicalSkillSelected = (id: string) =>
+      some(selectedTechnicalSkillList, function (selectedTechnicalSkillList) {
+        return selectedTechnicalSkillList.id === id
       })
 
     return (
@@ -176,16 +178,20 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
             مهارت های استفاده شده
           </Typography>
           <div className="w-full flex gap-3">
-            <FormControl className="flex-1" onBlur={addSkill}>
+            <FormControl className="flex-1" onBlur={addTechnicalSkill}>
               <InputLabel id="demo-simple-select-helper-label">مهارت ها</InputLabel>
               <Select
                 label="مهارتی انتخاب کنید"
-                onChange={onChangeSkill}
-                value={mainSkill?.id || ""}
+                onChange={onChangeTechnicalSkill}
+                value={mainTechnicalSkill?.id || ""}
               >
-                {skillList &&
-                  skillList?.map((item) => (
-                    <MenuItem disabled={isSkillSelected(item.id)} key={item.id} value={item.id}>
+                {technicalSkillList &&
+                  technicalSkillList?.map((item) => (
+                    <MenuItem
+                      disabled={isTechnicalSkillSelected(item.id)}
+                      key={item.id}
+                      value={item.id}
+                    >
                       {item.name}
                     </MenuItem>
                   ))}
@@ -193,7 +199,7 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
             </FormControl>
           </div>
           <ul className="min-h-14 w-full flex flex-wrap gap-3">
-            {selectedSkillList.map((item) => (
+            {selectedTechnicalSkillList.map((item) => (
               <li
                 className="bg-white/10 p-2 flex items-center rounded-md cursor-pointer"
                 key={item.id}
@@ -202,7 +208,7 @@ const ProjectForm = React.forwardRef<HTMLFormElement, TypeProjectFormComponentPr
                 <IconButton
                   className="flex-1"
                   color="error"
-                  onClick={() => removeSkill(item.id)}
+                  onClick={() => removeTechnicalSkill(item.id)}
                   size="small"
                 >
                   <DeleteOutlineOutlinedIcon />

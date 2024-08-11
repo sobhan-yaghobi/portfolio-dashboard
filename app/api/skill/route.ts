@@ -8,9 +8,9 @@ export const GET = async (request: NextRequest) => {
   const params = new URLSearchParams(searchParams)
   const isProjectListInclude = params.get("projectListInclude")
 
-  const skillList = await prisma.skill.findMany({
+  const technicalSkillList = await prisma.technicalSkill.findMany({
     include: { projectList: !!isProjectListInclude },
   })
 
-  return Response.json(skillList || [], { status: 201 })
+  return Response.json(technicalSkillList || [], { status: 201 })
 }

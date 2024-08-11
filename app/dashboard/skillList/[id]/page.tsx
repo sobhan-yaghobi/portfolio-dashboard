@@ -3,16 +3,16 @@ import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation"
 
 import Typography from "@mui/material/Typography"
-import EditSkill from "@/components/template/form/skill/EditSkill"
+import EditTechnicalSkill from "@/components/template/form/technicalSkill/EditTechnicalSkill"
 
 const Page: React.FC<{
   params: { [slug: string]: string }
 }> = async ({ params }) => {
   const id = params?.id
-  const mainSkill = await prisma.skill.findUnique({ where: { id } })
+  const mainTechnicalSkill = await prisma.technicalSkill.findUnique({ where: { id } })
 
-  if (!mainSkill) {
-    redirect("/skillList")
+  if (!mainTechnicalSkill) {
+    redirect("/technicalSkillList")
   }
 
   const projectList = await prisma.project.findMany()
@@ -20,9 +20,9 @@ const Page: React.FC<{
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        Edit Skill
+        Edit TechnicalSkill
       </Typography>
-      <EditSkill id={id} defaultValues={mainSkill} projectList={projectList} />
+      <EditTechnicalSkill id={id} defaultValues={mainTechnicalSkill} projectList={projectList} />
     </>
   )
 }

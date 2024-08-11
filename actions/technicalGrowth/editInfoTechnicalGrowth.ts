@@ -35,12 +35,12 @@ const setEditTechnicalGrowth = async ({
   const getTechnicalGrowthResult = await fetchTechnicalCreateInput(technicalGrowth.id)
   if (!getTechnicalGrowthResult) return { status: false, message: "رشد فنی یافت نشد" }
 
-  const isSkillInfoEqual = newTechnicalGrowthInfoIsEqual(
+  const isTechnicalSkillInfoEqual = newTechnicalGrowthInfoIsEqual(
     getTechnicalGrowthResult,
     technicalGrowth.infoForm
   )
 
-  if (isSkillInfoEqual) return { status: false, message: "لطفا فرم را بروزرسانی کنید" }
+  if (isTechnicalSkillInfoEqual) return { status: false, message: "لطفا فرم را بروزرسانی کنید" }
 
   return saveUpdatedTechnicalGrowth({
     technicalGrowth: { id: technicalGrowth.id, infoForm: technicalGrowth.infoForm },

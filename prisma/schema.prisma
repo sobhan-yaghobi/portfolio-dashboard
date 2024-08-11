@@ -26,10 +26,10 @@ model Project {
   link        String
   source      String
   description String
-  skillList   Skill[]
+  technicalSkillList   TechnicalSkill[]
 }
 
-model Skill {
+model TechnicalSkill {
   id                String            @id @default(uuid())
   name              String
   image             String

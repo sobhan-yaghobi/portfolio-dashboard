@@ -12,12 +12,12 @@ export const deleteTechnicalGrowthFormAction = async (
 ): Promise<TypeReturnSererAction> => {
   const isTechnicalGrowthResult = await isTechnicalGrowthExist(technicalGrowthId)
 
-  if (isTechnicalGrowthResult) return setDeleteSkill(technicalGrowthId, reValidPath)
+  if (isTechnicalGrowthResult) return setDeleteTechnicalSkill(technicalGrowthId, reValidPath)
 
   return { message: "رشد فنی یافت نشد", status: false }
 }
 
-const setDeleteSkill = async (
+const setDeleteTechnicalSkill = async (
   technicalGrowthId: string,
   reValidPath: string
 ): Promise<TypeReturnSererAction> => {

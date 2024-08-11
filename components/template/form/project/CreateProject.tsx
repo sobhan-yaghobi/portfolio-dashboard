@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/types/utils.type"
-import { Skill } from "@prisma/client"
+import { TechnicalSkill } from "@prisma/client"
 import { TypeCreateProjectComponentProps } from "@/lib/types/project.type"
 
 import { createProjectFormAction } from "@/actions/project/createProject"
@@ -12,18 +12,18 @@ import { createProjectFormAction } from "@/actions/project/createProject"
 import Form from "./ProjectForm"
 
 const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({
-  skillList,
-  selectionSkillList,
+  technicalSkillList,
+  selectionTechnicalSkillList,
 }) => {
-  const [selectedSkillList, setSelectedSkillList] = useState<Skill[]>(
-    selectionSkillList ? selectionSkillList : ([] as Skill[])
+  const [selectedTechnicalSkillList, setSelectedTechnicalSkillList] = useState<TechnicalSkill[]>(
+    selectionTechnicalSkillList ? selectionTechnicalSkillList : ([] as TechnicalSkill[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
     const actionResult = await createProjectFormAction({
-      project: { formData: event, relatedSkillList: selectedSkillList },
+      project: { formData: event, relatedTechnicalSkillList: selectedTechnicalSkillList },
       reValidPath: "/dashboard/projectList",
     })
 
@@ -35,16 +35,16 @@ const CreateProject: React.FC<TypeCreateProjectComponentProps> = ({
   const resetFrom = () => {
     formRef.current?.reset()
     setErrors({} as TypeError)
-    setSelectedSkillList([] as Skill[])
+    setSelectedTechnicalSkillList([] as TechnicalSkill[])
   }
 
   return (
     <Form
       errors={errors}
       ref={formRef}
-      skillList={skillList}
-      selectedSkillList={selectedSkillList}
-      setSelectedSkillList={setSelectedSkillList}
+      technicalSkillList={technicalSkillList}
+      selectedTechnicalSkillList={selectedTechnicalSkillList}
+      setSelectedTechnicalSkillList={setSelectedTechnicalSkillList}
       submitFunction={clientAction}
       submitText="اضافه کن"
     />

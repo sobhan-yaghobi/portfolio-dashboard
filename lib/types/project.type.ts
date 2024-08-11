@@ -1,4 +1,4 @@
-import { Prisma, Project, Skill } from "@prisma/client"
+import { Prisma, Project, TechnicalSkill } from "@prisma/client"
 import { TypeProjectForm, TypeProjectFormWithoutImage } from "../schema/project.schema"
 import { TypeError } from "./utils.type"
 
@@ -21,7 +21,7 @@ export const ProjectIdAndImagePath: Prisma.ProjectSelect = { id: true, image: tr
 export type TypeCreateProjectFormActionParams = {
   project: {
     formData: FormData
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
   }
   reValidPath: string
 }
@@ -30,7 +30,7 @@ export type TypeEditProjectFormActionParams = {
   project: {
     id: string
     formData: FormData
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
   }
   reValidPath: string
 }
@@ -39,7 +39,7 @@ export type TypeEditProjectFormActionParams = {
 export type TypeSetProjectParams = {
   project: {
     infoForm: TypeProjectForm
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
   }
   reValidPath: string
 }
@@ -48,7 +48,7 @@ export type TypeCreateProjectParams = {
   project: {
     id: string
     infoForm: TypeProjectForm
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
     imageUrl: string
   }
   reValidPath: string
@@ -58,7 +58,7 @@ export type TypeSetEditProjectParams = {
   project: {
     id: string
     infoForm: TypeProjectForm
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
   }
   reValidPath: string
 }
@@ -67,7 +67,7 @@ export type TypeSaveUpdatedProjectParams = {
   project: {
     id: string
     InfoFormWithoutImage: TypeProjectFormWithoutImage
-    relatedSkillList: Skill[]
+    relatedTechnicalSkillList: TechnicalSkill[]
     imageUrl?: string
   }
   reValidPath: string
@@ -83,21 +83,21 @@ export type TypeSetDeleteProjectParams = {
 
 // Component Props
 export type TypeCreateProjectComponentProps = {
-  skillList: Skill[]
-  selectionSkillList?: Skill[]
+  technicalSkillList: TechnicalSkill[]
+  selectionTechnicalSkillList?: TechnicalSkill[]
 }
 
 export type TypeEditProjectComponentProps = {
   id: string
   defaultValues: TypeProjectInput | null
-  skillList: Skill[]
-  selectionSkillList?: Skill[]
+  technicalSkillList: TechnicalSkill[]
+  selectionTechnicalSkillList?: TechnicalSkill[]
 }
 
 export type TypeProjectFormComponentProps = {
-  skillList?: Skill[]
-  selectedSkillList: Skill[]
-  setSelectedSkillList: React.Dispatch<React.SetStateAction<Skill[]>>
+  technicalSkillList?: TechnicalSkill[]
+  selectedTechnicalSkillList: TechnicalSkill[]
+  setSelectedTechnicalSkillList: React.Dispatch<React.SetStateAction<TechnicalSkill[]>>
   defaultValues?: TypeProjectInput | null
   submitText: string
   errors: TypeError

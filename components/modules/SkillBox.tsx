@@ -2,9 +2,9 @@
 
 import React from "react"
 import { toast } from "react-toastify"
-import { Skill } from "@prisma/client"
+import { TechnicalSkill } from "@prisma/client"
 
-import { deleteSkillFormAction } from "@/actions/skill/deleteSkill"
+import { deleteTechnicalSkillFormAction } from "@/actions/technicalSkill/deleteTechnicalSkill"
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
@@ -22,9 +22,9 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 
-const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
-  const deleteSkill = async () => {
-    const deleteResult = await deleteSkillFormAction(id, "/skillList")
+const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, description }) => {
+  const deleteTechnicalSkill = async () => {
+    const deleteResult = await deleteTechnicalSkillFormAction(id, "/technicalSkillList")
 
     if (deleteResult.status) {
       return toast.success(deleteResult.message)
@@ -35,7 +35,7 @@ const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
   return (
     <Card className="min-w-72 max-w-80 relative">
       <IconButton
-        onClick={deleteSkill}
+        onClick={deleteTechnicalSkill}
         title="delete"
         className="!absolute left-1 top-1 bg-black/30"
         color="error"
@@ -49,7 +49,7 @@ const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
             height={40}
             width={80}
             src={image}
-            alt="skill image"
+            alt="technicalSkill image"
           />
         </CardMedia>
         <Typography gutterBottom variant="h5" component="div">
@@ -66,7 +66,7 @@ const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
           </Button>
         </Link>
 
-        <Link href={`/dashboard/skillList/${id}`}>
+        <Link href={`/dashboard/technicalSkillList/${id}`}>
           <Button variant="outlined" size="small" endIcon={<EditIcon />}>
             edit
           </Button>
@@ -76,4 +76,4 @@ const SkillBox: React.FC<Skill> = ({ id, image, name, link, description }) => {
   )
 }
 
-export default SkillBox
+export default TechnicalSkillBox

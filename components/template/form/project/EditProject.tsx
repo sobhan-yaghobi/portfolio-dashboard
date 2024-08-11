@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react"
 import { showActionReturnMessage } from "@/lib/utils"
 
 import { TypeError } from "@/lib/types/utils.type"
-import { Skill } from "@prisma/client"
+import { TechnicalSkill } from "@prisma/client"
 import { TypeEditProjectComponentProps } from "@/lib/types/project.type"
 
 import { editProjectFormAction } from "@/actions/project/editProject"
@@ -14,11 +14,11 @@ import Form from "./ProjectForm"
 const EditProject: React.FC<TypeEditProjectComponentProps> = ({
   id,
   defaultValues,
-  skillList,
-  selectionSkillList,
+  technicalSkillList,
+  selectionTechnicalSkillList,
 }) => {
-  const [selectedSkillList, setSelectedSkillList] = useState<Skill[]>(
-    selectionSkillList ? selectionSkillList : ([] as Skill[])
+  const [selectedTechnicalSkillList, setSelectedTechnicalSkillList] = useState<TechnicalSkill[]>(
+    selectionTechnicalSkillList ? selectionTechnicalSkillList : ([] as TechnicalSkill[])
   )
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
@@ -28,7 +28,7 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
       project: {
         id,
         formData: event,
-        relatedSkillList: selectedSkillList,
+        relatedTechnicalSkillList: selectedTechnicalSkillList,
       },
       reValidPath: "/dashboard/projectList",
     })
@@ -43,9 +43,9 @@ const EditProject: React.FC<TypeEditProjectComponentProps> = ({
       defaultValues={defaultValues}
       errors={errors}
       ref={formRef}
-      skillList={skillList}
-      selectedSkillList={selectedSkillList}
-      setSelectedSkillList={setSelectedSkillList}
+      technicalSkillList={technicalSkillList}
+      selectedTechnicalSkillList={selectedTechnicalSkillList}
+      setSelectedTechnicalSkillList={setSelectedTechnicalSkillList}
       submitFunction={clientAction}
       submitText="ویرایش"
     />

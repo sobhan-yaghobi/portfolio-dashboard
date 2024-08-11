@@ -2,7 +2,7 @@ import { z } from "zod"
 import { trimAndNormalize } from "./utils"
 import { experienceYearTime } from "@prisma/client"
 
-export const SchemaSkill = z.object({
+export const SchemaTechnicalSkill = z.object({
   name: z.string().trim().min(1, "نام اجباری میباشد").transform(trimAndNormalize),
   image: z.instanceof(File).optional(),
   link: z.string().trim().min(1, "لینک داکیومنت اجباری میباشد").transform(trimAndNormalize),
@@ -21,6 +21,6 @@ export const SchemaSkill = z.object({
   ),
 })
 
-export type TypeSkillForm = z.infer<typeof SchemaSkill>
+export type TypeTechnicalSkillForm = z.infer<typeof SchemaTechnicalSkill>
 
-export type TypeSkillFormWithoutImage = Omit<TypeSkillForm, "image">
+export type TypeTechnicalSkillFormWithoutImage = Omit<TypeTechnicalSkillForm, "image">

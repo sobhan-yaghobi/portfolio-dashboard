@@ -1,19 +1,17 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-
-import { TypeError } from "@/lib/types/utils.type"
-import { Project } from "@prisma/client"
-import { TypeEditSkillListComponentProps } from "@/lib/types/skill.type"
-
-import { editSkillFormAction } from "@/actions/skill/editSkill"
-
-import Form from "./SkillForm"
 import { showActionReturnMessage } from "@/lib/utils"
 
-const EditSkill: React.FC<TypeEditSkillListComponentProps> = ({
-  id,
-  defaultValues,
+import { Project } from "@prisma/client"
+import { TypeError } from "@/lib/types/utils.type"
+import { TypeCreateTechnicalSkillComponentProps } from "@/lib/types/technicalSkill.type"
+
+import { createTechnicalSkillFormAction } from "@/actions/technicalSkill/createTechnicalSkill"
+
+import Form from "./TechnicalSkillForm"
+
+const CreateTechnicalSkill: React.FC<TypeCreateTechnicalSkillComponentProps> = ({
   projectList,
   selectionProjectList,
 }) => {
@@ -24,9 +22,9 @@ const EditSkill: React.FC<TypeEditSkillListComponentProps> = ({
   const [errors, setErrors] = useState<TypeError>({} as TypeError)
 
   const clientAction = async (event: FormData) => {
-    const actionResult = await editSkillFormAction({
-      skill: { id, formData: event, relatedProjectList: selectedProjectList },
-      reValidPath: "/dashboard/skillList",
+    const actionResult = await createTechnicalSkillFormAction({
+      technicalSkill: { formData: event, relatedProjectList: selectedProjectList },
+      reValidPath: "/dashboard/technicalSkillList",
     })
 
     if ("errors" in actionResult) return setErrors({ ...actionResult.errors } as TypeError)
@@ -35,22 +33,22 @@ const EditSkill: React.FC<TypeEditSkillListComponentProps> = ({
   }
 
   const resetForm = () => {
+    formRef.current?.reset()
     setErrors({} as TypeError)
     setSelectedProjectList([] as Project[])
   }
 
   return (
     <Form
-      defaultValues={defaultValues}
       errors={errors}
       projectList={projectList}
       ref={formRef}
       selectedProjectList={selectedProjectList}
       setSelectedProjectList={setSelectedProjectList}
       submitFunction={clientAction}
-      submitText="ویرایش"
+      submitText="اضافه کن"
     />
   )
 }
 
-export default EditSkill
+export default CreateTechnicalSkill

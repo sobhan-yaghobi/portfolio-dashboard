@@ -6,10 +6,10 @@ export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl
   const params = new URLSearchParams(searchParams)
-  const isSkillListInclude = params.get("skillListInclude")
+  const isTechnicalSkillListInclude = params.get("technicalSkillListInclude")
 
   const projectList = await prisma.project.findMany({
-    include: { skillList: !!isSkillListInclude },
+    include: { technicalSkillList: !!isTechnicalSkillListInclude },
   })
 
   return Response.json(projectList || [], { status: 201 })
