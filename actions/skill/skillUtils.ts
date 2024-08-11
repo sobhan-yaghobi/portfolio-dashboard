@@ -12,6 +12,15 @@ import {
 } from "@/lib/types/skill.type"
 import { SchemaSkill, TypeSkillForm, TypeSkillFormWithoutImage } from "@/lib/schema/skill.schema"
 import { TypeReturnSererAction } from "@/lib/types/utils.type"
+import { experienceYearTime } from "@prisma/client"
+
+export const experienceYearTimeTitles: Record<experienceYearTime, string> = {
+  LESS_ONE_YEAR: "کمتر از یک سال",
+  BETWEEN_ONE_AND_TWO_YEAR: "بین یک تا دو سال",
+  BETWEEN_TWO_AND_FOUR_YEAR: "بین دو تا چهار سال",
+  BETWEEN_FOUR_AND_TEN_YEAR: "بین چهار تا ده سال",
+  MORE_TEN_YEAR: "بیشتر از ده سال",
+}
 
 export const validateSkillForm = (formData: FormData) =>
   SchemaSkill.safeParse({
@@ -19,6 +28,7 @@ export const validateSkillForm = (formData: FormData) =>
     image: formData.get("image") as File,
     link: formData.get("link"),
     description: formData.get("description"),
+    experienceYearTime: formData.get("experienceYearTime"),
   } as TypeSkillForm)
 
 export const setImageSkill = async (skillId: string, skillImageFile: TypeSkillForm["image"]) => {
@@ -97,3 +107,9 @@ export const fetchSkillIdAndImagePath = async (
 
 export const deleteSkill = async (skillId: string) =>
   await prisma.skill.delete({ where: { id: skillId } })
+
+export const getExperienceYearTimeTitle = (
+  value: experienceYearTime | null | undefined
+): string => {
+  return value ? experienceYearTimeTitles[value] : ""
+}

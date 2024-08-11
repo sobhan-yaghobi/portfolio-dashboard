@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
 }
 
 model Admin {
@@ -30,12 +30,21 @@ model Project {
 }
 
 model Skill {
-  id          String    @id @default(uuid())
-  name        String
-  image       String
-  projectList Project[]
-  link        String
-  description String
+  id                String            @id @default(uuid())
+  name              String
+  image             String
+  projectList       Project[]
+  link              String
+  description       String
+  experienceYearTime experienceYearTime
+}
+
+enum experienceYearTime {
+  LESS_ONE_YEAR
+  BETWEEN_ONE_AND_TWO_YEAR
+  BETWEEN_TWO_AND_FOUR_YEAR
+  BETWEEN_FOUR_AND_TEN_YEAR
+  MORE_TEN_YEAR
 }
 
 model TechnicalGrowth {

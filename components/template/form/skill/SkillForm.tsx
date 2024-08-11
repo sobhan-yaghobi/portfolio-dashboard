@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { find, some } from "lodash"
 import { toast } from "react-toastify"
+import { experienceYearTimeTitles } from "@/actions/skill/skillUtils"
 
 import { Project } from "@prisma/client"
 import { TypeSkillFormComponentProps } from "@/lib/types/skill.type"
@@ -116,6 +117,30 @@ const SkillForm = React.forwardRef<HTMLFormElement, TypeSkillFormComponentProps>
               }}
             />
           </TextError>
+        </section>
+
+        <section>
+          <Typography variant="subtitle1" component={"h5"}>
+            سطح تجربه
+          </Typography>
+          <div className="w-full flex gap-3">
+            <TextError message={errors && errors?.experienceYearTime}>
+              <FormControl className="w-full">
+                <InputLabel id="demo-simple-select-label">سطح تجربه</InputLabel>
+                <Select
+                  defaultValue={defaultValues?.experienceYearTime}
+                  id="demo-simple-select"
+                  labelId="demo-simple-select-label"
+                  label="سطح تجربه"
+                  name="experienceYearTime"
+                >
+                  {Object.entries(experienceYearTimeTitles).map((experience) => (
+                    <MenuItem value={experience[0]}>{experience[1]}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </TextError>
+          </div>
         </section>
 
         <section>

@@ -1,4 +1,4 @@
-import { Prisma, Project, Skill } from "@prisma/client"
+import { experienceYearTime, Prisma, Project, Skill } from "@prisma/client"
 import { TypeSkillForm, TypeSkillFormWithoutImage } from "../schema/skill.schema"
 import { TypeError } from "./utils.type"
 
@@ -10,6 +10,7 @@ export const SkillCreateInput: Prisma.SkillSelect = {
   image: true,
   link: true,
   description: true,
+  experienceYearTime: true,
 }
 
 export type TypeSkillIdAndImagePath = Pick<Skill, "id" | "image">
