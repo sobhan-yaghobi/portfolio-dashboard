@@ -47,6 +47,12 @@ enum experienceYearTime {
   MORE_TEN_YEAR
 }
 
+model SoftSkill {
+  id String @id @default(uuid())
+  name String
+  score Int
+}
+
 model TechnicalGrowth {
   id          String @id @default(uuid())
   title       String
