@@ -12,7 +12,7 @@ const page: React.FC = async () => {
   return (
     <div className="h-full flex flex-col">
       <Typography variant="h4" component="h2" className="mb-8">
-        TechnicalSkillList
+        لیست مهارت های فنی
       </Typography>
       {technicalSkillList.length ? (
         <ul className="grid grid-cols-4 gap-3 gap-y-12 place-items-center">
