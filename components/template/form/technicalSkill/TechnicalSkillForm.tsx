@@ -123,9 +123,9 @@ const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillF
           <Typography variant="subtitle1" component={"h5"}>
             سطح تجربه
           </Typography>
-          <div className="w-full flex gap-3">
-            <TextError message={errors && errors?.experienceYearTime}>
-              <FormControl className="w-full">
+          <TextError message={errors && errors?.experienceYearTime}>
+            <div className="w-full flex gap-3">
+              <FormControl sx={{ m: 1 }} className="w-full p-0 !m-0">
                 <InputLabel id="demo-simple-select-label">سطح تجربه</InputLabel>
                 <Select
                   error={Boolean(errors && errors?.experienceYearTime)}
@@ -140,8 +140,8 @@ const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillF
                   ))}
                 </Select>
               </FormControl>
-            </TextError>
-          </div>
+            </div>
+          </TextError>
         </section>
 
         <section>
