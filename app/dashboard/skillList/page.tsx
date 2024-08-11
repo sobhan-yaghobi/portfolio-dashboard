@@ -21,7 +21,7 @@ const page: React.FC = async () => {
           ))}
         </ul>
       ) : (
-        <EmptyBox message="TechnicalSkillList Is Empty" />
+        <EmptyBox message="لیست مهارت های فنی خالی میباشد" />
       )}
     </div>
   )
