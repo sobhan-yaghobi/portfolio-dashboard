@@ -4,6 +4,8 @@ import { toast } from "react-toastify"
 
 import { TypeShowActionReturnMessageParam } from "./types/utils.type"
 import { verifyToken } from "@/auth/clientFunctions"
+import { TechnicalSkill } from "@prisma/client"
+import { experienceYearTimeTitles } from "@/actions/technicalSkill/technicalSkillUtils"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -46,3 +48,9 @@ export const formatPhoneNumber = (phoneNumber: string) => {
   }
   return filteredPhoneNumber
 }
+
+export const convertTechnicalSkillListExperienceItem = (technicalSkillList: TechnicalSkill[]) =>
+  technicalSkillList.map((technicalSkill) => ({
+    ...technicalSkill,
+    experienceYearTime: experienceYearTimeTitles[technicalSkill.experienceYearTime],
+  }))

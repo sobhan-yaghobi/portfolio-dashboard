@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { convertTechnicalSkillListExperienceItem } from "@/lib/utils"
 import { NextResponse } from "next/server"
 
 export const GET = async () => {
@@ -7,7 +8,7 @@ export const GET = async () => {
   const projectList = await prisma.project.findMany({ include: { technicalSkillList: true } })
 
   return NextResponse.json({
-    technicalSkillList,
+    technicalSkillList: convertTechnicalSkillListExperienceItem(technicalSkillList),
     softSkillList,
     projectList,
   })
