@@ -8,7 +8,7 @@ const page: React.FC = async () => {
   return (
     <>
       <Typography variant="h4" component="h2" className="mb-8">
-        اضافه کردن مهارت
+        اضافه کردن مهارت فنی
       </Typography>
       <CreateTechnicalSkillForm projectList={projectList} />
     </>

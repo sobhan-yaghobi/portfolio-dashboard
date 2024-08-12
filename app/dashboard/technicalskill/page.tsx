@@ -15,7 +15,7 @@ const page: React.FC = async () => {
         لیست مهارت های فنی
       </Typography>
       {technicalSkillList.length ? (
-        <ul className="grid grid-cols-4 gap-3 gap-y-12 place-items-center">
+        <ul className="grid grid-cols-3 gap-3 place-items-center">
           {technicalSkillList.map((item) => (
             <TechnicalSkillBox key={item.id} {...item} />
           ))}

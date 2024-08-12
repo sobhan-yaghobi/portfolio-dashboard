@@ -33,7 +33,7 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
   }
 
   return (
-    <Card className="min-w-72 max-w-80 relative">
+    <Card className="min-w-72 w-full max-w-96 relative">
       <IconButton
         onClick={deleteTechnicalSkill}
         title="delete"
@@ -45,7 +45,7 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
       <CardContent>
         <CardMedia>
           <Image
-            className="bg-white/50 w-20 h-10 mb-3 rounded-md"
+            className="bg-gray-500/40 w-auto h-10 mb-3 p-1 rounded-md"
             height={40}
             width={80}
             src={image}

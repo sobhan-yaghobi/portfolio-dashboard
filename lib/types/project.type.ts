@@ -103,3 +103,7 @@ export type TypeProjectFormComponentProps = {
   errors: TypeError
   submitFunction: (formData: FormData) => void | any
 }
+
+export type TypeProjectBoxComponentProps = {
+  project: Project
+}

@@ -13,7 +13,7 @@ const page: React.FC = async () => {
         لیست مهارت های نرم
       </Typography>
       {softSkillList.length ? (
-        <ul className="grid grid-cols-4 gap-3 gap-y-12 place-items-center">
+        <ul className="grid grid-cols-3 gap-3 place-items-center">
           {softSkillList.map((item) => (
             <SoftSkillBox key={item.id} {...item} />
           ))}

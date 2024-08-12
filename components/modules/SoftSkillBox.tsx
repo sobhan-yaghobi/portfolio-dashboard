@@ -31,7 +31,7 @@ const SoftSkillBox: React.FC<SoftSkill> = ({ id, name, score }) => {
   }
 
   return (
-    <Card className="min-w-72 max-w-80 relative">
+    <Card className="min-w-72 w-full max-w-96 relative">
       <IconButton
         onClick={deleteTechnicalSkill}
         title="delete"

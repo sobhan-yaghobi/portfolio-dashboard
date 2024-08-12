@@ -16,22 +16,15 @@ const page: React.FC = async () => {
         پروژه ها
       </Typography>
       {projectList.length ? (
-        <ul className="grid grid-cols-3 gap-6 gap-y-12 place-items-center">
-          {projectList.map((item) => (
-            <div
-              key={item.id}
-              className={`${
-                item.title.length >= 70 || item.description.length >= 300
-                  ? "col-span-3"
-                  : "col-span-1"
-              } w-full`}
-            >
-              <ProjectBox {...item} />
+        <ul className="grid grid-cols-3 gap-3 place-items-center">
+          {projectList.map((project) => (
+            <div key={project.id} className="col-span-1 w-full h-[400px]">
+              <ProjectBox project={project} />
             </div>
           ))}
         </ul>
       ) : (
-        <EmptyBox message="Project Is Empty" />
+        <EmptyBox message="لیست پروژه ها خالی میباشد" />
       )}
     </div>
   )

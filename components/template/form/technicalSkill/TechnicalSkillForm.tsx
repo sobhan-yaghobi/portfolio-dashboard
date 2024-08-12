@@ -73,7 +73,7 @@ const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillF
             عکس
           </Typography>
           {defaultValues?.image && (
-            <div className="bg-gray-500/40 w-fit h-72 p-3 rounded-xl overflow-hidden">
+            <div className="bg-gray-500/40 w-fit h-20 p-2 rounded-lg overflow-hidden">
               <Image
                 alt="technicalSkill image"
                 className="h-full w-auto rounded-2xl"

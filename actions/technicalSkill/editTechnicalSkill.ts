@@ -66,6 +66,7 @@ const setEditTechnicalSkill = async ({
       id: technicalSkill.id,
       InfoFormWithoutImage: technicalSkillInfoFormWithoutImage,
       relatedProjectList: technicalSkill.relatedProjectList,
+      imageUrl: typeof updatedImageResult.data === "string" ? updatedImageResult.data : "",
     },
     reValidPath,
   })
