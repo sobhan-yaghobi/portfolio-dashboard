@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Admin {
@@ -20,22 +20,22 @@ model Admin {
 }
 
 model Project {
-  id          String  @id @default(uuid())
-  image       String
-  title       String
-  link        String
-  source      String
-  description String
-  technicalSkillList   TechnicalSkill[]
+  id                 String           @id @default(uuid())
+  image              String
+  title              String
+  link               String
+  source             String
+  description        String
+  technicalSkillList TechnicalSkill[]
 }
 
 model TechnicalSkill {
-  id                String            @id @default(uuid())
-  name              String
-  image             String
-  projectList       Project[]
-  link              String
-  description       String
+  id                 String             @id @default(uuid())
+  name               String
+  image              String
+  projectList        Project[]
+  link               String
+  description        String
   experienceYearTime experienceYearTime
 }
 
@@ -48,8 +48,8 @@ enum experienceYearTime {
 }
 
 model SoftSkill {
-  id String @id @default(uuid())
-  name String
+  id    String @id @default(uuid())
+  name  String
   score Int
 }
 
@@ -59,4 +59,15 @@ model TechnicalGrowth {
   subtitle    String
   description String
   order       Int
+}
+
+model SocialMedia {
+  id          String  @id @default(uuid())
+  title       String
+  subtitle    String
+  description String
+  link        String
+  username    String
+  logo        String?
+  backImage   String?
 }
