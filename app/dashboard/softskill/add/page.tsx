@@ -1,7 +1,7 @@
-import CreateSoftSkill from "@/components/template/form/softSkill/CreateSoftSkill"
-import SoftSkillForm from "@/components/template/form/softSkill/SoftSkillForm"
-import { Typography } from "@mui/material"
 import React from "react"
+
+import { Typography } from "@mui/material"
+import CreateSoftSkill from "@/components/template/form/softSkill/CreateSoftSkill"
 
 const page = () => {
   return (
@@ -9,7 +9,7 @@ const page = () => {
       <Typography variant="h4" component="h2" className="mb-8">
         اضافه کردن مهارت
       </Typography>
-      <CreateSoftSkill submitText="اضافه کن" />
+      <CreateSoftSkill />
     </>
   )
 }

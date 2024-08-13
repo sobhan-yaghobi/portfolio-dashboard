@@ -136,7 +136,9 @@ const TechnicalSkillForm = React.forwardRef<HTMLFormElement, TypeTechnicalSkillF
                   name="experienceYearTime"
                 >
                   {Object.entries(experienceYearTimeTitles).map((experience) => (
-                    <MenuItem value={experience[0]}>{experience[1]}</MenuItem>
+                    <MenuItem key={experience[0]} value={experience[0]}>
+                      {experience[1]}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

@@ -67,4 +67,6 @@ const SoftSkillForm = React.forwardRef<HTMLFormElement, TypeSoftSkillFormCompone
   }
 )
 
+SoftSkillForm.displayName = "SoftSkillForm"
+
 export default SoftSkillForm
