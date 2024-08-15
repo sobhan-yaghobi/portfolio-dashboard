@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { toast } from "react-toastify"
 import { TechnicalSkill } from "@prisma/client"
 
@@ -9,20 +9,40 @@ import { deleteTechnicalSkillFormAction } from "@/actions/technicalSkill/deleteT
 import OpenInNewIcon from "@mui/icons-material/OpenInNew"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
+import ReadMoreIcon from "@mui/icons-material/ReadMore"
 
 import Link from "next/link"
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   IconButton,
+  Modal,
   Typography,
 } from "@mui/material"
 import Image from "next/image"
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  borderRadius: ".5rem",
+  boxShadow: 24,
+  p: 4,
+}
+
 const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, description }) => {
+  const summaryDescriptionText = description.split(" ").slice(0, 20).join(" ")
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   const deleteTechnicalSkill = async () => {
     const deleteResult = await deleteTechnicalSkillFormAction(id, "/technicalskill")
 
@@ -33,7 +53,7 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
   }
 
   return (
-    <Card className="min-w-72 w-full max-w-96 relative">
+    <Card className="min-w-72 w-full max-w-96 h-60 relative">
       <IconButton
         onClick={deleteTechnicalSkill}
         title="delete"
@@ -56,7 +76,7 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {summaryDescriptionText}...
         </Typography>
       </CardContent>
       <CardActions>
@@ -71,7 +91,24 @@ const TechnicalSkillBox: React.FC<TechnicalSkill> = ({ id, image, name, link, de
             edit
           </Button>
         </Link>
+
+        <Button onClick={handleOpen} variant="outlined" size="small" aria-label="Read-more">
+          <ReadMoreIcon />
+        </Button>
       </CardActions>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography className="!mb-6" variant="h4" component="h4">
+            {name}
+          </Typography>
+          <Typography>{description}</Typography>
+        </Box>
+      </Modal>
     </Card>
   )
 }
