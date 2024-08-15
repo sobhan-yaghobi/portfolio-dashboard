@@ -101,7 +101,7 @@ export const saveUpdatedTechnicalSkill = async ({
     where: { id: technicalSkill.id },
     data: {
       ...technicalSkill.InfoFormWithoutImage,
-      image: technicalSkill.imageUrl,
+      ...(technicalSkill.imageUrl && { image: technicalSkill.imageUrl }),
       projectList: { connect: technicalSkill.relatedProjectList },
     },
   })

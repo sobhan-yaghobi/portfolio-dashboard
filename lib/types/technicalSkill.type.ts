@@ -70,7 +70,7 @@ export type TypeSaveUpdatedTechnicalSkillParams = {
     id: string
     InfoFormWithoutImage: TypeTechnicalSkillFormWithoutImage
     relatedProjectList: Project[]
-    imageUrl: string
+    imageUrl: string | undefined
   }
   reValidPath: string
 }
